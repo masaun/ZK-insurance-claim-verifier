@@ -1,11 +1,13 @@
 pragma solidity ^0.8.17;
 
-import "../contract/Starter.sol";
-import "../circuits/target/contract.sol";
-import "forge-std/console.sol";
+import { UltraVerifier } from "../../contracts/circuit/ultra-verifier/plonk_vk.sol";
+//import "../circuits/target/contract.sol";
+import { Starter } from "../../contracts/circuit/Starter.sol";
 
-import "forge-std/Test.sol";
-import {NoirHelper} from "foundry-noir-helper/NoirHelper.sol";
+import "forge-std/console.sol";
+import { Test } from "forge-std/Test.sol";
+import { NoirHelper } from "foundry-noir-helper/NoirHelper.sol";
+
 
 
 contract StarterTest is Test {
