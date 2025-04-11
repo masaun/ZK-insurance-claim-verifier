@@ -1,6 +1,7 @@
 pragma solidity ^0.8.17;
 
-import "../circuits/target/contract.sol";
+import { UltraVerifier } from "./ultra-verifier/plonk_vk.sol";
+//import "../circuits/target/contract.sol";
 
 contract Starter {
     UltraVerifier public verifier;

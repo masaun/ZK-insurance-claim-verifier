@@ -72,12 +72,12 @@ sh circuit_test.sh
 ## SC - Script
 - Run the `Verify.s.sol` on the Local Network
 ```bash
-sh ./script/runningScript_Verify.sh
+sh ./scripts/runningScript_Verify.sh
 ```
 
 - Run the `Verify_onSwellChainTestnet.s.sol` on the Swell Chain Testnet
 ```bash
-sh ./script/swell-chain-testnet/runningScript_Verify_onSwellChainTestnet.sh
+sh ./scripts/swellchain-testnet/runningScript_Verify_onSwellChainTestnet.sh
 ```
 
 - NOTE: The ProofConverter#`sliceAfter96Bytes()` would be used in the both script file above.
@@ -88,14 +88,14 @@ sh ./script/swell-chain-testnet/runningScript_Verify_onSwellChainTestnet.sh
 <br>
 
 ## SC - Test
-- Run the `SomethingOwnershipVerifier.t.sol` on the Local Network
+- Run the `Starter.t.sol` on the Local Network
 ```bash
-sh ./test/runningTest_SomethingOwnershipVerifier.sh
+sh ./test/circuit/runningTest_Starter.sh
 ```
 
-- Run the `SomethingOwnershipVerifier_onSwellChainTestnet.t.sol` on the Swell Chain Testnet
+- Run the `Starter_onSwellChainTestnet.t.sol` on the Swell Chain Testnet
 ```bash
-sh ./test/swell-chain-testnet/runningTest_SomethingOwnershipVerifier_onSwellChainTestnet.sh
+sh ./test/swellchain-testnet/runningTest_Starter_onSwellChainTestnet.sh
 ```
 
 
@@ -104,7 +104,7 @@ sh ./test/swell-chain-testnet/runningTest_SomethingOwnershipVerifier_onSwellChai
 ## Deployment
 - Run the `DeploymentAllContracts.s.sol`
 ```bash
-sh ./script/edu-chain-testnet/deployment/deploymentScript_AllContracts.sh
+sh ./script/swellchain-testnet/deployment/deploymentScript_AllContracts.sh
 ```
 
 
