@@ -70,6 +70,12 @@ sh circuit_test.sh
 <br>
 
 ## SC - Script
+- Install `npm` modules - if it's first time to run this script. (From the second time, this installation step can be skipped):
+```bash
+cd script/utils/poseidon2-hash-generator
+npm i
+```
+
 - Run the `Verify.s.sol` on the Local Network
 ```bash
 sh ./scripts/runningScript_Verify.sh
