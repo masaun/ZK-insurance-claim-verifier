@@ -11,11 +11,11 @@ forge-std = "lib/foundry-noir-helper/lib/forge-std/src/"
 # foundry-noir-helper = "lib/foundry-noir-helper/src/"
 
 [rpc_endpoints]
-swell-chain-testnet = { url = "${EDU_CHAIN_TESTNET_RPC}", chain = "educhain-testnet" }
+swellchain-testnet = { url = "${SWELL_CHAIN_TESTNET_RPC}", chain = "swellchain-testnet" }
 #sepolia = "${SEPOLIA_RPC}"
 
 [etherscan]
-educhain-testnet = { key = "${EDU_CHAIN_TESTNET_PRIVATE_KEY}", url = "https://api.educhain-testnet.org/api" }
+swellchain-testnet = { key = "${SWELL_CHAIN_TESTNET_PRIVATE_KEY}", url = "${SWELL_CHAIN_TESTNET_RPC}" }
 #sepolia = { key = "${SEPOLIA_PRIVATE_KEY}" }
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
