@@ -1,4 +1,4 @@
-# Noir ZK circuit on Swell Chain
+# ZK Insurance Claim on Swell Chain 🛡️
 
 ## Tech Stack
 
