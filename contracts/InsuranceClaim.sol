@@ -26,8 +26,8 @@ contract InsuranceClaim {
         require(!hasClaimed[msg.sender], "Already claimed");
 
         // @dev - Verify the zkSNARK proof
-        bool isValid = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, publicInputs);
-        require(isValid, "Invalid proof");
+        bool isValidProof = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, publicInputs);
+        require(isValidProof, "Invalid proof");
 
         // @dev - [TODO]: Check that result == 1 (claim conditions met)
         //require(publicInputs.result == 1, "Claim requirements not met");
