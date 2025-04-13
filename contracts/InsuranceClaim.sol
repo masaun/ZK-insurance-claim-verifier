@@ -17,9 +17,9 @@ contract InsuranceClaim {
     }
 
     /**
-     * @notice - Submit a claim with a zkSNARK proof
+     * @notice - Submit a insurance claim with a zkSNARK proof
      */
-    function submitClaim(
+    function submitInsuranceClaim(
         bytes calldata proof, 
         bytes32[] calldata publicInputs
     ) external {
