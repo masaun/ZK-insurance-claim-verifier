@@ -8,4 +8,5 @@ pub struct IPNftData {
 pub struct RevealedData {
     nullifier: Field,
     nft_metadata_cid_hash: Field,
+    authorized_healthcare_provider_pubkey: Field // @dev - This public key should be validated on-chain with a on-chain registry.
 }
