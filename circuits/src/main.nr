@@ -13,8 +13,26 @@ fn main(
     secret: Field,   // @dev - A hidden metadata hash (private)
     expected_nullifier: Field,
     expected_nft_metadata_cid_hash: Field,
-    ip_nft_data: IPNftData
+    ip_nft_data: IPNftData,
+
+    // @dev - The insurance claim related input parameters
+    hospital_bill_hash: Field,
+    hospital_bill_amount: Field,
+    signature_from_hospital: Field,
+    authorized_healthcare_provider_pubkey: Field  // @dev - This public key should be validated on-chain with a on-chain registry.
 ) -> pub RevealedData {
+    // @dev - The minimum threshold for the insurance claim
+    let min_threshold: Field = 1000;
+
+    // @dev - Convert data type from "Field" to "uint32"
+    let hospital_bill_amount_as_uint: u32 = hospital_bill_amount as u32;
+    let min_threshold_as_uint: u32 = min_threshold as u32;
+
+    // @dev - The insurance claim related constraints
+    assert(hospital_bill_amount_as_uint >= min_threshold_as_uint, "Invalid hospital bill: A given hospital bill amount is less than the minimum threshold");
+    let is_policy_valid: bool = true;
+
+
     // Convert a IPFS CID (sha256) -> bytes -> Field -> Poseidon2 Hash
     //let nft_metadata_cid: str<46> = "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F";
     let nft_metadata_cid_hash: Field = converters::converter_module::convert_nft_metadata_cid_to_poseidon_hash(ip_nft_data.nft_metadata_cid);
@@ -41,5 +59,6 @@ fn main(
     RevealedData {
         nullifier,
         nft_metadata_cid_hash,
+        authorized_healthcare_provider_pubkey
     }
 }
