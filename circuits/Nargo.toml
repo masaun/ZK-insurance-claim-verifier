@@ -1,5 +1,5 @@
 [package]
-name="with_foundry"
+name="insurance_claim"
 type="bin"
 authors = ["masaun"]
 compiler_version = ">=0.31.0"
