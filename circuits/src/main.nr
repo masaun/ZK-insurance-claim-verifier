@@ -3,7 +3,10 @@ mod data_types; // data_types.nr
 mod converters; // converters.nr -> converters/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
 
 use std::hash::poseidon2;
+use std::ecdsa_secp256k1::verify_signature;
+
 use data_types::{ IPNftData, RevealedData }; // @dev - IPNftData struct
+use std::ops::bit::BitAnd;
 
 
 fn main(
@@ -34,6 +37,15 @@ fn main(
     // @dev - Hashing the "raw" pubKey of the authorized healthcare provider
     let authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([authorized_healthcare_provider_pubkey], 1);
     assert(authorized_healthcare_provider_pubkey_hash == expected_authorized_healthcare_provider_pubkey_hash, "Invalid authorized healthcare provider pubKey: The given pubKey is not valid");
+
+    // @dev - Verifying the signature of the hospital bill
+    assert(verify_signature(
+        public_key_x,
+        public_key_y,
+        signature_from_hospital,
+        hospital_bill_hash,
+        signature_from_hospital,
+    ), "Invalid hospital bill: The given hospital bill is not valid");
 
     // Convert a IPFS CID (sha256) -> bytes -> Field -> Poseidon2 Hash
     //let nft_metadata_cid: str<46> = "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F";
