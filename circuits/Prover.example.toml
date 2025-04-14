@@ -6,6 +6,14 @@ secret = ""                # @dev - A hidden metadata hash (private)
 expected_nullifier = ""    # @dev - Should be a Poseidon2 Hash
 expected_nft_metadata_cid_hash = "" # @dev - Should be a Poseidon2 Hash
 
+# @dev - The insurance claim related input data
+hospital_bill_hash = "" # @dev - The hash of the hospital bill
+hospital_bill_amount = "" # @dev - The insurance claim related input parameters
+signature_from_hospital = "" # @dev - The signature from the hospital
+authorized_healthcare_provider_pubkey = ""                # @dev - This public key should be validated on-chain with a on-chain registry.
+expected_authorized_healthcare_provider_pubkey_hash = ""  # @dev - The expected public key hash of the authorized healthcare provider
+
+# @dev - The IPNFTData struct
 [ip_nft_data]
 nft_owner = ""
 nft_token_id = ""
