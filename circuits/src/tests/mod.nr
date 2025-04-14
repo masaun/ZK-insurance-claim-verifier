@@ -44,7 +44,7 @@ mod tests {
             expected_nullifier,
             expected_nft_metadata_cid_hash, 
             ip_nft_data,
-            hospital_bill_hash, 
+            hospital_bill_hash,
             hospital_bill_amount,
             signature_from_hospital,
             authorized_healthcare_provider_pubkey
@@ -52,7 +52,7 @@ mod tests {
         println(revealed_data.nullifier); // [Log]: 
         println(revealed_data.nft_metadata_cid_hash); // [Log]: 
         println(revealed_data.authorized_healthcare_provider_pubkey_hash); // [Log]: 
-        
+
         let inputs_for_note_commitment: [Field; 1] = [secret];
         let note_commitment = poseidon2::Poseidon2::hash(inputs_for_note_commitment, inputs_for_note_commitment.len());
 

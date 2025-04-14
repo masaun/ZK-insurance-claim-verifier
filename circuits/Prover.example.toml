@@ -6,20 +6,18 @@ secret = ""                # @dev - A hidden metadata hash (private)
 expected_nullifier = ""    # @dev - Should be a Poseidon2 Hash
 expected_nft_metadata_cid_hash = "" # @dev - Should be a Poseidon2 Hash
 
-[ip_nft_data]
-nft_owner = ""
-nft_token_id = ""
-nft_metadata_cid = ""      # @dev - IPFS CID, which is not hashed yet. (i.e. "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F")
-#nft_metadata_hash = ""
-
 # @dev - The insurance claim related input data
 hospital_bill_hash = "" # @dev - The hash of the hospital bill
 hospital_bill_amount = "" # @dev - The insurance claim related input parameters
 signature_from_hospital = "" # @dev - The signature from the hospital
 authorized_healthcare_provider_pubkey = "" # @dev - This public key should be validated on-chain with a on-chain registry.
 
-
-
+# @dev - The IPNFTData struct
+[ip_nft_data]
+nft_owner = ""
+nft_token_id = ""
+nft_metadata_cid = ""      # @dev - IPFS CID, which is not hashed yet. (i.e. "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F")
+#nft_metadata_hash = ""
 
 # root: pub Field, // @dev - Merkle Root
 # hash_path: [Field; 2],

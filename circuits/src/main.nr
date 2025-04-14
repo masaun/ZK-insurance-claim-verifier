@@ -14,8 +14,6 @@ fn main(
     expected_nullifier: Field,
     expected_nft_metadata_cid_hash: Field,
     ip_nft_data: IPNftData,
-
-    // @dev - The insurance claim related input parameters
     hospital_bill_hash: Field,
     hospital_bill_amount: Field,
     signature_from_hospital: Field,
