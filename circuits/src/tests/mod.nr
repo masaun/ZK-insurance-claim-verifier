@@ -34,6 +34,7 @@ mod tests {
         let hospital_bill_amount: Field = 1000; // @dev - The insurance claim related input parameters
         let signature_from_hospital: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - The signature from the hospital
         let authorized_healthcare_provider_pubkey: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - This public key should be validated on-chain with a on-chain registry.
+        let expected_authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([authorized_healthcare_provider_pubkey], 1); // @dev - Hashed pubKey
 
         //let nullifier = main(
         let revealed_data: RevealedData = main(
@@ -47,11 +48,12 @@ mod tests {
             hospital_bill_hash,
             hospital_bill_amount,
             signature_from_hospital,
-            authorized_healthcare_provider_pubkey
+            authorized_healthcare_provider_pubkey,
+            expected_authorized_healthcare_provider_pubkey_hash
         );
         println(revealed_data.nullifier); // [Log]: 
         println(revealed_data.nft_metadata_cid_hash); // [Log]: 
-        println(revealed_data.authorized_healthcare_provider_pubkey_hash); // [Log]: 
+        println(revealed_data.authorized_healthcare_provider_pubkey_hash); // [Log]: 0x25a0ce4b4bb3a7b532fec02d9d03f324a8084e34e481c4520577e3db5ad30fc5
 
         let inputs_for_note_commitment: [Field; 1] = [secret];
         let note_commitment = poseidon2::Poseidon2::hash(inputs_for_note_commitment, inputs_for_note_commitment.len());

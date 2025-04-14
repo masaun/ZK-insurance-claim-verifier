@@ -17,7 +17,8 @@ fn main(
     hospital_bill_hash: Field,
     hospital_bill_amount: Field,
     signature_from_hospital: Field,
-    authorized_healthcare_provider_pubkey: Field  // @dev - Raw pubKey /This public key should be validated on-chain with a on-chain registry.
+    authorized_healthcare_provider_pubkey: Field,               // @dev - Raw pubKey /This public key should be validated on-chain with a on-chain registry.
+    expected_authorized_healthcare_provider_pubkey_hash: Field, // @dev - Hashed pubKey
 ) -> pub RevealedData {
     // @dev - The minimum threshold for the insurance claim
     let min_threshold: Field = 1000;
@@ -32,6 +33,7 @@ fn main(
 
     // @dev - Hashing the "raw" pubKey of the authorized healthcare provider
     let authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([authorized_healthcare_provider_pubkey], 1);
+    assert(authorized_healthcare_provider_pubkey_hash == expected_authorized_healthcare_provider_pubkey_hash, "Invalid authorized healthcare provider pubKey: The given pubKey is not valid");
 
     // Convert a IPFS CID (sha256) -> bytes -> Field -> Poseidon2 Hash
     //let nft_metadata_cid: str<46> = "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F";
