@@ -51,9 +51,8 @@ mod tests {
         );
         println(revealed_data.nullifier); // [Log]: 
         println(revealed_data.nft_metadata_cid_hash); // [Log]: 
-        //println(nullifier); // [Log]: 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373
-        //println(nft_metadata_cid_hash); // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
-
+        println(revealed_data.authorized_healthcare_provider_pubkey_hash); // [Log]: 
+        
         let inputs_for_note_commitment: [Field; 1] = [secret];
         let note_commitment = poseidon2::Poseidon2::hash(inputs_for_note_commitment, inputs_for_note_commitment.len());
 
