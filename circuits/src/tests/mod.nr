@@ -32,6 +32,18 @@ mod tests {
         // @dev - The insurance claim related input data
         let hospital_bill_hash: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8; // @dev - The hash of the hospital bill
         let hospital_bill_amount: Field = 1000; // @dev - The insurance claim related input parameters
+        let pubkey_of_hospital_x: [u8; 32] = [
+            1, 2, 3, 4, 5, 6, 7, 8,
+            9, 10, 11, 12, 13, 14, 15, 16,
+            17, 18, 19, 20, 21, 22, 23, 24,
+            25, 26, 27, 28, 29, 30, 31, 32,
+        ]; // @dev - public key, which is sliced at the 1st half of public key
+        let pubkey_of_hospital_y: [u8; 32] = [
+            1, 2, 3, 4, 5, 6, 7, 8,
+            9, 10, 11, 12, 13, 14, 15, 16,
+            17, 18, 19, 20, 21, 22, 23, 24,
+            25, 26, 27, 28, 29, 30, 31, 32,
+        ]; // @dev - public key, which is sliced at the 2nd half of public key
         let signature_from_hospital: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - The signature from the hospital
         let authorized_healthcare_provider_pubkey: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - This public key should be validated on-chain with a on-chain registry.
         let expected_authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([authorized_healthcare_provider_pubkey], 1); // @dev - Hashed pubKey
@@ -47,6 +59,8 @@ mod tests {
             ip_nft_data,
             hospital_bill_hash,
             hospital_bill_amount,
+            pubkey_of_hospital_x,
+            pubkey_of_hospital_y,
             signature_from_hospital,
             authorized_healthcare_provider_pubkey,
             expected_authorized_healthcare_provider_pubkey_hash

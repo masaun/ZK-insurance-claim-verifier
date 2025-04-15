@@ -6,7 +6,6 @@ use std::hash::poseidon2;
 use std::ecdsa_secp256k1::verify_signature;
 
 use data_types::{ IPNftData, RevealedData }; // @dev - IPNftData struct
-use std::ops::bit::BitAnd;
 
 
 fn main(
@@ -19,6 +18,8 @@ fn main(
     ip_nft_data: IPNftData,
     hospital_bill_hash: Field,
     hospital_bill_amount: Field,
+    pubkey_of_hospital_x: [u8; 32], // @dev - public key, which is sliced at the 1st half of 
+    pubkey_of_hospital_y: [u8; 32], // @dev - public key, which is sliced at the 2nd half of public key
     signature_from_hospital: Field,
     authorized_healthcare_provider_pubkey: Field,               // @dev - Raw pubKey /This public key should be validated on-chain with a on-chain registry.
     expected_authorized_healthcare_provider_pubkey_hash: Field, // @dev - Hashed pubKey
@@ -38,14 +39,13 @@ fn main(
     let authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([authorized_healthcare_provider_pubkey], 1);
     assert(authorized_healthcare_provider_pubkey_hash == expected_authorized_healthcare_provider_pubkey_hash, "Invalid authorized healthcare provider pubKey: The given pubKey is not valid");
 
-    // @dev - Verifying the signature of the hospital bill
+    // @dev - Verifying the signature of the hospital (for the bill that they issued).
     assert(verify_signature(
-        public_key_x,
-        public_key_y,
-        signature_from_hospital,
-        hospital_bill_hash,
-        signature_from_hospital,
-    ), "Invalid hospital bill: The given hospital bill is not valid");
+        pubkey_of_hospital_x, // Slile the first half of the public key
+        pubkey_of_hospital_y, // Slile the second half of the public key
+        signature_from_hospital.to_be_bytes(),
+        hospital_bill_hash.to_be_bytes()
+    ) == true, "Invalid hospital bill: The given hospital bill is not valid");
 
     // Convert a IPFS CID (sha256) -> bytes -> Field -> Poseidon2 Hash
     //let nft_metadata_cid: str<46> = "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F";
