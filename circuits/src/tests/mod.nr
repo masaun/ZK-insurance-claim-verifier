@@ -32,19 +32,19 @@ mod tests {
         // @dev - The insurance claim related input data
         let hospital_bill_hash: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8; // @dev - The hash of the hospital bill
         let hospital_bill_amount: Field = 1000; // @dev - The insurance claim related input parameters
-        let pubkey_of_hospital_x: [u8; 32] = [
-            1, 2, 3, 4, 5, 6, 7, 8,
-            9, 10, 11, 12, 13, 14, 15, 16,
-            17, 18, 19, 20, 21, 22, 23, 24,
-            25, 26, 27, 28, 29, 30, 31, 32,
-        ]; // @dev - public key, which is sliced at the 1st half of public key
-        let pubkey_of_hospital_y: [u8; 32] = [
-            1, 2, 3, 4, 5, 6, 7, 8,
-            9, 10, 11, 12, 13, 14, 15, 16,
-            17, 18, 19, 20, 21, 22, 23, 24,
-            25, 26, 27, 28, 29, 30, 31, 32,
-        ]; // @dev - public key, which is sliced at the 2nd half of public key
-        let signature_from_hospital: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - The signature from the hospital
+        let pubkey_of_hospital_bytes: [u8; 64] = [
+            131,  24,  83,  91,  84,  16, 93,  74, 122, 174,  96,
+            192, 143, 196,  95, 150, 135, 24,  27,  79, 223, 198,
+            37, 189,  26, 117,  63, 167, 57, 127, 237, 117,  53,
+            71, 241,  28, 168, 105, 102, 70, 242, 243, 172, 176,
+            142,  49,   1, 106, 250, 194, 62,  99,  12,  93,  17,
+            245, 159,  97, 254, 245, 123, 13,  42, 165
+        ];
+        //let pub_key_x = [131, 24, 83, 91, 84, 16, 93, 74, 122, 174, 96, 192, 143, 196, 95, 150, 135, 24, 27, 79, 223, 198, 37, 189, 26, 117, 63, 167, 57, 127, 237, 117];
+        //let pub_key_y = [53, 71, 241, 28, 168, 105, 102, 70, 242, 243, 172, 176, 142, 49, 1, 106, 250, 194, 62, 99, 12, 93, 17, 245, 159, 97, 254, 245, 123, 13, 42, 165];
+        let signature_from_hospital_bytes = [57, 17, 112, 239, 241, 30, 64, 157, 170, 50, 85, 145, 156, 69, 226, 85, 147, 164, 10, 82, 71, 93, 42, 132, 200, 220, 161, 255, 95, 241, 211, 141, 81, 7, 150, 25, 25, 27, 162, 213, 80, 61, 12, 170, 50, 4, 154, 203, 252, 229, 119, 29, 202, 153, 50, 25, 126, 145, 245, 23, 136, 75, 29, 177]; // @dev - The signature from the hospital
+        //let signature_from_hospital: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - The signature from the hospital
+        let hospital_bill_hash_bytes = [13, 82, 120, 60, 76, 186, 215, 235, 175, 126, 185, 67, 252, 100, 143, 82, 130, 165, 32, 112, 68, 47, 193, 141, 141, 209, 109, 219, 47, 203, 175, 102];
         let authorized_healthcare_provider_pubkey: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - This public key should be validated on-chain with a on-chain registry.
         let expected_authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([authorized_healthcare_provider_pubkey], 1); // @dev - Hashed pubKey
 
@@ -57,11 +57,15 @@ mod tests {
             expected_nullifier,
             expected_nft_metadata_cid_hash, 
             ip_nft_data,
-            hospital_bill_hash,
+            hospital_bill_hash_bytes,
+            //hospital_bill_hash,
             hospital_bill_amount,
-            pubkey_of_hospital_x,
-            pubkey_of_hospital_y,
-            signature_from_hospital,
+            pubkey_of_hospital_bytes,
+            //pubkey_of_hospital,
+            //pubkey_of_hospital_x,
+            //pubkey_of_hospital_y,
+            signature_from_hospital_bytes,
+            //signature_from_hospital,
             authorized_healthcare_provider_pubkey,
             expected_authorized_healthcare_provider_pubkey_hash
         );

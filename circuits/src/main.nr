@@ -4,6 +4,8 @@ mod converters; // converters.nr -> converters/convert_cid_to_poseidon_hash.nr -
 
 use std::hash::poseidon2;
 use std::ecdsa_secp256k1::verify_signature;
+use dep::std;
+use dep::ecrecover;
 
 use data_types::{ IPNftData, RevealedData }; // @dev - IPNftData struct
 
@@ -16,11 +18,14 @@ fn main(
     expected_nullifier: Field,
     expected_nft_metadata_cid_hash: Field,
     ip_nft_data: IPNftData,
-    hospital_bill_hash: Field,
+    hospital_bill_hash_bytes: [u8; 32], // @dev - The hash of the hospital bill
+    //hospital_bill_hash: Field,
     hospital_bill_amount: Field,
-    pubkey_of_hospital_x: [u8; 32], // @dev - public key, which is sliced at the 1st half of 
-    pubkey_of_hospital_y: [u8; 32], // @dev - public key, which is sliced at the 2nd half of public key
-    signature_from_hospital: Field,
+    pubkey_of_hospital: [u8; 64],
+    //pubkey_of_hospital_x: [u8; 32], // @dev - public key, which is sliced at the 1st half of 
+    //pubkey_of_hospital_y: [u8; 32], // @dev - public key, which is sliced at the 2nd half of public key
+    signature_from_hospital_bytes: [u8; 64], // @dev - The signature from the hospital
+    //signature_from_hospital: Field,        // @dev - The signature from the hospital
     authorized_healthcare_provider_pubkey: Field,               // @dev - Raw pubKey /This public key should be validated on-chain with a on-chain registry.
     expected_authorized_healthcare_provider_pubkey_hash: Field, // @dev - Hashed pubKey
 ) -> pub RevealedData {
@@ -39,9 +44,16 @@ fn main(
     let authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([authorized_healthcare_provider_pubkey], 1);
     assert(authorized_healthcare_provider_pubkey_hash == expected_authorized_healthcare_provider_pubkey_hash, "Invalid authorized healthcare provider pubKey: The given pubKey is not valid");
 
+
+    // @dev - 
+    let key = ecrecover::secp256k1::PubKey::from_unified(pubkey_of_hospital);
+    let pubkey_of_hospital_x: [u8; 32] = key.pub_x;
+    let pubkey_of_hospital_y: [u8; 32] = key.pub_y;
+    //let address = ecrecover::ecrecover(key.pub_x, key.pub_y, signature, hashed_message);
+
     // @dev - Verifying the signature of the hospital (for the bill that they issued).
-    let signature_from_hospital_bytes: [u8; 64] = signature_from_hospital.to_be_bytes();
-    let hospital_bill_hash_bytes: [u8; 32] = hospital_bill_hash.to_be_bytes();
+    //let signature_from_hospital_bytes: [u8; 64] = signature_from_hospital.to_be_bytes();  // [Result]: Success
+    //let hospital_bill_hash_bytes: [u8; 32] = hospital_bill_hash.to_be_bytes();
     assert(std::ecdsa_secp256k1::verify_signature(
         pubkey_of_hospital_x, // Slile the first half of the public key
         pubkey_of_hospital_y, // Slile the second half of the public key
