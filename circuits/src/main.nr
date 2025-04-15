@@ -21,7 +21,7 @@ fn main(
     hospital_bill_hash_bytes: [u8; 32], // @dev - The hash of the hospital bill
     //hospital_bill_hash: Field,
     hospital_bill_amount: Field,
-    pubkey_of_hospital: [u8; 64],
+    pubkey_of_hospital_bytes: [u8; 64],
     //pubkey_of_hospital_x: [u8; 32], // @dev - public key, which is sliced at the 1st half of 
     //pubkey_of_hospital_y: [u8; 32], // @dev - public key, which is sliced at the 2nd half of public key
     signature_from_hospital_bytes: [u8; 64], // @dev - The signature from the hospital
@@ -46,9 +46,11 @@ fn main(
 
 
     // @dev - 
-    let key = ecrecover::secp256k1::PubKey::from_unified(pubkey_of_hospital);
+    let key = ecrecover::secp256k1::PubKey::from_unified(pubkey_of_hospital_bytes);
     let pubkey_of_hospital_x: [u8; 32] = key.pub_x;
     let pubkey_of_hospital_y: [u8; 32] = key.pub_y;
+    println(pubkey_of_hospital_x);
+    println(pubkey_of_hospital_y);
     //let address = ecrecover::ecrecover(key.pub_x, key.pub_y, signature, hashed_message);
 
     // @dev - Verifying the signature of the hospital (for the bill that they issued).
