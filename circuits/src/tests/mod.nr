@@ -30,7 +30,8 @@ mod tests {
         println(expected_nullifier); // [Log]: 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373
 
         // @dev - The insurance claim related input data
-        let hospital_bill_hash: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8; // @dev - The hash of the hospital bill
+        let hospital_bill_hash_bytes: [u8; 32] = [13, 82, 120, 60, 76, 186, 215, 235, 175, 126, 185, 67, 252, 100, 143, 82, 130, 165, 32, 112, 68, 47, 193, 141, 141, 209, 109, 219, 47, 203, 175, 102]; // @dev - The hash of the hospital bill
+        //let hospital_bill_hash: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8; // @dev - The hash of the hospital bill
         let hospital_bill_amount: Field = 1000; // @dev - The insurance claim related input parameters
         let pubkey_of_hospital_bytes: [u8; 64] = [
             131,  24,  83,  91,  84,  16, 93,  74, 122, 174,  96,
@@ -57,7 +58,7 @@ mod tests {
             expected_nullifier,
             expected_nft_metadata_cid_hash, 
             ip_nft_data,
-            hospital_bill_hash_bytes,
+            hospital_bill_hash_bytes, // @dev - The hash of the hospital bill
             //hospital_bill_hash,
             hospital_bill_amount,
             pubkey_of_hospital_bytes,
