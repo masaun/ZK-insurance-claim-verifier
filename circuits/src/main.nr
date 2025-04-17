@@ -5,7 +5,7 @@ mod converters; // converters.nr -> converters/convert_cid_to_poseidon_hash.nr -
 use std::hash::poseidon2;
 use std::ecdsa_secp256k1::verify_signature;
 use dep::std;
-use dep::ecrecover;
+use dep::ecrecover; // @dev - Source: https://github.com/colinnielsen/ecrecover-noir
 
 use data_types::{ IPNftData, RevealedData }; // @dev - IPNftData struct
 
