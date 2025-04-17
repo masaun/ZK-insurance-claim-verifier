@@ -7,7 +7,7 @@ mod tests {
     use std::hash::poseidon2;
 
     #[test]
-    fn test_nft_metadata_verifier() {
+    fn test_insurance_claim_proof_verifier() {
         let root: Field = 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629;   // @dev - Merkle Root
         let hash_path: [Field; 2] = [0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8, 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77];
         let index: Field = 0;
