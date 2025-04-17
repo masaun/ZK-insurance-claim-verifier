@@ -19,11 +19,6 @@ mod tests {
             nft_metadata_cid: "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F"
         };
 
-        // Convert a IPFS CID (sha256) -> bytes -> Field -> Poseidon2 Hash
-        let nft_metadata_cid: str<46> = "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F";
-        let expected_nft_metadata_cid_hash: Field = converters::converter_module::convert_nft_metadata_cid_to_poseidon_hash(nft_metadata_cid);
-        println(expected_nft_metadata_cid_hash); // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
-
         //let expected_nullifier: Field = 0x168758332d5b3e2d13be8048c8011b454590e06c44bce7f702f09103eef5a373;          // @dev - Successful (NOTE: This is equal to Field(10190015755989328289879378487807721086446093622177241109507523918927702106995) in Noir)
         //let expected_nullifier: Field = 10190015755989328289879378487807721086446093622177241109507523918927702106995; // @dev - Same with the "hash" in the output.json
         let expected_nullifier = poseidon2::Poseidon2::hash([root, secret, ip_nft_data.nft_owner, ip_nft_data.nft_token_id, expected_nft_metadata_cid_hash], 5);
@@ -73,7 +68,6 @@ mod tests {
             index,
             secret,
             expected_nullifier,
-            expected_nft_metadata_cid_hash, 
             ip_nft_data,
             hospital_bill_hash_bytes, // @dev - The hash of the hospital bill
             //hospital_bill_hash,

@@ -87,10 +87,6 @@ fn main(
     // Constraint: nullifier (hash) == expected_nullifier (hash)
     assert(nullifier == expected_nullifier);
 
-    // @dev - TEST
-        let authorized_healthcare_provider_pubkey: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - This public key should be validated on-chain with a on-chain registry.
-        let expected_authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([authorized_healthcare_provider_pubkey], 1); // @dev - Hashed pubKey
-
     //nullifier
     //(nullifier, nft_metadata_cid_hash)
     RevealedData {
