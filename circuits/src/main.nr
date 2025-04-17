@@ -45,24 +45,24 @@ fn main(
     assert(authorized_healthcare_provider_pubkey_hash == expected_authorized_healthcare_provider_pubkey_hash, "Invalid authorized healthcare provider pubKey: The given pubKey is not valid");
 
 
-    // // @dev - 
-    // let key = ecrecover::secp256k1::PubKey::from_unified(pubkey_of_hospital_bytes);
-    // let pubkey_of_hospital_x: [u8; 32] = key.pub_x;
-    // let pubkey_of_hospital_y: [u8; 32] = key.pub_y;
-    // println(pubkey_of_hospital_x);
-    // println(pubkey_of_hospital_y);
-    // //let address = ecrecover::ecrecover(key.pub_x, key.pub_y, signature, hashed_message);
-    // //let signature_as_fields = signature.map(|x : u8| x as Field);
+    // @dev - 
+    let key = ecrecover::secp256k1::PubKey::from_unified(pubkey_of_hospital_bytes);
+    let pubkey_of_hospital_x: [u8; 32] = key.pub_x;
+    let pubkey_of_hospital_y: [u8; 32] = key.pub_y;
+    println(pubkey_of_hospital_x);
+    println(pubkey_of_hospital_y);
+    //let address = ecrecover::ecrecover(key.pub_x, key.pub_y, signature, hashed_message);
+    //let signature_as_fields = signature.map(|x : u8| x as Field);
 
-    // // @dev - Verifying the signature of the hospital (for the bill that they issued).
-    // //let signature_from_hospital_bytes: [u8; 64] = signature_from_hospital.to_be_bytes();  // [Result]: Success
-    // //let hospital_bill_hash_bytes: [u8; 32] = hospital_bill_hash.to_be_bytes();
-    // assert(std::ecdsa_secp256k1::verify_signature(
-    //     pubkey_of_hospital_x, // Slile the first half of the public key
-    //     pubkey_of_hospital_y, // Slile the second half of the public key
-    //        signature_from_hospital_bytes,
-    //     hospital_bill_hash_bytes
-    // ) == true, "Invalid hospital bill: The given hospital bill is not valid");
+    // @dev - Verifying the signature of the hospital (for the bill that they issued).
+    //let signature_from_hospital_bytes: [u8; 64] = signature_from_hospital.to_be_bytes();  // [Result]: Success
+    //let hospital_bill_hash_bytes: [u8; 32] = hospital_bill_hash.to_be_bytes();
+    assert(std::ecdsa_secp256k1::verify_signature(
+        pubkey_of_hospital_x, // Slile the first half of the public key
+        pubkey_of_hospital_y, // Slile the second half of the public key
+           signature_from_hospital_bytes,
+        hospital_bill_hash_bytes
+    ) == true, "Invalid hospital bill: The given hospital bill is not valid");
 
     // Convert a IPFS CID (sha256) -> bytes -> Field -> Poseidon2 Hash
     //let nft_metadata_cid: str<46> = "QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F";
