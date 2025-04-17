@@ -18,6 +18,8 @@ fn main(
     expected_nullifier: Field,
     expected_nft_metadata_cid_hash: Field,
     ip_nft_data: IPNftData,
+
+    
     hospital_bill_hash_bytes: [u8; 32], // @dev - The hash of the hospital bill
     //hospital_bill_hash: Field,
     hospital_bill_amount: Field,
