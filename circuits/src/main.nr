@@ -15,7 +15,7 @@ fn main(
     hash_path: [Field; 2],
     index: Field,
     secret: Field,   // @dev - A hidden metadata hash (private)
-    expected_nullifier: Field,
+    nullifier: Field,
     insurance_claim_data: InsuranceClaimData
 ) -> pub RevealedData {
     // @dev - The minimum threshold for the insurance claim
@@ -30,8 +30,8 @@ fn main(
     let is_policy_valid: bool = true;
 
     // @dev - Hashing the "raw" pubKey of the authorized healthcare provider
-    let authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([insurance_claim_data.authorized_healthcare_provider_pubkey], 1);
-    assert(authorized_healthcare_provider_pubkey_hash == insurance_claim_data.expected_authorized_healthcare_provider_pubkey_hash, "Invalid authorized healthcare provider pubKey: The given pubKey is not valid");
+    let expected_authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([insurance_claim_data.authorized_healthcare_provider_pubkey], 1);
+    assert(expected_authorized_healthcare_provider_pubkey_hash == insurance_claim_data.authorized_healthcare_provider_pubkey_hash, "Invalid authorized healthcare provider pubKey: The given pubKey is not valid");
 
 
     // @dev - Split the pubKey into 2 parts
@@ -62,7 +62,7 @@ fn main(
 
     //let inputs_for_nullifier: [Field; 1] = [ip_nft_data.nft_token_id];
     let inputs_for_nullifier: [Field; 3] = [root, secret, insurance_claim_data.hospital_bill_amount];
-    let nullifier = poseidon2::Poseidon2::hash(inputs_for_nullifier, inputs_for_nullifier.len());
+    let expected_nullifier = poseidon2::Poseidon2::hash(inputs_for_nullifier, inputs_for_nullifier.len());
     println(nullifier);
     println(expected_nullifier); // [Log]: 0x1265c921cb8e0dc6c91f70ae08b14352b8f10451aee7582b9ed44abea8d4123c
 
@@ -72,7 +72,7 @@ fn main(
     //nullifier
     //(nullifier, nft_metadata_cid_hash)
     RevealedData {
-        nullifier,
-        authorized_healthcare_provider_pubkey_hash // @dev - Hashed pubKey
+        nullifier: nullifier,
+        authorized_healthcare_provider_pubkey_hash: insurance_claim_data.authorized_healthcare_provider_pubkey_hash // @dev - Hashed pubKey
     }
 }
