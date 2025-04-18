@@ -74,15 +74,15 @@ mod tests {
         println(f"signature_as_fields: {signature_as_fields}");
 
         // @dev - Generate the nullifier
-        let expected_nullifier = poseidon2::Poseidon2::hash([root, secret, insurance_claim_data.hospital_bill_amount], 3);
-        println(expected_nullifier);
+        let nullifier = poseidon2::Poseidon2::hash([root, secret, insurance_claim_data.hospital_bill_amount], 3);
+        println(f"nullifier: {nullifier}");
 
         let revealed_data: RevealedData = main(
             root,
             hash_path,
             index,
             secret,
-            expected_nullifier,
+            nullifier,
             insurance_claim_data
         );
         println(revealed_data.nullifier); // [Log]: 
