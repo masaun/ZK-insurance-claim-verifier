@@ -49,7 +49,7 @@ mod tests {
         ];
 
         let _authorized_healthcare_provider_pubkey: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - This public key should be validated on-chain with a on-chain registry.
-        let _expected_authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([_authorized_healthcare_provider_pubkey], 1); // @dev - Hashed pubKey
+        let _authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([_authorized_healthcare_provider_pubkey], 1); // @dev - Hashed pubKey
 
         let insurance_claim_data: InsuranceClaimData = InsuranceClaimData {
             hospital_bill_hash_bytes: _hospital_bill_hash_bytes,
@@ -57,7 +57,7 @@ mod tests {
             pubkey_of_hospital_bytes: _pubkey_of_hospital_bytes,
             signature_from_hospital_bytes: _signature_from_hospital_bytes, // @dev - The signature from the hospital
             authorized_healthcare_provider_pubkey: _authorized_healthcare_provider_pubkey,               // @dev - Raw pubKey /This public key should be validated on-chain with a on-chain registry.
-            expected_authorized_healthcare_provider_pubkey_hash: _expected_authorized_healthcare_provider_pubkey_hash
+            authorized_healthcare_provider_pubkey_hash: _authorized_healthcare_provider_pubkey_hash
         };
 
         // @dev - Split the pubKey into 2 parts
