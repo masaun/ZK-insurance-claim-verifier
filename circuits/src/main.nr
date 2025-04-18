@@ -31,7 +31,7 @@ fn main(
 
     // @dev - Hashing the "raw" pubKey of the authorized healthcare provider
     let expected_authorized_healthcare_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([insurance_claim_data.authorized_healthcare_provider_pubkey], 1);
-    assert(expected_authorized_healthcare_provider_pubkey_hash == insurance_claim_data.authorized_healthcare_provider_pubkey_hash, "Invalid authorized healthcare provider pubKey: The given pubKey is not valid");
+    assert(insurance_claim_data.authorized_healthcare_provider_pubkey_hash == expected_authorized_healthcare_provider_pubkey_hash, "Invalid authorized healthcare provider pubKey: The given pubKey is not valid");
 
 
     // @dev - Split the pubKey into 2 parts

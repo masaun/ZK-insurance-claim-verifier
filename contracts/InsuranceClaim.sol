@@ -17,6 +17,19 @@ contract InsuranceClaim {
     }
 
     /**
+     * @notice - This caller must be the Hospital (System)
+     * @notice - Store some info from a publicOutput, which was generated when a ZKP was proved.
+     */
+    function storeHospitalBillData(
+        bytes calldata proof, 
+        bytes32[] calldata publicInputs
+    ) external {
+        // [TODO]:
+    }
+
+
+    /**
+     * @notice - This caller must be the insurer (= Patient)
      * @notice - Submit a insurance claim with a zkSNARK proof
      */
     function submitInsuranceClaim(
