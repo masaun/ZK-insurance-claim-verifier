@@ -60,6 +60,20 @@ mod tests {
             expected_authorized_healthcare_provider_pubkey_hash: _expected_authorized_healthcare_provider_pubkey_hash
         };
 
+        // @dev - Split the pubKey into 2 parts
+        let key = ecrecover::secp256k1::PubKey::from_unified(insurance_claim_data.pubkey_of_hospital_bytes);
+        let pubkey_of_hospital_x: [u8; 32] = key.pub_x;
+        let pubkey_of_hospital_y: [u8; 32] = key.pub_y;
+        println(f"pubkey_of_hospital_x: {pubkey_of_hospital_x}");
+        println(f"pubkey_of_hospital_y: {pubkey_of_hospital_y}");
+
+        // @dev - Recover the wallet address from the pubKey, signature, and the hashed message
+        let wallet_address = ecrecover::ecrecover(key.pub_x, key.pub_y, insurance_claim_data.signature_from_hospital_bytes, insurance_claim_data.hospital_bill_hash_bytes);
+        let signature_as_fields: [Field; 64] = insurance_claim_data.signature_from_hospital_bytes.map(|x : u8| x as Field);
+        println(f"wallet_address: {wallet_address}");
+        println(f"signature_as_fields: {signature_as_fields}");
+
+        // @dev - Generate the nullifier
         let expected_nullifier = poseidon2::Poseidon2::hash([root, secret, insurance_claim_data.hospital_bill_amount], 3);
         println(expected_nullifier);
 

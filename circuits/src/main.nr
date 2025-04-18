@@ -34,16 +34,20 @@ fn main(
     assert(authorized_healthcare_provider_pubkey_hash == insurance_claim_data.expected_authorized_healthcare_provider_pubkey_hash, "Invalid authorized healthcare provider pubKey: The given pubKey is not valid");
 
 
-    // @dev - 
+    // @dev - Split the pubKey into 2 parts
     let key = ecrecover::secp256k1::PubKey::from_unified(insurance_claim_data.pubkey_of_hospital_bytes);
     let pubkey_of_hospital_x: [u8; 32] = key.pub_x;
     let pubkey_of_hospital_y: [u8; 32] = key.pub_y;
-    println(pubkey_of_hospital_x);
-    println(pubkey_of_hospital_y);
-    //let address = ecrecover::ecrecover(key.pub_x, key.pub_y, signature, hashed_message);
-    //let signature_as_fields = signature.map(|x : u8| x as Field);
+    println(f"pubkey_of_hospital_x: {pubkey_of_hospital_x}");
+    println(f"pubkey_of_hospital_y: {pubkey_of_hospital_y}");
 
-    // @dev - Verifying the signature of the hospital (for the bill that they issued).
+    // @dev - Recover the wallet address from the pubKey, signature, and the hashed message
+    let wallet_address = ecrecover::ecrecover(key.pub_x, key.pub_y, insurance_claim_data.signature_from_hospital_bytes, insurance_claim_data.hospital_bill_hash_bytes);
+    let signature_as_fields: [Field; 64] = insurance_claim_data.signature_from_hospital_bytes.map(|x : u8| x as Field);
+    println(f"wallet_address: {wallet_address}");
+    println(f"signature_as_fields: {signature_as_fields}");
+
+    // @dev - Constraint: Verifying the signature of the hospital (for the bill that they issued).
     //let signature_from_hospital_bytes: [u8; 64] = signature_from_hospital.to_be_bytes();  // [Result]: Success
     //let hospital_bill_hash_bytes: [u8; 32] = hospital_bill_hash.to_be_bytes();
     assert(std::ecdsa_secp256k1::verify_signature(
