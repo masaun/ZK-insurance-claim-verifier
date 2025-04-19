@@ -64,8 +64,7 @@ fn main(
     // Constraint: nullifier (hash) == expected_nullifier (hash)
     assert(nullifier == expected_nullifier);
 
-    //nullifier
-    //(nullifier, nft_metadata_cid_hash)
+    // @dev - Return
     RevealedData {
         nullifier: nullifier,
         is_bill_signed: true,                   // [TODO]: Replace a fixed-value with a variable
