@@ -8,12 +8,16 @@ import { InsuranceClaimProofVerifier } from "./circuit/InsuranceClaimProofVerifi
  */
 contract HospitalRegistry {
 
+    mapping(address => bool) private hospitalPubkeys;
+
     constructor() {}
 
     /**
      * @dev - A hospital would register on-Chain.
+     * @dev - Only hispital can call this function.
      */
     function registerHospital(address hospitalPubKey) public returns (address _hospitalPubKey) {
-        // [TODO]:
+        require(hospitalPubkeys[hospitalPubKey] = false, "This hospital pubKey has already been registered");
+        hospitalPubkeys[hospitalPubKey] = true;
     }
 }
