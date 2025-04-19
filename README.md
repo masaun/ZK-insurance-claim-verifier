@@ -10,7 +10,7 @@
 
 ## Overview
 
-- This is the Zero-Knowledge (ZK) based Insurance Claim protocol, which allow a patient to claim the medical payment coverage without revealing the sensitive information (i.e. exact treatment, treatment cost, coverage, etc) to a insurer by submitting a hospital bill proof (which is a ZK Proof).
+- This is the Zero-Knowledge (ZK) based Insurance Claim protocol, which allow a patient to claim a payout without revealing the sensitive information (i.e. exact treatment, treatment cost, coverage, etc) to a insurer by submitting a hospital bill proof (which is a ZK Proof).
 
 <br>
 
