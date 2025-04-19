@@ -1,4 +1,4 @@
-pub struct InsuranceClaimData {
+pub struct HospitalBillData { // @dev - Bill data, which is issued by a Hospital. (Healthcare Provider)
     hospital_bill_hash_bytes: [u8; 32], // @dev - The hash of the hospital bill
     //hospital_bill_hash: Field,
     hospital_bill_amount: Field,
