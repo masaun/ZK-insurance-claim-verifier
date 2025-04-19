@@ -72,6 +72,7 @@ mod tests {
         let nullifier = poseidon2::Poseidon2::hash([root, secret, insurance_claim_data.hospital_bill_amount], 3);
         println(f"nullifier: {nullifier}");
 
+        // @dev - Generate a ZKP and publicInput as the "revealed_data"
         let revealed_data: RevealedData = main(
             root,
             hash_path,
@@ -80,7 +81,16 @@ mod tests {
             nullifier,
             insurance_claim_data
         );
-        println(revealed_data.nullifier); // [Log]: 
+
+        // @dev - Check the revealed data, which is the publicInput
+        let revealed_data_nullifier = revealed_data.nullifier;
+        let revealed_data_is_bill_signed = revealed_data.is_bill_signed;
+        let revealed_data_is_bill_amount_exceed_threshold = revealed_data.is_bill_amount_exceed_threshold;
+        let revealed_data_is_policy_valid = revealed_data.is_policy_valid;
+        println(f"revealed_data.nullifier: {revealed_data_nullifier}");
+        println(f"revealed_data.is_bill_signed: {revealed_data_is_bill_signed}");
+        println(f"revealed_data.is_bill_amount_exceed_threshold: {revealed_data_is_bill_amount_exceed_threshold}");
+        println(f"revealed_data.is_policy_valid: {revealed_data_is_policy_valid}");
 
         let inputs_for_note_commitment: [Field; 1] = [secret];
         let note_commitment = poseidon2::Poseidon2::hash(inputs_for_note_commitment, inputs_for_note_commitment.len());

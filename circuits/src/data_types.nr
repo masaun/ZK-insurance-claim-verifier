@@ -10,5 +10,8 @@ pub struct InsuranceClaimData {
 }
 
 pub struct RevealedData {
-    nullifier: Field
+    nullifier: Field,
+    is_bill_signed: bool,
+    is_bill_amount_exceed_threshold: bool,
+    is_policy_valid: bool
 }

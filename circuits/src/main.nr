@@ -67,6 +67,9 @@ fn main(
     //nullifier
     //(nullifier, nft_metadata_cid_hash)
     RevealedData {
-        nullifier: nullifier
+        nullifier: nullifier,
+        is_bill_signed: true,                   // [TODO]: Replace a fixed-value with a variable
+        is_bill_amount_exceed_threshold: true,  // [TODO]: Replace a fixed-value with a variable 
+        is_policy_valid: true,                  // [TODO]: Replace a fixed-value with a variable  
     }
 }
