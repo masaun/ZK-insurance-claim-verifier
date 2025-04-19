@@ -8,7 +8,7 @@ import { InsuranceClaimProofVerifier } from "./circuit/InsuranceClaimProofVerifi
  */
 contract HospitalRegistry {
 
-    mapping(address => bool) private hospitalPubkeys;
+    mapping(address => bool) public hospitalPubkeys;
 
     constructor() {}
 
@@ -19,5 +19,12 @@ contract HospitalRegistry {
     function registerHospital(address hospitalPubKey) public returns (address _hospitalPubKey) {
         require(hospitalPubkeys[hospitalPubKey] = false, "This hospital pubKey has already been registered");
         hospitalPubkeys[hospitalPubKey] = true;
+    }
+
+    /**
+     * @dev - Verify whether or not a given hospitalPubKey is registered.
+     */
+    function isHospitalPubkeyRegistered(address hospitalPubKey) public view returns (bool _isHospitalPubkeyRegistered) {
+        return hospitalPubkeys[hospitalPubKey];
     }
 }
