@@ -29,11 +29,6 @@ fn main(
     assert(hospital_bill_amount_as_uint >= min_threshold_as_uint, "Invalid hospital bill: A given hospital bill amount is less than the minimum threshold");
     let is_policy_valid: bool = true;
 
-    // @dev - Hashing the "raw" pubKey of the authorized healthcare provider
-    let expected_healthcare_insurance_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([insurance_claim_data.healthcare_insurance_provider_pubkey], 1);
-    assert(insurance_claim_data.healthcare_insurance_provider_pubkey_hash == expected_healthcare_insurance_provider_pubkey_hash, "Invalid authorized healthcare provider pubKey: The given pubKey is not valid");
-
-
     // @dev - Split the pubKey into 2 parts
     let key = ecrecover::secp256k1::PubKey::from_unified(insurance_claim_data.hospital_pubkey_bytes);
     let pubkey_of_hospital_x: [u8; 32] = key.pub_x;
@@ -72,7 +67,6 @@ fn main(
     //nullifier
     //(nullifier, nft_metadata_cid_hash)
     RevealedData {
-        nullifier: nullifier,
-        healthcare_insurance_provider_pubkey_hash: insurance_claim_data.healthcare_insurance_provider_pubkey_hash // @dev - Hashed pubKey
+        nullifier: nullifier
     }
 }

@@ -20,6 +20,3 @@ hospital_pubkey_bytes = []   # @dev - The public key of the hospital
 
 hospital_signature_bytes = []
 #hospital_signature_bytes = "" # @dev - The signature from the hospital
-
-healthcare_insuranceprovider_pubkey = ""                # @dev - This public key should be validated on-chain with a on-chain registry.
-expected_healthcare_insurance_provider_pubkey_hash = ""  # @dev - The expected public key hash of the authorized healthcare provider

@@ -48,16 +48,11 @@ mod tests {
             3, 210, 111, 56, 246, 219,  19, 104
         ];
 
-        let _healthcare_insuranceprovider_pubkey: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - This public key should be validated on-chain with a on-chain registry.
-        let _healthcare_insurance_provider_pubkey_hash: Field = poseidon2::Poseidon2::hash([_healthcare_insuranceprovider_pubkey], 1); // @dev - Hashed pubKey
-
         let insurance_claim_data: InsuranceClaimData = InsuranceClaimData {
             hospital_bill_hash_bytes: _hospital_bill_hash_bytes,
             hospital_bill_amount: _hospital_bill_amount,
             hospital_pubkey_bytes: _hospital_pubkey_bytes,
-            hospital_signature_bytes: _hospital_signature_bytes, // @dev - The signature from the hospital
-            healthcare_insurance_provider_pubkey: _healthcare_insuranceprovider_pubkey,               // @dev - Raw pubKey /This public key should be validated on-chain with a on-chain registry.
-            healthcare_insurance_provider_pubkey_hash: _healthcare_insurance_provider_pubkey_hash
+            hospital_signature_bytes: _hospital_signature_bytes // @dev - The signature from the hospital
         };
 
         // @dev - Split the pubKey into 2 parts
@@ -86,7 +81,6 @@ mod tests {
             insurance_claim_data
         );
         println(revealed_data.nullifier); // [Log]: 
-        println(revealed_data.healthcare_insurance_provider_pubkey_hash); // [Log]: 0x25a0ce4b4bb3a7b532fec02d9d03f324a8084e34e481c4520577e3db5ad30fc5
 
         let inputs_for_note_commitment: [Field; 1] = [secret];
         let note_commitment = poseidon2::Poseidon2::hash(inputs_for_note_commitment, inputs_for_note_commitment.len());
