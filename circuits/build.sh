@@ -12,19 +12,19 @@ echo "Generate witness..."
 nargo execute
 
 echo "Proving and generating a ZK Proof..."
-bb prove -b ./target/insurance_claim.json -w ./target/insurance_claim.gz -o ./target/insurance_claim_proof.bin
+bb prove -b ./target/hospital_bill.json -w ./target/hospital_bill.gz -o ./target/hospital_bill_proof.bin
 
 echo "Generating vkey..."
-bb write_vk -b ./target/insurance_claim.json -o ./target/insurance_claim_vk.bin
+bb write_vk -b ./target/hospital_bill.json -o ./target/hospital_bill_vk.bin
 
 echo "Link vkey to the zkProof"
-bb verify -k ./target/insurance_claim_vk.bin -p ./target/insurance_claim_proof.bin
+bb verify -k ./target/hospital_bill_vk.bin -p ./target/hospital_bill_proof.bin
 
 echo "Check a zkProof"
-head -c 32 ./target/insurance_claim_proof.bin | od -An -v -t x1 | tr -d $' \n'
+head -c 32 ./target/hospital_bill_proof.bin | od -An -v -t x1 | tr -d $' \n'
 
 echo "Copy and paste vk for generating a Solidity Verifier contract"
-cp ./target/insurance_claim_vk.bin ./target/vk
+cp ./target/hospital_bill_vk.bin ./target/vk
 
 echo "Generate a Solidity Verifier contract"
 bb contract
