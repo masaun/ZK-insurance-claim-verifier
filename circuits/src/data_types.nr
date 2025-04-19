@@ -5,8 +5,11 @@ pub struct HospitalBillData { // @dev - Bill data, which is issued by a Hospital
     hospital_pubkey_bytes: [u8; 64],
     //hospital_pubkey_x: [u8; 32],      // @dev - public key, which is sliced at the 1st half of 
     //hospital_pubkey_y: [u8; 32],      // @dev - public key, which is sliced at the 2nd half of public key
-    hospital_signature_bytes: [u8; 64]  // @dev - The signature from the hospital
+    hospital_signature_bytes: [u8; 64], // @dev - The signature from the hospital
     //hospital_signature: Field,        // @dev - The signature from the hospital
+    patient_name: Field,                // @dev - The patient name
+    treatment_details: Field,           // @dev - The treatment details
+    date_of_service: Field,             // @dev - The date of service
 }
 
 pub struct RevealedData {
