@@ -1,6 +1,6 @@
 pub struct InsurancePolicyData {
-    insurer_pubkey_bytes: [u8; 32],     // @dev - The public key of the insurer
-    insurer_signature_bytes: [u8; 32],  // @dev - The signature from the insurer
+    insurer_pubkey_bytes: [u8; 64],     // @dev - The public key of the insurer
+    insurer_signature_bytes: [u8; 64],  // @dev - The signature from the insurer
     patient_name: Field,                // @dev - The patient name
     start_date: Field, // @dev - The start date of the insurance policy (UNIX timestamp)
     end_date: Field,   // @dev - The end date of the insurance policy (UNIX timestamp)

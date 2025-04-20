@@ -13,7 +13,22 @@ mod tests {
         let index: Field = 0;
         let secret: Field = 1;
 
-        // @dev - The insurance policy related input data
+        let _insurer_pubkey_bytes: [u8; 64] = [
+            131,  24,  83,  91,  84,  16, 93,  74, 122, 174,  96,
+            192, 143, 196,  95, 150, 135, 24,  27,  79, 223, 198,
+            37, 189,  26, 117,  63, 167, 57, 127, 237, 117,  53,
+            71, 241,  28, 168, 105, 102, 70, 242, 243, 172, 176,
+            142,  49,   1, 106, 250, 194, 62,  99,  12,  93,  17,
+            245, 159,  97, 254, 245, 123, 13,  42, 165
+        ];
+        let _insurer_signature_bytes: [u8; 64] = [
+            1,  83,  82, 167, 184,  77, 226, 104,   5,  27, 151,
+            91, 202, 127,  17, 183,  75,  31, 190, 253, 159, 116,
+            155,  13,  24, 178,  40, 165, 129,  90, 103, 204,  42,
+            164, 230,  62,  73, 181, 169,  61, 251, 221, 128, 221,
+            14,  19, 179,  25, 107, 132,  10, 188, 149,   0, 197,
+            52, 151, 239, 244, 103, 215, 224,  56, 242
+        ];
         let _patient_name: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8; // @dev - The patient name
         let _insurance_policy_start_date: Field = 1690982400;                                          // @dev - The start date of the insurance policy (UNIX timestamp)
         let _insurance_policy_end_date: Field = 1690982600;                                            // @dev - The end date of the insurance policy (UNIX timestamp)
@@ -23,6 +38,8 @@ mod tests {
         let _insurance_policy_treatment_hcpcs_code: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8; // @dev - The treatment details to be covered by a insurance policy (HCPCS code)
         let _insurance_policy_treatment_drg_code: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77;   // @dev - The treatment details to be covered by a insurance policy (DRG code)
         let insurance_policy_data: InsurancePolicyData = InsurancePolicyData {
+            insurer_pubkey_bytes: _insurer_pubkey_bytes,
+            insurer_signature_bytes: _insurer_signature_bytes,
             patient_name: _patient_name,
             start_date: _insurance_policy_start_date,
             end_date: _insurance_policy_end_date,
