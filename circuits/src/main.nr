@@ -37,8 +37,19 @@ fn main(
         "Invalid the treatment date: A given treatment date must be within the insurance policy period"
     );
 
-    // @dev - [TODO]: Constraint: The insurance policy must be valid
-    // assert();
+    // @dev - Constraint: The insurance policy must be valid
+    let treatment_icd_code_hash: Field = poseidon2::Poseidon2::hash([hospital_bill_data.treatment_icd_code], 1);
+    let treatment_cpt_code_hash: Field = poseidon2::Poseidon2::hash([hospital_bill_data.treatment_cpt_code], 1);
+    let treatment_hcpcs_code_hash: Field = poseidon2::Poseidon2::hash([hospital_bill_data.treatment_hcpcs_code], 1);
+    let treatment_drg_code_hash: Field = poseidon2::Poseidon2::hash([hospital_bill_data.treatment_drg_code], 1);
+    let covered_treatment_icd_code_hash: Field = poseidon2::Poseidon2::hash([insurance_policy_data.treatment_icd_code], 1);
+    let covered_treatment_cpt_code_hash: Field = poseidon2::Poseidon2::hash([insurance_policy_data.treatment_cpt_code], 1);
+    let covered_treatment_hcpcs_code_hash: Field = poseidon2::Poseidon2::hash([insurance_policy_data.treatment_hcpcs_code], 1);
+    let covered_treatment_drg_code_hash: Field = poseidon2::Poseidon2::hash([insurance_policy_data.treatment_drg_code], 1);
+    assert(treatment_icd_code_hash == covered_treatment_icd_code_hash, "Invalid the treatment details (ICD): A given treatment details must be covered by the insurance policy");
+    assert(treatment_cpt_code_hash == covered_treatment_cpt_code_hash, "Invalid the treatment details (CPT): A given treatment details must be covered by the insurance policy");
+    assert(treatment_hcpcs_code_hash == covered_treatment_hcpcs_code_hash, "Invalid the treatment details (HCPCS): A given treatment details must be covered by the insurance policy");
+    assert(treatment_drg_code_hash == covered_treatment_drg_code_hash, "Invalid the treatment details (DRG): A given treatment details must be covered by the insurance policy");
     let _is_policy_valid: bool = true;
 
     // @dev - Split the pubKey into 2 parts

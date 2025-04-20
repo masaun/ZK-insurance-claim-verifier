@@ -2,10 +2,10 @@ pub struct InsurancePolicyData {
     start_date: Field, // @dev - The start date of the insurance policy (UNIX timestamp)
     end_date: Field,   // @dev - The end date of the insurance policy (UNIX timestamp)
     minimum_threshold_of_bill_amount: Field, // @dev - The minimum threshold for the insurance claim  
-    treatment_icd_code: Field,          // @dev - The treatment details (ICD code)
-    treatment_cpt_code: Field,          // @dev - The treatment details (CPT code)
-    treatment_hcpcs_code: Field,        // @dev - The treatment details (HCPCS code)
-    treatment_drg_code: Field           // @dev - The treatment details (DRG code)
+    treatment_icd_code: Field,          // @dev - The treatment details to be covered by a insurance policy (ICD code)
+    treatment_cpt_code: Field,          // @dev - The treatment details to be covered by a insurance policy (CPT code)
+    treatment_hcpcs_code: Field,        // @dev - The treatment details to be covered by a insurance policy (HCPCS code)
+    treatment_drg_code: Field           // @dev - The treatment details to be covered by a insurance policy (DRG code)
 }
 
 pub struct HospitalBillData { // @dev - Bill data, which is issued by a Hospital. (Healthcare Provider)
