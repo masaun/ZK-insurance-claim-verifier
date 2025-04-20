@@ -36,6 +36,9 @@ fn main(
         treatment_date_as_uint <= end_date_as_uint, 
         "Invalid the treatment date: A given treatment date must be within the insurance policy period"
     );
+
+    // @dev - [TODO]: Constraint: The insurance policy must be valid
+    // assert();
     let _is_policy_valid: bool = true;
 
     // @dev - Split the pubKey into 2 parts

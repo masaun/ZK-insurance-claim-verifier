@@ -2,6 +2,10 @@ pub struct InsurancePolicyData {
     start_date: Field, // @dev - The start date of the insurance policy (UNIX timestamp)
     end_date: Field,   // @dev - The end date of the insurance policy (UNIX timestamp)
     minimum_threshold_of_bill_amount: Field, // @dev - The minimum threshold for the insurance claim  
+    treatment_icd_code: Field,          // @dev - The treatment details (ICD code)
+    treatment_cpt_code: Field,          // @dev - The treatment details (CPT code)
+    treatment_hcpcs_code: Field,        // @dev - The treatment details (HCPCS code)
+    treatment_drg_code: Field           // @dev - The treatment details (DRG code)
 }
 
 pub struct HospitalBillData { // @dev - Bill data, which is issued by a Hospital. (Healthcare Provider)
@@ -15,6 +19,10 @@ pub struct HospitalBillData { // @dev - Bill data, which is issued by a Hospital
     //hospital_signature: Field,        // @dev - The signature from the hospital
     patient_name: Field,                // @dev - The patient name
     treatment_date: Field,              // @dev - The date of treatment (UNIX timestamp)
+    treatment_icd_code: Field,          // @dev - The treatment details (ICD code)
+    treatment_cpt_code: Field,          // @dev - The treatment details (CPT code)
+    treatment_hcpcs_code: Field,        // @dev - The treatment details (HCPCS code)
+    treatment_drg_code: Field           // @dev - The treatment details (DRG code)
 }
 
 pub struct RevealedData {
