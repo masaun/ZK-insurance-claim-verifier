@@ -48,11 +48,23 @@ contract InsuranceClaim {
         hasClaimed[msg.sender] = true;
 
         // @dev - Send payout
-        uint256 payoutAmount = 1 ether;
-        payable(msg.sender).transfer(payoutAmount);
+        _proceedPayout();
 
         emit ClaimApproved(msg.sender, payoutAmount);
     }
+
+    /**
+     * @notice - This function is called to send the payout to the claimant
+     */
+    function _proceedPayout() internal returns (bool) {
+        // @dev - Send payout
+        uint256 payoutAmount = 1 ether;
+        payable(msg.sender).transfer(payoutAmount);
+
+        return true;
+    }
+
+
 
     // Fallback function to receive ETH for payouts
     receive() external payable {}
