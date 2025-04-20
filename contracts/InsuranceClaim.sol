@@ -48,7 +48,7 @@ contract InsuranceClaim {
         hasClaimed[msg.sender] = true;
 
         // @dev - Send payout
-        _proceedPayout();
+        uint256 payoutAmount = _proceedPayout();
 
         emit ClaimApproved(msg.sender, payoutAmount);
     }
@@ -56,12 +56,12 @@ contract InsuranceClaim {
     /**
      * @notice - This function is called to send the payout to the claimant
      */
-    function _proceedPayout() internal returns (bool) {
+    function _proceedPayout() internal returns (uint256 _payoutAmount) {
         // @dev - Send payout
         uint256 payoutAmount = 1 ether;
         payable(msg.sender).transfer(payoutAmount);
 
-        return true;
+        return payoutAmount;
     }
 
 
