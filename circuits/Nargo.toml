@@ -1,5 +1,5 @@
 [package]
-name="hospital_bill"
+name="insurance_claim"
 type="bin"
 authors = ["masaun"]
 compiler_version = ">=0.31.0"
