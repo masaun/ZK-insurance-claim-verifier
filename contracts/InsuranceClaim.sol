@@ -8,7 +8,8 @@ contract InsuranceClaim {
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     address public insurer;
 
-    mapping(address => bool) public hasClaimed;
+    mapping(bytes32 => bool) private nullifiers;
+    mapping(address => mapping(bytes32 => bool)) public hasClaimed;
 
     constructor(address _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = InsuranceClaimProofVerifier(_insuranceClaimProofVerifier);
@@ -38,13 +39,17 @@ contract InsuranceClaim {
         require(!hasClaimed[msg.sender], "Already claimed");
 
         // @dev - Verify the zkSNARK proof
+        bytes32[] memory publicInputs = new bytes32[](3);
+        bytes32 merkleRoot = publicInputs[0];
+        bytes32 nullifierHash = publicInputs[1];
         bool isValidProof = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, publicInputs);
         require(isValidProof, "Invalid proof");
 
-        // @dev - [TODO]: Check that result == 1 (claim conditions met)
-        //require(publicInputs.result == 1, "Claim requirements not met");
+        // @dev - Store the claimed-status of the claimant (msg.sender). NOTE: This claimant is a "patient".
+        hasClaimed[msg.sender][merkleRoot] = true;
 
-        hasClaimed[msg.sender] = true;
+        // @dev - Store the nullifierHash to prevent a double spending of proof.
+        nullifiers[nullifierHash] = true;
 
         // @dev - Send payout
         uint256 payoutAmount = _proceedPayout();

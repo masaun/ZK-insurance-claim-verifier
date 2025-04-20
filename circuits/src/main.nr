@@ -15,7 +15,7 @@ fn main(
     hash_path: [Field; 2],
     index: Field,
     secret: Field,   // @dev - A hidden metadata hash (private)
-    nullifier: Field,
+    nullifier: pub Field,
     insurance_policy_data: InsurancePolicyData,
     hospital_bill_data: HospitalBillData
 ) -> pub RevealedData {
