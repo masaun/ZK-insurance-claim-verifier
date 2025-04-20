@@ -45,6 +45,8 @@ contract InsuranceClaim {
         bool isValidProof = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, publicInputs);
         require(isValidProof, "Invalid proof");
 
+        // @dev - [TODO]: Check a signature of the hospital and the insurer - by comparing the hashed-signature with the publicInputs[2] (hospitalSignature)
+
         // @dev - Store the claimed-status of the claimant (msg.sender). NOTE: This claimant is a "patient".
         hasClaimed[msg.sender][merkleRoot] = true;
 
