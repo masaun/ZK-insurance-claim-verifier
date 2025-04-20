@@ -1,4 +1,5 @@
 pub struct InsurancePolicyData {
+    patient_name: Field,                // @dev - The patient name
     start_date: Field, // @dev - The start date of the insurance policy (UNIX timestamp)
     end_date: Field,   // @dev - The end date of the insurance policy (UNIX timestamp)
     minimum_threshold_of_bill_amount: Field, // @dev - The minimum threshold for the insurance claim  

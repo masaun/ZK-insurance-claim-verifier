@@ -2,7 +2,7 @@ mod test_inputs; // test_inputs.nr
 
 mod tests {
     use crate::main;                   // src/main.nr
-    use crate::data_types::{ HospitalBillData, RevealedData };  // src/data_types.nr
+    use crate::data_types::{ InsurancePolicyData, HospitalBillData, RevealedData };  // src/data_types.nr
     use crate::converters;             // src/converters.nr -> converters/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
     use std::hash::poseidon2;
 
@@ -12,6 +12,26 @@ mod tests {
         let hash_path: [Field; 2] = [0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8, 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77];
         let index: Field = 0;
         let secret: Field = 1;
+
+        // @dev - The insurance policy related input data
+        let _patient_name: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8; // @dev - The patient name
+        let _insurance_policy_start_date: Field = 1690982400; // @dev - The start date of the insurance policy (UNIX timestamp)
+        let _insurance_policy_end_date: Field = 1690982400;   // @dev - The end date of the insurance policy (UNIX timestamp)
+        let _insurance_policy_minimum_threshold_of_bill_amount: Field = 1000; // @dev - The minimum threshold for the insurance claim
+        let _insurance_policy_treatment_icd_code: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8; // @dev - The treatment details to be covered by a insurance policy (ICD code)
+        let _insurance_policy_treatment_cpt_code: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - The treatment details to be covered by a insurance policy (CPT code)
+        let _insurance_policy_treatment_hcpcs_code: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8; // @dev - The treatment details to be covered by a insurance policy (HCPCS code)
+        let _insurance_policy_treatment_drg_code: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - The treatment details to be covered by a insurance policy (DRG code)
+        let insurance_policy_data: InsurancePolicyData = InsurancePolicyData {
+            patient_name: _patient_name,
+            start_date: _insurance_policy_start_date,
+            end_date: _insurance_policy_end_date,
+            minimum_threshold_of_bill_amount: _insurance_policy_minimum_threshold_of_bill_amount,
+            treatment_icd_code: _insurance_policy_treatment_icd_code,
+            treatment_cpt_code: _insurance_policy_treatment_cpt_code,
+            treatment_hcpcs_code: _insurance_policy_treatment_hcpcs_code,
+            treatment_drg_code: _insurance_policy_treatment_drg_code
+        };
 
         // @dev - The insurance claim related input data
         let _hospital_bill_hash_bytes: [u8; 32] = [
@@ -48,11 +68,23 @@ mod tests {
             3, 210, 111, 56, 246, 219,  19, 104
         ];
 
+        let _patient_name: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8; // @dev - The patient name
+        let _treatment_date: Field = 1690982400; // @dev - The date of treatment (UNIX timestamp)
+        let _treatment_icd_code: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8; // @dev - The treatment details to be covered by a insurance policy (ICD code)
+        let _treatment_cpt_code: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - The treatment details to be covered by a insurance policy (CPT code)
+        let _treatment_hcpcs_code: Field = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8; // @dev - The treatment details to be covered by a insurance policy (HCPCS code)
+        let _treatment_drg_code: Field = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77; // @dev - The treatment details to be covered by a insurance policy (DRG code)        
         let hospital_bill_data: HospitalBillData = HospitalBillData {
             hospital_bill_hash_bytes: _hospital_bill_hash_bytes,
             hospital_bill_amount: _hospital_bill_amount,
             hospital_pubkey_bytes: _hospital_pubkey_bytes,
-            hospital_signature_bytes: _hospital_signature_bytes // @dev - The signature from the hospital
+            hospital_signature_bytes: _hospital_signature_bytes, // @dev - The signature from the hospital
+            patient_name: _patient_name, // @dev - The patient name
+            treatment_date: _treatment_date, // @dev - The date of treatment (UNIX timestamp)
+            treatment_icd_code: _treatment_icd_code, // @dev - The treatment details (ICD code)
+            treatment_cpt_code: _treatment_cpt_code, // @dev - The treatment details (CPT code)
+            treatment_hcpcs_code: _treatment_hcpcs_code, // @dev - The treatment details (HCPCS code)
+            treatment_drg_code: _treatment_drg_code // @dev - The treatment details (DRG code)
         };
 
         // @dev - Split the pubKey into 2 parts
@@ -79,6 +111,7 @@ mod tests {
             index,
             secret,
             nullifier,
+            insurance_policy_data,
             hospital_bill_data
         );
 
