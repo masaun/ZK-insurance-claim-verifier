@@ -37,7 +37,7 @@ contract VerifyScript is Script {
         console.logBytes32(nullifierHash);       // [Log]: 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862
         console.logBytes32(nftMetadataCidHash);  // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
 
-        bytes memory proof_w_inputs = vm.readFileBinary("./circuits/target/hospital_bill_proof.bin");
+        bytes memory proof_w_inputs = vm.readFileBinary("./circuits/target/insurance_claim_proof.bin");
         bytes memory proofBytes = ProofConverter.sliceAfter96Bytes(proof_w_inputs);    /// @dev - In case of that there are 3 public inputs (bytes32 * 3 = 96 bytes), the proof file includes 64 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
         //bytes memory proofBytes = ProofConverter.sliceAfter64Bytes(proof_w_inputs);  /// @dev - In case of that there are 2 public inputs (bytes32 * 2 = 64 bytes), the proof file includes 64 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
 
