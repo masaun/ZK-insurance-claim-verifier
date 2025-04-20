@@ -36,8 +36,6 @@ contract InsuranceClaim {
         bytes calldata proof, 
         bytes32[] calldata publicInputs
     ) external {
-        require(!hasClaimed[msg.sender], "Already claimed");
-
         // @dev - Verify the zkSNARK proof
         bytes32[] memory publicInputs = new bytes32[](3);
         bytes32 merkleRoot = publicInputs[0];
@@ -48,6 +46,7 @@ contract InsuranceClaim {
         // @dev - [TODO]: Check a signature of the hospital and the insurer - by comparing the hashed-signature with the publicInputs[2] (hospitalSignature)
 
         // @dev - Store the claimed-status of the claimant (msg.sender). NOTE: This claimant is a "patient".
+        require(!hasClaimed[msg.sender][merkleRoot], "Already claimed");
         hasClaimed[msg.sender][merkleRoot] = true;
 
         // @dev - Store the nullifierHash to prevent a double spending of proof.
