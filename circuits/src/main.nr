@@ -7,7 +7,7 @@ use std::ecdsa_secp256k1::verify_signature;
 use dep::std;
 use dep::ecrecover; // @dev - Source: https://github.com/colinnielsen/ecrecover-noir
 
-use data_types::{ HospitalBillData, RevealedData }; // @dev - IPNftData struct
+use data_types::{ InsurancePolicyData, HospitalBillData, RevealedData }; // @dev - IPNftData struct
 
 
 fn main(
@@ -16,18 +16,41 @@ fn main(
     index: Field,
     secret: Field,   // @dev - A hidden metadata hash (private)
     nullifier: Field,
+    insurance_policy_data: InsurancePolicyData,
     hospital_bill_data: HospitalBillData
 ) -> pub RevealedData {
-    // @dev - The minimum threshold for the insurance claim
-    let min_threshold: Field = 1000;
-
     // @dev - Convert data type from "Field" to "uint32"
     let hospital_bill_amount_as_uint: u32 = hospital_bill_data.hospital_bill_amount as u32;
-    let min_threshold_as_uint: u32 = min_threshold as u32;
+    let minimum_threshold_of_bill_amount_as_uint: u32 = insurance_policy_data.minimum_threshold_of_bill_amount as u32;
 
-    // @dev - The insurance claim related constraints
-    assert(hospital_bill_amount_as_uint >= min_threshold_as_uint, "Invalid hospital bill: A given hospital bill amount is less than the minimum threshold");
-    let is_policy_valid: bool = true;
+    // @dev - Constraint: The hospital bill amount must be greater than the minimum threshold
+    assert(hospital_bill_amount_as_uint >= minimum_threshold_of_bill_amount_as_uint, "Invalid hospital bill: A given hospital bill amount must be greater than the minimum threshold");
+    let _is_bill_amount_exceed_threshold: bool = true;
+
+    // @dev - Constraint: The treatment date must be within the insurance policy period
+    let start_date_as_uint: u32 = insurance_policy_data.start_date as u32;
+    let end_date_as_uint: u32 = insurance_policy_data.end_date as u32;
+    let treatment_date_as_uint: u32 = hospital_bill_data.treatment_date as u32;
+    assert(
+        start_date_as_uint <= treatment_date_as_uint & 
+        treatment_date_as_uint <= end_date_as_uint, 
+        "Invalid the treatment date: A given treatment date must be within the insurance policy period"
+    );
+
+    // @dev - Constraint: The insurance policy must be valid
+    let treatment_icd_code_hash: Field = poseidon2::Poseidon2::hash([hospital_bill_data.treatment_icd_code], 1);
+    let treatment_cpt_code_hash: Field = poseidon2::Poseidon2::hash([hospital_bill_data.treatment_cpt_code], 1);
+    let treatment_hcpcs_code_hash: Field = poseidon2::Poseidon2::hash([hospital_bill_data.treatment_hcpcs_code], 1);
+    let treatment_drg_code_hash: Field = poseidon2::Poseidon2::hash([hospital_bill_data.treatment_drg_code], 1);
+    let covered_treatment_icd_code_hash: Field = poseidon2::Poseidon2::hash([insurance_policy_data.treatment_icd_code], 1);
+    let covered_treatment_cpt_code_hash: Field = poseidon2::Poseidon2::hash([insurance_policy_data.treatment_cpt_code], 1);
+    let covered_treatment_hcpcs_code_hash: Field = poseidon2::Poseidon2::hash([insurance_policy_data.treatment_hcpcs_code], 1);
+    let covered_treatment_drg_code_hash: Field = poseidon2::Poseidon2::hash([insurance_policy_data.treatment_drg_code], 1);
+    assert(treatment_icd_code_hash == covered_treatment_icd_code_hash, "Invalid the treatment details (ICD): A given treatment details must be covered by the insurance policy");
+    assert(treatment_cpt_code_hash == covered_treatment_cpt_code_hash, "Invalid the treatment details (CPT): A given treatment details must be covered by the insurance policy");
+    assert(treatment_hcpcs_code_hash == covered_treatment_hcpcs_code_hash, "Invalid the treatment details (HCPCS): A given treatment details must be covered by the insurance policy");
+    assert(treatment_drg_code_hash == covered_treatment_drg_code_hash, "Invalid the treatment details (DRG): A given treatment details must be covered by the insurance policy");
+    let _is_policy_valid: bool = true;
 
     // @dev - Split the pubKey into 2 parts
     let key = ecrecover::secp256k1::PubKey::from_unified(hospital_bill_data.hospital_pubkey_bytes);
@@ -50,7 +73,8 @@ fn main(
         pubkey_of_hospital_y, // Slile the second half of the public key
            hospital_bill_data.hospital_signature_bytes,
         hospital_bill_data.hospital_bill_hash_bytes
-    ) == true, "Invalid hospital bill: The given hospital bill is not valid");
+    ) == true, "Invalid hospital bill: A given hospital bill is not valid");
+    let _is_bill_signed: bool = true;
 
     let inputs_for_note_commitment: [Field; 1] = [secret];
     let note_commitment = poseidon2::Poseidon2::hash(inputs_for_note_commitment, inputs_for_note_commitment.len());
@@ -67,8 +91,8 @@ fn main(
     // @dev - Return
     RevealedData {
         nullifier: nullifier,
-        is_bill_signed: true,                   // [TODO]: Replace a fixed-value with a variable
-        is_bill_amount_exceed_threshold: true,  // [TODO]: Replace a fixed-value with a variable 
-        is_policy_valid: true,                  // [TODO]: Replace a fixed-value with a variable  
+        is_bill_signed: _is_bill_signed,
+        is_bill_amount_exceed_threshold: _is_bill_amount_exceed_threshold,
+        is_policy_valid: _is_policy_valid,
     }
 }
