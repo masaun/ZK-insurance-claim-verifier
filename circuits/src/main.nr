@@ -27,7 +27,11 @@ fn main(
 
     // @dev - The insurance claim related constraints
     assert(hospital_bill_amount_as_uint >= min_threshold_as_uint, "Invalid hospital bill: A given hospital bill amount is less than the minimum threshold");
-    let is_policy_valid: bool = true;
+    let _is_bill_amount_exceed_threshold: bool = true;
+
+    // @dev 
+    let min_threshold
+    let _is_policy_valid: bool = true;
 
     // @dev - Split the pubKey into 2 parts
     let key = ecrecover::secp256k1::PubKey::from_unified(hospital_bill_data.hospital_pubkey_bytes);
@@ -69,6 +73,6 @@ fn main(
         nullifier: nullifier,
         is_bill_signed: true,                   // [TODO]: Replace a fixed-value with a variable
         is_bill_amount_exceed_threshold: true,  // [TODO]: Replace a fixed-value with a variable 
-        is_policy_valid: true,                  // [TODO]: Replace a fixed-value with a variable  
+        is_policy_valid: _is_policy_valid,
     }
 }

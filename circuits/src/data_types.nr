@@ -1,15 +1,20 @@
+pub struct InsurancePolicyData {
+    start_data: Field, // @dev - The start date of the insurance policy (UNIX timestamp)
+    end_date: Field,   // @dev - The end date of the insurance policy (UNIX timestamp)
+}
+
 pub struct HospitalBillData { // @dev - Bill data, which is issued by a Hospital. (Healthcare Provider)
     hospital_bill_hash_bytes: [u8; 32], // @dev - The hash of the hospital bill
     //hospital_bill_hash: Field,
-    hospital_bill_amount: Field,
-    hospital_pubkey_bytes: [u8; 64],
+    hospital_bill_amount: Field,        // @dev - Charges for the treatment
+    hospital_pubkey_bytes: [u8; 64],    // @dev - The public key of the hospital, which must be registered in the on-Chain Registry contract (HospitalRegistry.sol).
     //hospital_pubkey_x: [u8; 32],      // @dev - public key, which is sliced at the 1st half of 
     //hospital_pubkey_y: [u8; 32],      // @dev - public key, which is sliced at the 2nd half of public key
     hospital_signature_bytes: [u8; 64], // @dev - The signature from the hospital
     //hospital_signature: Field,        // @dev - The signature from the hospital
     patient_name: Field,                // @dev - The patient name
-    treatment_details: Field,           // @dev - The treatment details
-    date_of_service: Field,             // @dev - The date of service
+    treatment_details: Field,           // @dev - The treatment details (The treatment number)
+    treatment_date: Field               // @dev - The date of service (UNIX timestamp)
 }
 
 pub struct RevealedData {
