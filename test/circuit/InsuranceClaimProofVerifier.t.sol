@@ -35,18 +35,38 @@ contract InsuranceClaimProofVerifierTest is Test {
                   .withInput("hash_path", hash_path_bytes32)
                   .withInput("index", bytes32(uint256(0)))
                   .withInput("secret", bytes32(uint256(1)))                   
-                  .withInput("expected_nullifier", bytes32(uint256(0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862)))
-                  .withInput("expected_nft_metadata_cid_hash", bytes32(uint256(0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0)))
-                  .withStruct("ip_nft_data")
-                  .withStructInput("nft_owner", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("nft_token_id", bytes32(uint256(1)))
-                  .withStructInput("nft_metadata_cid", string('QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F'));
+                  .withInput("nullifier", bytes32(uint256(0x2658c0d82f9c0728e055fd8272568260ed2d5117a0ed2e1935f737c528ef3505)))
+                  .withStruct("insurance_policy_data") // @dev - The InsurancePolicyData struct
+                  .withStructInput("insurer_pubkey_bytes", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("insurer_signature_bytes", bytes32(uint256(1)))
+                  .withStructInput("patient_name", string('John Doe'))
+                  .withStructInput("start_date", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
+                  .withStructInput("end_date", bytes32(uint256(0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77)))
+                  .withStructInput("minimum_threshold_of_bill_amount", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
+                  .withStructInput("treatment_icd_code", string('ICD-10-CM: A00.0'))
+                  .withStructInput("treatment_cpt_code", string('CPT: 99213'))
+                  .withStructInput("treatment_hcpcs_code", string('HCPCS: G0008'))
+                  .withStructInput("treatment_drg_code", string('DRG: 001'))
+                  .withStruct("hospital_bill_data") // @dev - The HospitalBillData struct
+                  .withStructInput("hospital_bill_hash_bytes", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("hospital_bill_amount", bytes32(uint256(1)))
+                  .withStructInput("hospital_pubkey_bytes", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("hospital_signature_bytes", bytes32(uint256(1)))
+                  .withStructInput("patient_name", string('John Doe'))
+                  .withStructInput("treatment_date", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
+                  .withStructInput("treatment_icd_code", string('ICD-10-CM: A00.0'))
+                  .withStructInput("treatment_cpt_code", string('CPT: 99213'))
+                  .withStructInput("treatment_hcpcs_code", string('HCPCS: G0008'))
+                  .withStructInput("treatment_drg_code", string('DRG: 001'));
 
         /// @dev - Generate the proof
-        (bytes32[] memory publicInputs, bytes memory proof) = noirHelper.generateProof("test_verifyProof", 3); // [NOTE]: The number of public inputs is '3'.
+        (bytes32[] memory publicInputs, bytes memory proof) = noirHelper.generateProof("test_verifyProof", 6); // [NOTE]: The number of public inputs is '3'.
         console.logBytes32(publicInputs[0]); // [Log]: 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629
         console.logBytes32(publicInputs[1]); // [Log]: 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862
         console.logBytes32(publicInputs[2]); // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
+        console.logBytes32(publicInputs[3]); // [Log]: 
+        console.logBytes32(publicInputs[4]); // [Log]: 
+        console.logBytes32(publicInputs[5]); // [Log]: 
 
         /// @dev - Verify the proof
         insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, publicInputs);
@@ -67,18 +87,38 @@ contract InsuranceClaimProofVerifierTest is Test {
                   .withInput("hash_path", hash_path_bytes32)
                   .withInput("index", bytes32(uint256(0)))
                   .withInput("secret", bytes32(uint256(1)))                   
-                  .withInput("expected_nullifier", bytes32(uint256(0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862)))
-                  .withInput("expected_nft_metadata_cid_hash", bytes32(uint256(0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0)))
-                  .withStruct("ip_nft_data")
-                  .withStructInput("nft_owner", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("nft_token_id", bytes32(uint256(1)))
-                  .withStructInput("nft_metadata_cid", string('QmYwAPJzv5CZsnAzt8auVZRn5W4mBkpLsD4HaBFN6r5y6F'));
+                  .withInput("nullifier", bytes32(uint256(0x2658c0d82f9c0728e055fd8272568260ed2d5117a0ed2e1935f737c528ef3505)))
+                  .withStruct("insurance_policy_data") // @dev - The InsurancePolicyData struct
+                  .withStructInput("insurer_pubkey_bytes", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("insurer_signature_bytes", bytes32(uint256(1)))
+                  .withStructInput("patient_name", string('John Doe'))
+                  .withStructInput("start_date", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
+                  .withStructInput("end_date", bytes32(uint256(0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77)))
+                  .withStructInput("minimum_threshold_of_bill_amount", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
+                  .withStructInput("treatment_icd_code", string('ICD-10-CM: A00.0'))
+                  .withStructInput("treatment_cpt_code", string('CPT: 99213'))
+                  .withStructInput("treatment_hcpcs_code", string('HCPCS: G0008'))
+                  .withStructInput("treatment_drg_code", string('DRG: 001'))
+                  .withStruct("hospital_bill_data") // @dev - The HospitalBillData struct
+                  .withStructInput("hospital_bill_hash_bytes", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("hospital_bill_amount", bytes32(uint256(1)))
+                  .withStructInput("hospital_pubkey_bytes", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("hospital_signature_bytes", bytes32(uint256(1)))
+                  .withStructInput("patient_name", string('John Doe'))
+                  .withStructInput("treatment_date", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
+                  .withStructInput("treatment_icd_code", string('ICD-10-CM: A00.0'))
+                  .withStructInput("treatment_cpt_code", string('CPT: 99213'))
+                  .withStructInput("treatment_hcpcs_code", string('HCPCS: G0008'))
+                  .withStructInput("treatment_drg_code", string('DRG: 001'));
 
         /// @dev - Generate the proof
-        (bytes32[] memory publicInputs, bytes memory proof) = noirHelper.generateProof("test_wrongProof", 3);
+        (bytes32[] memory publicInputs, bytes memory proof) = noirHelper.generateProof("test_wrongProof", 6);
         console.logBytes32(publicInputs[0]); // [Log]: 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629
         console.logBytes32(publicInputs[1]); // [Log]: 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862
         console.logBytes32(publicInputs[2]); // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
+        console.logBytes32(publicInputs[3]); // [Log]: 
+        console.logBytes32(publicInputs[4]); // [Log]: 
+        console.logBytes32(publicInputs[5]); // [Log]: 
 
         /// @dev - Create a fake public input, which should fail because the public input is wrong
         bytes32[] memory fakePublicInputs = new bytes32[](2);

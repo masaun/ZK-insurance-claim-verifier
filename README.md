@@ -27,3 +27,15 @@
 
 | Contract Name | Descripttion | Deployed-contract addresses on `Swell Chain` (Testnet) | Contract Source Code Verified |
 | ------------- |:------------:|:--------------------------------------------------:|:-----------------------------:|
+
+<br>
+
+<hr>
+
+# Installation
+
+## SC - test
+
+```bash
+sh ./test/circuit/runningTest_InsuranceClaimProofVerifier.sh
+```
