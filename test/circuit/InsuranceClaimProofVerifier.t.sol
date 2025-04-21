@@ -37,12 +37,12 @@ contract InsuranceClaimProofVerifierTest is Test {
                   .withInput("secret", bytes32(uint256(1)))                   
                   .withInput("nullifier", bytes32(uint256(0x2658c0d82f9c0728e055fd8272568260ed2d5117a0ed2e1935f737c528ef3505)))
                   .withStruct("insurance_policy_data") // @dev - The InsurancePolicyData struct
-                  .withStructInput("insurer_pubkey_bytes", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("insurer_pubkey_bytes", bytes32(uint256(uint160(0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("insurer_signature_bytes", bytes32(uint256(1)))
                   .withStructInput("patient_name", string('John Doe'))
-                  .withStructInput("start_date", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
-                  .withStructInput("end_date", bytes32(uint256(0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77)))
-                  .withStructInput("minimum_threshold_of_bill_amount", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
+                  .withStructInput("start_date", bytes32(uint256(1690982400))) // [NOTE]: 2023-08-01
+                  .withStructInput("end_date", bytes32(uint256(1690982600)))   // [NOTE]: 2023-08-01
+                  .withStructInput("minimum_threshold_of_bill_amount", bytes32(uint256(1000)))
                   .withStructInput("treatment_icd_code", string('ICD-10-CM: A00.0'))
                   .withStructInput("treatment_cpt_code", string('CPT: 99213'))
                   .withStructInput("treatment_hcpcs_code", string('HCPCS: G0008'))

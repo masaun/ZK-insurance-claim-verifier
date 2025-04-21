@@ -155,9 +155,37 @@ mod tests {
 
         println("The test of the test_nft_metadata_verifier()) has been successful");
 
+        // [TEST]: Recover the wallet address from the pubKey, signature, and the hashed message
+        wallet_address_recover(
+            hospital_bill_data.hospital_pubkey_bytes, 
+            hospital_bill_data.hospital_signature_bytes, 
+            hospital_bill_data.hospital_bill_hash_bytes
+        );
+
         // Test - Convert IPFS CID (sha256) -> bytes -> Field -> Poseidon2 Hash
         test_convert_nft_metadata_cid_to_poseidon_hash();
     }
+
+
+    /**
+     * @notice - Recover the wallet address from the pubKey, signature, and the hashed message
+     */
+    fn wallet_address_recover(pubkey: [u8; 64], signature: [u8; 64], message_hash: [u8; 32]) {
+        // @dev - Split the pubKey into 2 parts
+        let key = ecrecover::secp256k1::PubKey::from_unified(pubkey);
+        let pubkey_of_hospital_x: [u8; 32] = key.pub_x;
+        let pubkey_of_hospital_y: [u8; 32] = key.pub_y;
+        println(f"pubkey_of_hospital_x: {pubkey_of_hospital_x}");
+        println(f"pubkey_of_hospital_y: {pubkey_of_hospital_y}");
+
+        // @dev - Recover the wallet address from the pubKey, signature, and the hashed message
+        let wallet_address = ecrecover::ecrecover(key.pub_x, key.pub_y, signature, message_hash);
+        println(f"wallet_address: {wallet_address}"); // [Log]: wallet_address: 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+    }
+
+
+
+
 
     /** 
      * @notice - Test: Convert IPFS CID (sha256) -> bytes -> Field -> Poseidon2 Hash
