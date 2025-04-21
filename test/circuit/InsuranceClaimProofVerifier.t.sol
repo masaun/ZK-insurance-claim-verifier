@@ -36,8 +36,10 @@ contract InsuranceClaimProofVerifierTest is Test {
                   .withInput("index", bytes32(uint256(0)))
                   .withInput("secret", bytes32(uint256(1)))                   
                   .withInput("nullifier", bytes32(uint256(0x2658c0d82f9c0728e055fd8272568260ed2d5117a0ed2e1935f737c528ef3505)))
-                  .withStruct("insurance_policy_data") // @dev - The InsurancePolicyData struct
-                  .withStructInput("insurer_pubkey_bytes", bytes32(uint256(uint160(0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  
+                  // @dev - The InsurancePolicyData struct
+                  .withStruct("insurance_policy_data")
+                  .withStructInput("insurer_pubkey_bytes", bytes32(uint256(uint160(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("insurer_signature_bytes", bytes32(uint256(1)))
                   .withStructInput("patient_name", string('John Doe'))
                   .withStructInput("start_date", bytes32(uint256(1690982400))) // [NOTE]: 2023-08-01
@@ -47,13 +49,15 @@ contract InsuranceClaimProofVerifierTest is Test {
                   .withStructInput("treatment_cpt_code", string('CPT: 99213'))
                   .withStructInput("treatment_hcpcs_code", string('HCPCS: G0008'))
                   .withStructInput("treatment_drg_code", string('DRG: 001'))
-                  .withStruct("hospital_bill_data") // @dev - The HospitalBillData struct
-                  .withStructInput("hospital_bill_hash_bytes", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("hospital_bill_amount", bytes32(uint256(1)))
-                  .withStructInput("hospital_pubkey_bytes", bytes32(uint256(uint160(0xC6093Fd9cc143F9f058938868b2df2daF9A91d28)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("hospital_signature_bytes", bytes32(uint256(1)))
+                  
+                  // @dev - The HospitalBillData struct
+                  .withStruct("hospital_bill_data")
+                  .withStructInput("hospital_bill_hash_bytes", bytes32(uint256(0xc31c19168ea8c7aa8182fa5fd99b11071fc2c281710717b5335698d26604db05))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("hospital_bill_amount", bytes32(uint256(1000)))
+                  .withStructInput("hospital_pubkey_bytes", bytes32(uint256(uint160(0x1357Be3F8ba486146f34F782eB14346747FF5d80)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("hospital_signature_bytes", bytes32(uint256(0x57a9088363ec57d8ba6befc6b2fb9819e1617d396f02d5b2d7ae3b41509c3ca312281e5b28ae341666134a6b0e97f8741a3d5cb6d0344c8ad311ae179c55810a1c)))
                   .withStructInput("patient_name", string('John Doe'))
-                  .withStructInput("treatment_date", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
+                  .withStructInput("treatment_date", bytes32(uint256(1690982500))) // [NOTE]: 2023-08-01
                   .withStructInput("treatment_icd_code", string('ICD-10-CM: A00.0'))
                   .withStructInput("treatment_cpt_code", string('CPT: 99213'))
                   .withStructInput("treatment_hcpcs_code", string('HCPCS: G0008'))
