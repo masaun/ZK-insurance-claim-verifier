@@ -30,6 +30,10 @@ contract InsuranceClaimProofVerifierTest is Test {
         hash_path_bytes32[0] = bytes32(hash_path[0]);
         hash_path_bytes32[1] = bytes32(hash_path[1]);
 
+        /// @dev - [TEST]: Convert the first element of the hash_path array to bytes
+        bytes memory valueInUTF8Bytes = DataTypeConverter.toUtf8Bytes(hash_path[0]);
+        console.logBytes(valueInUTF8Bytes); // [Log]: 0x
+
         /// @dev - Set the input data for generating a proof
         noirHelper.withInput("root", bytes32(uint256(0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629)))
                   .withInput("hash_path", hash_path_bytes32)
@@ -52,10 +56,10 @@ contract InsuranceClaimProofVerifierTest is Test {
                   
                   // @dev - The HospitalBillData struct
                   .withStruct("hospital_bill_data")
-                  .withStructInput("hospital_bill_hash_bytes", bytes32(uint256(0xc31c19168ea8c7aa8182fa5fd99b11071fc2c281710717b5335698d26604db05))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("hospital_bill_hash_bytes", bytes32(uint256(0x2658c0d82f9c0728e055fd8272568260ed2d5117a0ed2e1935f737c528ef3505))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("hospital_bill_amount", bytes32(uint256(1000)))
                   .withStructInput("hospital_pubkey_bytes", bytes32(uint256(uint160(0x1357Be3F8ba486146f34F782eB14346747FF5d80)))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("hospital_signature_bytes", bytes32(uint256(0x57a9088363ec57d8ba6befc6b2fb9819e1617d396f02d5b2d7ae3b41509c3ca312281e5b28ae341666134a6b0e97f8741a3d5cb6d0344c8ad311ae179c55810a1c)))
+                  .withStructInput("hospital_signature_bytes", bytes32(uint256(0x2658c0d82f9c0728e055fd8272568260ed2d5117a0ed2e1935f737c528ef3505)))
                   .withStructInput("patient_name", string('John Doe'))
                   .withStructInput("treatment_date", bytes32(uint256(1690982500))) // [NOTE]: 2023-08-01
                   .withStructInput("treatment_icd_code", string('ICD-10-CM: A00.0'))
