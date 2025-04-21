@@ -1,7 +1,7 @@
 pragma solidity ^0.8.17;
 
 import { UltraVerifier } from "../../contracts/circuit/ultra-verifier/plonk_vk.sol";
-import { Starter } from "../../contracts/circuit/Starter.sol";
+import { InsuranceClaimProofVerifier } from "../../contracts/circuit/InsuranceClaimProofVerifier.sol";
 //import "../circuits/target/contract.sol";
 import { DataTypeConverter } from "../../contracts/libraries/DataTypeConverter.sol";
 
@@ -10,15 +10,15 @@ import { Test } from "forge-std/Test.sol";
 import { NoirHelper } from "foundry-noir-helper/NoirHelper.sol";
 
 
-contract StarterTest is Test {
-    Starter public starter;
+contract InsuranceClaimProofVerifierTest is Test {
+    InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     UltraVerifier public verifier;
     NoirHelper public noirHelper;
 
     function setUp() public {
         noirHelper = new NoirHelper();
         verifier = new UltraVerifier();
-        starter = new Starter(verifier);
+        insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
     }
 
     function test_verifyProof() public {
@@ -49,7 +49,7 @@ contract StarterTest is Test {
         console.logBytes32(publicInputs[2]); // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
 
         /// @dev - Verify the proof
-        starter.verifyEqual(proof, publicInputs);
+        insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, publicInputs);
     }
 
     function test_wrongProof() public {
@@ -87,7 +87,7 @@ contract StarterTest is Test {
 
         /// @dev - Verify the proof, which should be reverted
         vm.expectRevert();
-        starter.verifyEqual(proof, fakePublicInputs);
+        insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, fakePublicInputs);
     }
 
     // function test_all() public {

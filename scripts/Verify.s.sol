@@ -5,14 +5,14 @@ import "forge-std/console.sol";
 
 import { UltraVerifier } from "../contracts/circuit/ultra-verifier/plonk_vk.sol";
 //import "../circuits/target/contract.sol";
-import { Starter } from "../contracts/circuit/Starter.sol";
+import { InsuranceClaimProofVerifier } from "../contracts/circuit/InsuranceClaimProofVerifier.sol";
 import { ProofConverter } from "./utils/ProofConverter.sol";
 
 import { DataTypeConverter } from "../../contracts/libraries/DataTypeConverter.sol";
 
 
 contract VerifyScript is Script {
-    Starter public starter;
+    InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     UltraVerifier public verifier;
 
     struct Poseidon2HashAndPublicInputs {
@@ -26,7 +26,7 @@ contract VerifyScript is Script {
 
     function run() public returns (bool) {
         verifier = new UltraVerifier();
-        starter = new Starter(verifier);
+        insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
 
         // @dev - Retrieve the Poseidon2 hash and public inputs, which was read from the output.json file
         Poseidon2HashAndPublicInputs memory poseidon2HashAndPublicInputs = computePoseidon2Hash();
@@ -49,7 +49,7 @@ contract VerifyScript is Script {
         correctPublicInputs[1] = nullifierHash;
         correctPublicInputs[2] = nftMetadataCidHash;
     
-        bool isValidProof = starter.verifyEqual(proofBytes, correctPublicInputs);
+        bool isValidProof = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proofBytes, correctPublicInputs);
         require(isValidProof == true, "isValidProof should be true");
         console.logBool(isValidProof); // [Log]: true
         return isValidProof;
