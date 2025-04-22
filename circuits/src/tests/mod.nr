@@ -3,8 +3,9 @@ mod test_inputs; // test_inputs.nr
 mod tests {
     use crate::main;                   // src/main.nr
     use crate::data_types::{ InsurancePolicyData, HospitalBillData, RevealedData };  // src/data_types.nr
-    use crate::converters;             // src/converters.nr -> converters/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
+    use crate::utils;             // src/utils.nr -> utils/converter_field_to_bytes.nr -> convert_field_bytes32_to_uint8_array()
     use std::hash::poseidon2;
+
 
     #[test]
     fn test_hospital_bill_proof_verifier() {

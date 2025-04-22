@@ -1,6 +1,6 @@
 mod tests;      // tests/mod.nr
 mod data_types; // data_types.nr
-mod converters; // converters.nr -> converters/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
+mod utils;      // utils.nr -> utils/converter_field_to_bytes.nr -> convert_field_bytes32_to_uint8_array()
 
 use std::hash::poseidon2;
 use std::ecdsa_secp256k1::verify_signature;
@@ -8,7 +8,7 @@ use dep::std;
 use dep::ecrecover; // @dev - Source: https://github.com/colinnielsen/ecrecover-noir
 
 use data_types::{ InsurancePolicyData, HospitalBillData, RevealedData }; // @dev - IPNftData struct
-
+use utils::converter_field_to_bytes::convert_field_bytes32_to_uint8_array;       // @dev - Convert a Field (bytes32) value to uint8Array value
 
 fn main(
     root: pub Field, // @dev - Merkle Root
@@ -19,6 +19,10 @@ fn main(
     insurance_policy_data: InsurancePolicyData,
     hospital_bill_data: HospitalBillData
 ) -> pub RevealedData {
+    // @dev - [TEST] Convert a Field (bytes32) value to uint8Array value
+    let uint8_array_value:[u8; 32]= convert_field_bytes32_to_uint8_array(root);
+    println(f"uint8_array_value: {uint8_array_value}"); // [Log]: uint8_array_value: [33, 85, 151, 186, 205, 156, 126, 151, 125, 252, 23, 15, 50, 0, 116, 21, 93, 233, 116, 190, 73, 69, 121, 210, 88, 110, 91, 38, 143, 163, 182, 41]
+
     // @dev - Convert data type from "Field" to "uint32"
     let hospital_bill_amount_as_uint: u32 = hospital_bill_data.hospital_bill_amount as u32;
     let minimum_threshold_of_bill_amount_as_uint: u32 = insurance_policy_data.minimum_threshold_of_bill_amount as u32;
