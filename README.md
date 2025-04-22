@@ -49,3 +49,8 @@ sh ./test/circuit/runningTest_InsuranceClaimProofVerifier.sh
 ```bash
 sh ./scripts/utils/array-bytes-generator/random-array-bytes-generator/runningScript_randomArrayBytesGenerator.sh
 ```
+
+- Run the `randomArrayBytesGeneratorWithEthersjs.ts`
+```bash
+sh ./scripts/utils/array-bytes-generator/random-array-bytes-generator/runningScript_randomArrayBytesGeneratorWithEthersjs.sh
+```
