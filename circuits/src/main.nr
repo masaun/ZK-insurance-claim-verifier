@@ -7,8 +7,9 @@ use std::ecdsa_secp256k1::verify_signature;
 use dep::std;
 use dep::ecrecover; // @dev - Source: https://github.com/colinnielsen/ecrecover-noir
 
-use data_types::{ InsurancePolicyData, HospitalBillData, RevealedData }; // @dev - IPNftData struct
-use utils::converter_field_to_bytes::convert_field_bytes32_to_uint8_array;       // @dev - Convert a Field (bytes32) value to uint8Array value
+use data_types::{ InsurancePolicyData, HospitalBillData, RevealedData };    // @dev - struct
+use utils::converter_field_to_bytes::convert_field_bytes32_to_uint8_array;  // @dev - Convert a Field (bytes32) value to uint8Array value
+use utils::converter_field_to_bytes::convert_field_bytes64_to_uint8_array;  // @dev - Convert a Field (bytes64) value to uint8Array value
 
 fn main(
     root: pub Field, // @dev - Merkle Root
@@ -20,8 +21,13 @@ fn main(
     hospital_bill_data: HospitalBillData
 ) -> pub RevealedData {
     // @dev - [TEST] Convert a Field (bytes32) value to uint8Array value
-    let uint8_array_value:[u8; 32]= convert_field_bytes32_to_uint8_array(root);
-    println(f"uint8_array_value: {uint8_array_value}"); // [Log]: uint8_array_value: [33, 85, 151, 186, 205, 156, 126, 151, 125, 252, 23, 15, 50, 0, 116, 21, 93, 233, 116, 190, 73, 69, 121, 210, 88, 110, 91, 38, 143, 163, 182, 41]
+    let uint8_array_value_32:[u8; 32]= convert_field_bytes32_to_uint8_array(root);
+    println(f"uint8_array_value (bytes32): {uint8_array_value_32}"); // [Log]: uint8_array_value: [33, 85, 151, 186, 205, 156, 126, 151, 125, 252, 23, 15, 50, 0, 116, 21, 93, 233, 116, 190, 73, 69, 121, 210, 88, 110, 91, 38, 143, 163, 182, 41]
+
+    let value_in_field: Field = "0x8318535b54105d4a7aae60c08fc45f9687181b4fdfc625bd1a753fa7397fed753547f11ca8696646f2f3acb08e31016afac23e630c5d11f59f61fef57b0d2aa5";
+    let uint8_array_value_64:[u8; 64]= convert_field_bytes64_to_uint8_array(root);
+    println(f"uint8_array_value (bytes64): {uint8_array_value_64}"); // [Log]: uint8_array_value: [33, 85, 151, 186, 205, 156, 126, 151, 125, 252, 23, 15, 50, 0, 116, 21, 93, 233, 116, 190, 73, 69, 121, 210, 88, 110, 91, 38, 143, 163, 182, 41]
+
 
     // @dev - Convert data type from "Field" to "uint32"
     let hospital_bill_amount_as_uint: u32 = hospital_bill_data.hospital_bill_amount as u32;
