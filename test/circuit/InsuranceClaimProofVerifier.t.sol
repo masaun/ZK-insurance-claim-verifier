@@ -36,7 +36,7 @@ contract InsuranceClaimProofVerifierTest is Test {
             console.log("valueInUint8ArrayBytes[%s] = %s", i, valueInUint8ArrayBytes[i]);
         }
 
-       //console.log("valueInUint8ArrayBytes: %s", valueInUint8ArrayBytes);
+        //console.log("valueInUint8ArrayBytes: %s", valueInUint8ArrayBytes);
 
 
 
