@@ -31,8 +31,10 @@ contract InsuranceClaimProofVerifierTest is Test {
         hash_path_bytes32[1] = bytes32(hash_path[1]);
 
         /// @dev - [TEST]: Convert the first element of the hash_path array to bytes
-        bytes memory valueInUTF8Bytes = DataTypeConverter.toUtf8Bytes(hash_path[0]);
-        console.logBytes(valueInUTF8Bytes); // [Log]: 0x
+        //bytes memory valueInUTF8Bytes = DataTypeConverter.toUtf8Bytes(hash_path[0]);
+        //console.logBytes(valueInUTF8Bytes);
+
+        /// @dev - [TODO]: Using NoirJS to generate a value in "UTF-8 bytes array".
 
         /// @dev - Set the input data for generating a proof
         noirHelper.withInput("root", bytes32(uint256(0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629)))

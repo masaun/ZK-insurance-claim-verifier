@@ -39,3 +39,13 @@
 ```bash
 sh ./test/circuit/runningTest_InsuranceClaimProofVerifier.sh
 ```
+
+
+<br>
+
+## Utils - Array Bytes generator
+
+- Run the `randomArrayBytesGenerator.ts`
+```bash
+sh ./scripts/utils/array-bytes-generator/random-array-bytes-generator/runningScript_randomArrayBytesGenerator.sh
+```
