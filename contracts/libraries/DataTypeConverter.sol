@@ -55,28 +55,14 @@ library DataTypeConverter {
     }
 
     /**
-     * @dev - Converts a uint256 value to a UTF-8 bytes array of length 8.
+     * @dev - Converts a bytes32 value to an uint8 array bytes (length is 32 bytes).
+     * @dev - Target is to convert bytes32 in Solidity to [u8; 32] in Noir, which is same with uint8[] in Solidity.
      * @dev - i.e). 2 is converted to [0, 0, 0, 0, 0, 0, 0, 2]
      */
-    function toUtf8Bytes(uint256 value) public pure returns (bytes memory) {
-        require(value < 2**64, "Too large for 8 bytes");
-
-        bytes memory output = new bytes(8);
-        for (uint i = 0; i < 8; i++) {
-            output[7 - i] = bytes1(uint8(value >> (i * 8)));
-        }
-
-        return output;
-    }
-
-    /**
-     * @dev - Converts a UTF-8 bytes array of length 8 to uint256 value.
-     * @dev - i.e). [0, 0, 0, 0, 0, 0, 0, 2] is converted to 2
-     */
-    function utf8BytesToUint256(bytes8 utf8Bytes) public pure returns (uint256) {
-        uint256 result;
-        for (uint i = 0; i < 8; i++) {
-            result |= uint256(uint8(utf8Bytes[i])) << (8 * (7 - i)); // Big-endian
+    function toUint8Array(bytes32 data) public pure returns (uint8[] memory) {
+        uint8 ;
+        for (uint i = 0; i < 32; i++) {
+            result[i] = uint8(data[i]);
         }
         return result;
     }
