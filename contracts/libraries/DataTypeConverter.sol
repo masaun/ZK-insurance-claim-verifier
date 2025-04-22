@@ -59,8 +59,8 @@ library DataTypeConverter {
      * @dev - Target is to convert bytes32 in Solidity to [u8; 32] in Noir, which is same with uint8[] in Solidity.
      * @dev - i.e). 2 is converted to [0, 0, 0, 0, 0, 0, 0, 2]
      */
-    function toUint8Array(bytes32 data) public pure returns (uint8[] memory) {
-        uint8 ;
+    function toUint8Array(bytes32 data) public pure returns (uint8[] memory uint8ArrayBytesValue) {
+        uint8[] memory result;
         for (uint i = 0; i < 32; i++) {
             result[i] = uint8(data[i]);
         }
