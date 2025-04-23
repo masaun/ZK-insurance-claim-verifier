@@ -82,20 +82,23 @@ contract VerifyScript is Script {
         bytes32 _merkle_root = vm.parseJsonBytes32(json, ".merkle_root");
         bytes32 _nullifier = vm.parseJsonBytes32(json, ".nullifier");
         bytes32 _nullifier_in_revealed_data_struct = vm.parseJsonBytes32(json, ".nullifier_in_revealed_data_struct");
-        bool _is_bill_signed = vm.parseJsonBool(json, ".is_bill_signed");
-        bool _is_bill_amount_exceed_threshold = vm.parseJsonBool(json, ".is_bill_amount_exceed_threshold");
-        bool _is_policy_valid = vm.parseJsonBool(json, ".is_policy_valid");
+        bytes32 _is_bill_signed = vm.parseJsonBytes32(json, ".is_bill_signed");
+        bytes32 _is_bill_amount_exceed_threshold = vm.parseJsonBytes32(json, ".is_bill_amount_exceed_threshold");
+        bytes32 _is_policy_valid = vm.parseJsonBytes32(json, ".is_policy_valid");
+        // bytes32 _is_bill_signed = bytes32(uint256(vm.parseJsonBytes32(json, ".is_bill_signed")));
+        // bytes32 _is_bill_amount_exceed_threshold = bytes32(uint256(vm.parseJsonBytes32(json, ".is_bill_amount_exceed_threshold")));
+        // bytes32 _is_policy_valid = bytes32(uint256(vm.parseJsonBytes32(json, ".is_policy_valid")));
         console.logBytes32(_merkle_root);
         console.logBytes32(_nullifier);
         console.logBytes32(_nullifier_in_revealed_data_struct);
-        console.logBytes32l(_is_bill_signed);
+        console.logBytes32(_is_bill_signed);
         console.logBytes32(_is_bill_amount_exceed_threshold);
         console.logBytes32(_is_policy_valid);
 
         PublicInputs memory publicInputs = PublicInputs({
-            merkle_root: poseidon2HashAndPublicInputs.merkle_root,
-            nullifier: poseidon2HashAndPublicInputs.nullifier,
-            nullifier_in_revealed_data_struct: poseidon2HashAndPublicInputs.nullifier,
+            merkle_root: _merkle_root,
+            nullifier: _nullifier,
+            nullifier_in_revealed_data_struct: _nullifier_in_revealed_data_struct,
             is_bill_signed: _is_bill_signed,
             is_bill_amount_exceed_threshold: _is_bill_amount_exceed_threshold,
             is_policy_valid: _is_policy_valid
@@ -133,12 +136,12 @@ contract VerifyScript is Script {
             console.log("_hospital_signature_bytes[%s] = %s", i, _hospital_signature_bytes[i]); // [Log - Success]: _hospital_signature_bytes[0] = 211, _hospital_signature_bytes[1] = 23, ...
         }
 
-        bytes32[] memory _insurer_pubkey_bytes = vm.parseJsonBytes32Array(json, ".insurer_pubkey_bytes");
+        uint256[] memory _insurer_pubkey_bytes = vm.parseJsonUintArray(json, ".insurer_pubkey_bytes");
         for (uint i = 0; i < _insurer_pubkey_bytes.length; i++) {
             console.log("_insurer_pubkey_bytes[%s] = %s", i, _insurer_pubkey_bytes[i]); // [Log - Success]: _insurer_pubkey_bytes[0] = 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629, _insurer_pubkey_bytes[1] = 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862, ...
         }
 
-        bytes32[] memory _hospital_pubkey_bytes = vm.parseJsonBytes32Array(json, ".hospital_pubkey_bytes");
+        uint256[] memory _hospital_pubkey_bytes = vm.parseJsonUintArray(json, ".hospital_pubkey_bytes");
         for (uint i = 0; i < _hospital_pubkey_bytes.length; i++) {
             console.log("_hospital_pubkey_bytes[%s] = %s", i, _hospital_pubkey_bytes[i]); // [Log - Success]: _hospital_pubkey_bytes[0] = 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629, _hospital_pubkey_bytes[1] = 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862, ...
         }

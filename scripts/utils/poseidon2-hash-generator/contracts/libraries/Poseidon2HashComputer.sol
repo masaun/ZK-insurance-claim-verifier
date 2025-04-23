@@ -4,9 +4,9 @@ import { Script } from "forge-std/Script.sol";
 import "forge-std/console.sol";
 
 /**
- * @title Poseidon2HashComputer library
+ * @title Poseidon2HashComputer contract
  */
-library Poseidon2HashComputer is Script {
+contract Poseidon2HashComputer is Script {
 
     struct Poseidon2HashAndPublicInputs {
         string hash; // Poseidon Hash of "nullifier"
