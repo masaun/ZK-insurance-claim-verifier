@@ -7,7 +7,7 @@ import { UltraVerifier } from "../contracts/circuit/ultra-verifier/plonk_vk.sol"
 //import "../circuits/target/contract.sol";
 import { InsuranceClaimProofVerifier } from "../contracts/circuit/InsuranceClaimProofVerifier.sol";
 import { ProofConverter } from "./utils/ProofConverter.sol";
-import { Poseidon2HashComputer } from "./utils/Poseidon2HashComputer.sol";
+import { Poseidon2HashComputer } from "./utils/poseidon2-hash-generator/Poseidon2HashComputer.sol";
 
 import { DataTypeConverter } from "../../contracts/libraries/DataTypeConverter.sol";
 

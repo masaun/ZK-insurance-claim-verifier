@@ -6,6 +6,13 @@ pragma solidity ^0.8.17;
  */
 library Poseidon2HashComputer {
 
+    struct Poseidon2HashAndPublicInputs {
+        string hash; // Poseidon Hash of "nullifier"
+        bytes32 merkleRoot;
+        bytes32 nullifier;
+        bytes32 nftMetadataCidHash;
+    }
+
     /**
      * @dev - Compute Poseidon2 hash
      */
