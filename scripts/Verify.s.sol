@@ -20,17 +20,10 @@ contract VerifyScript is Script {
         bytes32 merkle_root; // root
         bytes32 nullifier;    
         bytes32 nullifier_in_revealed_data_struct; // Same with the "nullifier"
-        bool is_bill_signed;
-        bool is_bill_amount_exceed_threshold;
-        bool is_policy_valid;
+        bytes32 is_bill_signed;                    // "0": False <-> "1": True
+        bytes32 is_bill_amount_exceed_threshold;   // "0": False <-> "1": True
+        bytes32 is_policy_valid;                   // "0": False <-> "1": True
     }
-
-    // struct Poseidon2HashAndPublicInputs {
-    //     string hash; // Poseidon Hash of "nullifier"
-    //     bytes32 merkleRoot;
-    //     bytes32 nullifier;
-    //     bytes32 nftMetadataCidHash;
-    // }
 
     function setUp() public {}
 
@@ -48,15 +41,15 @@ contract VerifyScript is Script {
         bytes32 merkle_root = publicInputs.merkle_root;
         bytes32 nullifier = publicInputs.nullifier;
         bytes32 nullifier_in_revealed_data_struct = publicInputs.nullifier_in_revealed_data_struct;
-        bool is_bill_signed = publicInputs.is_bill_signed;
-        bool is_bill_amount_exceed_threshold = publicInputs.is_bill_amount_exceed_threshold;
-        bool is_policy_valid = publicInputs.is_policy_valid;
+        bytes32 is_bill_signed = publicInputs.is_bill_signed;
+        bytes32 is_bill_amount_exceed_threshold = publicInputs.is_bill_amount_exceed_threshold;
+        bytes32 is_policy_valid = publicInputs.is_policy_valid;
         console.logBytes32(merkle_root); // [Log]: 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629
         console.logBytes32(nullifier); // [Log]: 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862
         console.logBytes32(nullifier_in_revealed_data_struct); // [Log]: 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862
-        console.logBool(is_bill_signed); // [Log]: true
-        console.logBool(is_bill_amount_exceed_threshold); // [Log]: true
-        console.logBool(is_policy_valid); // [Log]: true
+        console.logBytes32(is_bill_signed); // [Log]: true
+        console.logBytes32(is_bill_amount_exceed_threshold); // [Log]: true
+        console.logBytes32(is_policy_valid); // [Log]: true
 
         bytes memory proof_w_inputs = vm.readFileBinary("./circuits/target/insurance_claim_proof.bin");
         bytes memory proofBytes = ProofConverter.sliceAfter96Bytes(proof_w_inputs);    /// @dev - In case of that there are 3 public inputs (bytes32 * 3 = 96 bytes), the proof file includes 64 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
@@ -68,7 +61,7 @@ contract VerifyScript is Script {
         bytes32[] memory correctPublicInputs = new bytes32[](6);
         correctPublicInputs[0] = merkle_root;
         correctPublicInputs[1] = nullifier;
-        correctPublicInputs[2] = nullifier_in_revealed_data_struct
+        correctPublicInputs[2] = nullifier_in_revealed_data_struct;
         correctPublicInputs[3] = is_bill_signed;
         correctPublicInputs[4] = is_bill_amount_exceed_threshold;
         correctPublicInputs[5] = is_policy_valid;
@@ -94,9 +87,9 @@ contract VerifyScript is Script {
         console.logBytes32(_merkle_root);
         console.logBytes32(_nullifier);
         console.logBytes32(_nullifier_in_revealed_data_struct);
-        console.logBool(_is_bill_signed);
-        console.logBool(_is_bill_amount_exceed_threshold);
-        console.logBool(_is_policy_valid);
+        console.logBytes32l(_is_bill_signed);
+        console.logBytes32(_is_bill_amount_exceed_threshold);
+        console.logBytes32(_is_policy_valid);
 
         PublicInputs memory publicInputs = PublicInputs({
             merkle_root: poseidon2HashAndPublicInputs.merkle_root,
