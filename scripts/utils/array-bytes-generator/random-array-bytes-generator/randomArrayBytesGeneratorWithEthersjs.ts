@@ -6,11 +6,11 @@ import { decodeBase64 } from 'ethers/utils';  // ethers.js v6
  * @notice - Generate a random array of bytes /w ethers.js v6
  */
 async function generateRandomArrayBytesWithWithEthersjs() {
-    const bytes64 = "0xf875be44b382147d14f23ae10a3cd544e54996013ea390cef46c215f063862760011cd83eee30440d9dd72aa4a0c401d8ef014efd1c34b983217616bef8fbd401b"
-    const randomUint8ArrayBytes_64 = decodeBase64(bytes64);                               // Lenght of 64 bytes (ethers.js v6)
+    const bytes64Value = "0xf875be44b382147d14f23ae10a3cd544e54996013ea390cef46c215f063862760011cd83eee30440d9dd72aa4a0c401d8ef014efd1c34b983217616bef8fbd401b"
+    const randomUint8ArrayBytes_64 = decodeBase64(bytes64Value);                               // Lenght of 64 bytes (ethers.js v6)
 
-    const bytes32 = "0x68656c6c6f000000000000000000000000000000000000000000000000000000"; // "hello" padded
-    const randomUint8ArrayBytes_32 = decodeBase64(bytes32);                               // Lenght of 32 bytes (ethers.js v6)
+    const bytes32Value = "0x68656c6c6f000000000000000000000000000000000000000000000000000000"; // "hello" padded
+    const randomUint8ArrayBytes_32 = decodeBase64(bytes32Value);                               // Lenght of 32 bytes (ethers.js v6)
     //const randomUint8ArrayBytes = ethers.utils.decodeBase64(bytes32);                   // Lenght of 32 bytes
     //const randomUint8ArrayBytes = arrayify(bytes32);                                    // Lenght of 32 bytes (ethers.js v5)
 
