@@ -10,7 +10,7 @@ import { Test } from "forge-std/Test.sol";
 import { NoirHelper } from "foundry-noir-helper/NoirHelper.sol";
 
 /// @dev - Import the PubkeyAndSignedMessageExtractor.sol from the scripts/utils/array-bytes-generator directory
-import { PubkeyAndSignedMessageExtractor } from "../../scripts/utils/array-bytes-generator/pubkey-and-signed-message-extractor/contracts/libraries/PubkeyAndSignedMessageExtractor.sol";
+import { PubkeyAndSignedMessageExtractor } from "../utils/array-bytes-generator/pubkey-and-signed-message-extractor/contracts/libraries/PubkeyAndSignedMessageExtractor.sol";
 
 
 contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtractor {
