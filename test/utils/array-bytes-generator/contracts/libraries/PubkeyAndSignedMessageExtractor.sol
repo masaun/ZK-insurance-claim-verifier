@@ -4,9 +4,9 @@ import { Script } from "forge-std/Script.sol";
 import "forge-std/console.sol";
 
 /**
- * @title Poseidon2HashComputer contract
+ * @title PubkeyAndSignedMessageExtractor contract
  */
-contract Poseidon2HashComputer is Script {
+contract PubkeyAndSignedMessageExtractor is Script {
     
     /**
      * @dev - Extract the public key and signed message from the output.json file
