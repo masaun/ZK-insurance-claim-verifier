@@ -7,7 +7,7 @@ import { UltraVerifier } from "../contracts/circuit/ultra-verifier/plonk_vk.sol"
 //import "../circuits/target/contract.sol";
 import { InsuranceClaimProofVerifier } from "../contracts/circuit/InsuranceClaimProofVerifier.sol";
 import { ProofConverter } from "./utils/ProofConverter.sol";
-import { Poseidon2HashComputer } from "./utils/poseidon2-hash-generator/Poseidon2HashComputer.sol";
+import { Poseidon2HashComputer } from "./utils/poseidon2-hash-generator/contracts/libraries/Poseidon2HashComputer.sol";
 
 import { DataTypeConverter } from "../../contracts/libraries/DataTypeConverter.sol";
 
@@ -17,9 +17,9 @@ contract VerifyScript is Script {
     UltraVerifier public verifier;
 
     struct PublicInputs {
-        bytes32 merkleRoot; // root
+        bytes32 merkle_root; // root
         bytes32 nullifier;    
-        bytes32 nullifierInRevealedDataStruct, // Same with the "nullifier"
+        bytes32 nullifier_in_revealed_data_struct; // Same with the "nullifier"
         bool is_bill_signed;
         bool is_bill_amount_exceed_threshold;
         bool is_policy_valid;
@@ -39,18 +39,24 @@ contract VerifyScript is Script {
         insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
 
 
+
         // @dev - [TEST]: Extract the public key and signed message from the output.json file
         extractPubkeyAndSignedMessage();
 
-
         // @dev - Retrieve the Poseidon2 hash and public inputs, which was read from the output.json file
-        Poseidon2HashAndPublicInputs memory poseidon2HashAndPublicInputs = computePoseidon2Hash();
-        bytes32 merkleRoot = poseidon2HashAndPublicInputs.merkleRoot;
-        bytes32 nullifierHash = poseidon2HashAndPublicInputs.nullifier;
-        bytes32 nftMetadataCidHash = poseidon2HashAndPublicInputs.nftMetadataCidHash;
-        console.logBytes32(merkleRoot);          // [Log]: 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629
-        console.logBytes32(nullifierHash);       // [Log]: 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862
-        console.logBytes32(nftMetadataCidHash);  // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
+        PublicInputs memory publicInputs = getPublicInputs();
+        bytes32 merkle_root = publicInputs.merkle_root;
+        bytes32 nullifier = publicInputs.nullifier;
+        bytes32 nullifier_in_revealed_data_struct = publicInputs.nullifier_in_revealed_data_struct;
+        bool is_bill_signed = publicInputs.is_bill_signed;
+        bool is_bill_amount_exceed_threshold = publicInputs.is_bill_amount_exceed_threshold;
+        bool is_policy_valid = publicInputs.is_policy_valid;
+        console.logBytes32(merkle_root); // [Log]: 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629
+        console.logBytes32(nullifier); // [Log]: 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862
+        console.logBytes32(nullifier_in_revealed_data_struct); // [Log]: 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862
+        console.logBool(is_bill_signed); // [Log]: true
+        console.logBool(is_bill_amount_exceed_threshold); // [Log]: true
+        console.logBool(is_policy_valid); // [Log]: true
 
         bytes memory proof_w_inputs = vm.readFileBinary("./circuits/target/insurance_claim_proof.bin");
         bytes memory proofBytes = ProofConverter.sliceAfter96Bytes(proof_w_inputs);    /// @dev - In case of that there are 3 public inputs (bytes32 * 3 = 96 bytes), the proof file includes 64 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
@@ -59,15 +65,49 @@ contract VerifyScript is Script {
         // string memory proof = vm.readLine("./circuits/target/ip_nft_ownership_proof.bin");
         // bytes memory proofBytes = vm.parseBytes(proof);
 
-        bytes32[] memory correctPublicInputs = new bytes32[](3);
-        correctPublicInputs[0] = merkleRoot;
-        correctPublicInputs[1] = nullifierHash;
-        correctPublicInputs[2] = nftMetadataCidHash;
+        bytes32[] memory correctPublicInputs = new bytes32[](6);
+        correctPublicInputs[0] = merkle_root;
+        correctPublicInputs[1] = nullifier;
+        correctPublicInputs[2] = nullifier_in_revealed_data_struct
+        correctPublicInputs[3] = is_bill_signed;
+        correctPublicInputs[4] = is_bill_amount_exceed_threshold;
+        correctPublicInputs[5] = is_policy_valid;
     
         bool isValidProof = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proofBytes, correctPublicInputs);
         require(isValidProof == true, "isValidProof should be true");
         console.logBool(isValidProof); // [Log]: true
         return isValidProof;
+    }
+
+    function getPublicInputs() public view returns (PublicInputs memory _pulicInputs) {
+        /// @dev - Read the publicInputs.json file and parse the JSON data
+        string memory json = vm.readFile("scripts/utils/array-bytes-generator/pubkey-and-signed-message-extractor/output/publicInputs.json");
+        console.log(json);
+        bytes memory data = vm.parseJson(json);
+
+        bytes32 _merkle_root = vm.parseJsonBytes32(json, ".merkle_root");
+        bytes32 _nullifier = vm.parseJsonBytes32(json, ".nullifier");
+        bytes32 _nullifier_in_revealed_data_struct = vm.parseJsonBytes32(json, ".nullifier_in_revealed_data_struct");
+        bool _is_bill_signed = vm.parseJsonBool(json, ".is_bill_signed");
+        bool _is_bill_amount_exceed_threshold = vm.parseJsonBool(json, ".is_bill_amount_exceed_threshold");
+        bool _is_policy_valid = vm.parseJsonBool(json, ".is_policy_valid");
+        console.logBytes32(_merkle_root);
+        console.logBytes32(_nullifier);
+        console.logBytes32(_nullifier_in_revealed_data_struct);
+        console.logBool(_is_bill_signed);
+        console.logBool(_is_bill_amount_exceed_threshold);
+        console.logBool(_is_policy_valid);
+
+        PublicInputs memory publicInputs = PublicInputs({
+            merkle_root: poseidon2HashAndPublicInputs.merkle_root,
+            nullifier: poseidon2HashAndPublicInputs.nullifier,
+            nullifier_in_revealed_data_struct: poseidon2HashAndPublicInputs.nullifier,
+            is_bill_signed: _is_bill_signed,
+            is_bill_amount_exceed_threshold: _is_bill_amount_exceed_threshold,
+            is_policy_valid: _is_policy_valid
+        });
+
+        return publicInputs;
     }
 
 
@@ -94,7 +134,20 @@ contract VerifyScript is Script {
             console.log("_insurer_signature_bytes[%s] = %s", i, _insurer_signature_bytes[i]); // [Log - Success]: _insurer_signature_bytes[0] = 211, _insurer_signature_bytes[1] = 23, ...
         }
 
+        uint256[] memory _hospital_signature_bytes = vm.parseJsonUintArray(json, ".hospital_signature_bytes");
+        for (uint i = 0; i < _hospital_signature_bytes.length; i++) {
+            console.log("_hospital_signature_bytes[%s] = %s", i, _hospital_signature_bytes[i]); // [Log - Success]: _hospital_signature_bytes[0] = 211, _hospital_signature_bytes[1] = 23, ...
+        }
 
+        bytes32[] memory _insurer_pubkey_bytes = vm.parseJsonBytes32Array(json, ".insurer_pubkey_bytes");
+        for (uint i = 0; i < _insurer_pubkey_bytes.length; i++) {
+            console.log("_insurer_pubkey_bytes[%s] = %s", i, _insurer_pubkey_bytes[i]); // [Log - Success]: _insurer_pubkey_bytes[0] = 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629, _insurer_pubkey_bytes[1] = 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862, ...
+        }
+
+        bytes32[] memory _hospital_pubkey_bytes = vm.parseJsonBytes32Array(json, ".hospital_pubkey_bytes");
+        for (uint i = 0; i < _hospital_pubkey_bytes.length; i++) {
+            console.log("_hospital_pubkey_bytes[%s] = %s", i, _hospital_pubkey_bytes[i]); // [Log - Success]: _hospital_pubkey_bytes[0] = 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629, _hospital_pubkey_bytes[1] = 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862, ...
+        }
 
         // string memory _insurer_pubkey_bytes = vm.parseJsonString(json, ".insurer_pubkey_bytes");
         // bytes32 _insurer_signature_bytes = vm.parseJsonBytes32(json, ".insurer_signature_bytes");

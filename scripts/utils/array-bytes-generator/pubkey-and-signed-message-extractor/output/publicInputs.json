@@ -1,0 +1,8 @@
+{
+    "merkle_root": "0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b62",
+    "nullifier": "0x2658c0d82f9c0728e055fd8272568260ed2d5117a0ed2e1935f737c528ef3505",    
+    "nullifier_in_revealed_data_struct": "0x2658c0d82f9c0728e055fd8272568260ed2d5117a0ed2e1935f737c528ef3505",
+    "is_bill_signed": true,
+    "is_bill_amount_exceed_threshold": true,
+    "is_policy_vali": true
+}
