@@ -28,6 +28,11 @@ contract VerifyScript is Script {
         verifier = new UltraVerifier();
         insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
 
+
+        // @dev - [TEST]: Extract the public key and signed message from the output.json file
+        extractPubkeyAndSignedMessage();
+
+
         // @dev - Retrieve the Poseidon2 hash and public inputs, which was read from the output.json file
         Poseidon2HashAndPublicInputs memory poseidon2HashAndPublicInputs = computePoseidon2Hash();
         bytes32 merkleRoot = poseidon2HashAndPublicInputs.merkleRoot;
@@ -104,4 +109,37 @@ contract VerifyScript is Script {
         return poseidon2HashAndPublicInputs;
     }
 
+
+    /**
+     * @dev - Extract the public key and signed message from the output.json file
+     */
+    function extractPubkeyAndSignedMessage() public returns (bool) {
+        /// @dev - Run the Poseidon2 hash generator script
+        string[] memory ffi_commands_for_generating_poseidon2_hash = new string[](2);
+        ffi_commands_for_generating_poseidon2_hash[0] = "sh";
+        ffi_commands_for_generating_poseidon2_hash[1] = "scripts/utils/array-bytes-generator/random-array-bytes-generator/runningScript_randomArrayBytesGeneratorWithEthersjs.sh";
+        bytes memory commandResponse = vm.ffi(ffi_commands_for_generating_poseidon2_hash);
+        console.log(string(commandResponse));
+
+        /// @dev - Read the output.json file and parse the JSON data
+        string memory json = vm.readFile("scripts/utils/array-bytes-generator/pubkey-and-signed-message-extractor/output/output.json");
+        console.log(json);
+        bytes memory data = vm.parseJson(json);
+        console.logBytes(data);
+
+        string memory _insurer_signature_bytes = vm.parseJsonString(json, ".insurer_signature_bytes");
+        console.logString(_insurer_signature_bytes); // [Log - Success]: 211,23,252,23, ..., 221,227,77,91
+
+        // string memory _insurer_pubkey_bytes = vm.parseJsonString(json, ".insurer_pubkey_bytes");
+        // bytes32 _insurer_signature_bytes = vm.parseJsonBytes32(json, ".insurer_signature_bytes");
+        // bytes32 _hospital_pubkey_bytes = vm.parseJsonBytes32(json, ".hospital_pubkey_bytes");
+        // bytes32 _hospital_signature_bytes = vm.parseJsonBytes32(json, ".hospital_signature_bytes");
+        // console.logString(_insurer_pubkey_bytes);
+        // console.logBytes32(_insurer_signature_bytes);
+        // console.logBytes32(_hospital_pubkey_bytes);
+        // console.logBytes32(_hospital_signature_bytes);
+    }
+
+
 }
+

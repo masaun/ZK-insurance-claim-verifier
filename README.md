@@ -34,6 +34,14 @@
 
 # Installation
 
+## SC - script
+- Run the `Verify.s.sol`
+```bash
+sh ./scripts/runningScript_Verify.sh
+```
+
+<br>
+
 ## SC - test
 
 ```bash
