@@ -7,7 +7,7 @@ import { ethers, SigningKey } from "ethers"; // @dev - ethers.js v6
 async function extractPubkeyAndSignedMessage() {
     // hardhat wallet 0
     const sender = new ethers.Wallet(
-        "ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+        "ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"　/// @dev - private key
     );
 
     // @dev - "message" is same with the "message to be signed /or hashed"

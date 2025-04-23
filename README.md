@@ -54,3 +54,8 @@ sh ./scripts/utils/array-bytes-generator/random-array-bytes-generator/runningScr
 ```bash
 sh ./scripts/utils/array-bytes-generator/random-array-bytes-generator/runningScript_randomArrayBytesGeneratorWithEthersjs.sh
 ```
+
+- Run the `pubkeyAndSignedMessageExtractor.ts`
+```bash
+sh ./scripts/utils/array-bytes-generator/pubkey-and-signed-message-extractor/runningScript_pubkeyAndSignedMessageExtractor.sh
+```
