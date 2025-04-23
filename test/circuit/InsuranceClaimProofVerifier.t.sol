@@ -10,7 +10,6 @@ import { Test } from "forge-std/Test.sol";
 import { NoirHelper } from "foundry-noir-helper/NoirHelper.sol";
 
 /// @dev - Import the PubkeyAndSignedMessageExtractor.sol from the scripts/utils/array-bytes-generator directory
-//import { PubkeyAndSignedMessageExtractor } from "../utils/array-bytes-generator/contracts/libraries/PubkeyAndSignedMessageExtractor.sol";
 import { PubkeyAndSignedMessageExtractor } from "../../scripts/utils/array-bytes-generator/contracts/libraries/PubkeyAndSignedMessageExtractor.sol";
 
 
