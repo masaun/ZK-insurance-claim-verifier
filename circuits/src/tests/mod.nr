@@ -3,8 +3,9 @@ mod test_inputs; // test_inputs.nr
 mod tests {
     use crate::main;                   // src/main.nr
     use crate::data_types::{ InsurancePolicyData, HospitalBillData, RevealedData };  // src/data_types.nr
-    use crate::converters;             // src/converters.nr -> converters/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
+    use crate::utils;             // src/utils.nr -> utils/converter_field_to_bytes.nr -> convert_field_bytes32_to_uint8_array()
     use std::hash::poseidon2;
+
 
     #[test]
     fn test_hospital_bill_proof_verifier() {
@@ -153,7 +154,7 @@ mod tests {
         // Constraint check
         assert(revealed_data.nullifier == _nullifier, "Invalid nullifier");
 
-        println("The test of the test_nft_metadata_verifier()) has been successful");
+        println("The test of the test_nft_metadata_verifier() has been successful");
 
         // [TEST]: Recover the wallet address from the pubKey, signature, and the hashed message
         wallet_address_recover(
@@ -172,14 +173,15 @@ mod tests {
      */
     fn wallet_address_recover(pubkey: [u8; 64], signature: [u8; 64], message_hash: [u8; 32]) {
         // @dev - Split the pubKey into 2 parts
-        let key = ecrecover::secp256k1::PubKey::from_unified(pubkey);
-        let pubkey_of_hospital_x: [u8; 32] = key.pub_x;
-        let pubkey_of_hospital_y: [u8; 32] = key.pub_y;
+        let pubkey = ecrecover::secp256k1::PubKey::from_unified(pubkey);
+        let pubkey_of_hospital_x: [u8; 32] = pubkey.pub_x;
+        let pubkey_of_hospital_y: [u8; 32] = pubkey.pub_y;
+        println(f"pubkey: {pubkey}");
         println(f"pubkey_of_hospital_x: {pubkey_of_hospital_x}");
         println(f"pubkey_of_hospital_y: {pubkey_of_hospital_y}");
 
         // @dev - Recover the wallet address from the pubKey, signature, and the hashed message
-        let wallet_address = ecrecover::ecrecover(key.pub_x, key.pub_y, signature, message_hash);
+        let wallet_address = ecrecover::ecrecover(pubkey.pub_x, pubkey.pub_y, signature, message_hash);
         println(f"wallet_address: {wallet_address}"); // [Log]: wallet_address: 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
     }
 

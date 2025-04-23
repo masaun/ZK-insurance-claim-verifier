@@ -1,14 +1,15 @@
 mod tests;      // tests/mod.nr
 mod data_types; // data_types.nr
-mod converters; // converters.nr -> converters/convert_cid_to_poseidon_hash.nr -> convert_nft_metadata_cid_to_poseidon_hash()
+mod utils;      // utils.nr -> utils/converter_field_to_bytes.nr -> convert_field_bytes32_to_uint8_array()
 
 use std::hash::poseidon2;
 use std::ecdsa_secp256k1::verify_signature;
 use dep::std;
 use dep::ecrecover; // @dev - Source: https://github.com/colinnielsen/ecrecover-noir
 
-use data_types::{ InsurancePolicyData, HospitalBillData, RevealedData }; // @dev - IPNftData struct
-
+use data_types::{ InsurancePolicyData, HospitalBillData, RevealedData };    // @dev - struct
+use utils::converter_field_to_bytes::convert_field_bytes32_to_uint8_array;  // @dev - Convert a Field (bytes32) value to uint8Array value
+use utils::converter_field_to_bytes::convert_field_bytes64_to_uint8_array;  // @dev - Convert a Field (bytes64) value to uint8Array value
 
 fn main(
     root: pub Field, // @dev - Merkle Root
@@ -19,6 +20,20 @@ fn main(
     insurance_policy_data: InsurancePolicyData,
     hospital_bill_data: HospitalBillData
 ) -> pub RevealedData {
+    // @dev - [TEST] Convert a Field (bytes32) value to uint8Array value -> [Result]: Successful
+    let bytes32_field_value = root;
+    let uint8_array_value_32:[u8; 32]= convert_field_bytes32_to_uint8_array(bytes32_field_value);
+    println(f"uint8_array_value (bytes32): {uint8_array_value_32}"); // [Log]: uint8_array_value (bytes32): [33, 85, 151, 186, 205, 156, 126, 151, 125, 252, 23, 15, 50, 0, 116, 21, 93, 233, 116, 190, 73, 69, 121, 210, 88, 110, 91, 38, 143, 163, 182, 41]
+
+    // @dev - [TEST] Convert a Field (bytes64) value to uint8Array value -> [Result]: Failed due to too long input value (bytes64)
+    // let value_in_field: Field = Field::from_be_bytes::<64>(0xf875be44b382147d14f23ae10a3cd544e54996013ea390cef46c215f063862760011cd83eee30440d9dd72aa4a0c401d8ef014efd1c34b983217616bef8fbd401b);
+    // //let value_in_field: Field = Field::from_be_bytes::<64>(hospital_bill_data.hospital_signature_bytes);
+    // let uint8_array_value_64:[u8; 64]= convert_field_bytes64_to_uint8_array(value_in_field);
+    // println(f"uint8_array_value (bytes64): {uint8_array_value_64}"); // [Log]: uint8_array_value (bytes64): 
+
+
+
+
     // @dev - Convert data type from "Field" to "uint32"
     let hospital_bill_amount_as_uint: u32 = hospital_bill_data.hospital_bill_amount as u32;
     let minimum_threshold_of_bill_amount_as_uint: u32 = insurance_policy_data.minimum_threshold_of_bill_amount as u32;

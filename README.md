@@ -34,6 +34,14 @@
 
 # Installation
 
+## SC - script
+- Run the `Verify.s.sol`
+```bash
+sh ./scripts/runningScript_Verify.sh
+```
+
+<br>
+
 ## SC - test
 
 ```bash
@@ -48,4 +56,14 @@ sh ./test/circuit/runningTest_InsuranceClaimProofVerifier.sh
 - Run the `randomArrayBytesGenerator.ts`
 ```bash
 sh ./scripts/utils/array-bytes-generator/random-array-bytes-generator/runningScript_randomArrayBytesGenerator.sh
+```
+
+- Run the `randomArrayBytesGeneratorWithEthersjs.ts`
+```bash
+sh ./scripts/utils/array-bytes-generator/random-array-bytes-generator/runningScript_randomArrayBytesGeneratorWithEthersjs.sh
+```
+
+- Run the `pubkeyAndSignedMessageExtractor.ts`
+```bash
+sh ./scripts/utils/array-bytes-generator/pubkey-and-signed-message-extractor/runningScript_pubkeyAndSignedMessageExtractor.sh
 ```
