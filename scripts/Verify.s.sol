@@ -125,10 +125,15 @@ contract VerifyScript is Script {
         string memory json = vm.readFile("scripts/utils/array-bytes-generator/pubkey-and-signed-message-extractor/output/output.json");
         console.log(json);
         bytes memory data = vm.parseJson(json);
-        console.logBytes(data);
+        //console.logBytes(data);
 
-        string memory _insurer_signature_bytes = vm.parseJsonString(json, ".insurer_signature_bytes");
-        console.logString(_insurer_signature_bytes); // [Log - Success]: 211,23,252,23, ..., 221,227,77,91
+        /// @dev - Store a Uint8Array value, which was retrieved from the output.json, into the uint256 array variable (uint256[])
+        uint256[] memory _insurer_signature_bytes = vm.parseJsonUintArray(json, ".insurer_signature_bytes");
+        for (uint i = 0; i < _insurer_signature_bytes.length; i++) {
+            console.log("_insurer_signature_bytes[%s] = %s", i, _insurer_signature_bytes[i]); // [Log - Success]: _insurer_signature_bytes[0] = 211, _insurer_signature_bytes[1] = 23, ...
+        }
+
+
 
         // string memory _insurer_pubkey_bytes = vm.parseJsonString(json, ".insurer_pubkey_bytes");
         // bytes32 _insurer_signature_bytes = vm.parseJsonBytes32(json, ".insurer_signature_bytes");
