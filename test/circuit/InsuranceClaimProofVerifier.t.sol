@@ -9,8 +9,11 @@ import "forge-std/console.sol";
 import { Test } from "forge-std/Test.sol";
 import { NoirHelper } from "foundry-noir-helper/NoirHelper.sol";
 
+/// @dev - Import the PubkeyAndSignedMessageExtractor.sol from the scripts/utils/array-bytes-generator directory
+import { PubkeyAndSignedMessageExtractor } from "../../scripts/utils/array-bytes-generator/pubkey-and-signed-message-extractor/contracts/libraries/PubkeyAndSignedMessageExtractor.sol";
 
-contract InsuranceClaimProofVerifierTest is Test {
+
+contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtractor {
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     UltraVerifier public verifier;
     NoirHelper public noirHelper;
@@ -22,6 +25,12 @@ contract InsuranceClaimProofVerifierTest is Test {
     }
 
     function test_verifyProof() public {
+
+        /// @dev - [TEST]: Extract the public key and signed message from the output.json file
+        extractPubkeyAndSignedMessage();
+
+
+
         uint256[] memory hash_path = new uint256[](2);
         hash_path[0] = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8;
         hash_path[1] = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77;
