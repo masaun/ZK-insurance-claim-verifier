@@ -1,10 +1,12 @@
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.29;
 
+import { Script } from "forge-std/Script.sol";
+import "forge-std/console.sol";
 
 /**
  * @title Poseidon2HashComputer library
  */
-library Poseidon2HashComputer {
+library Poseidon2HashComputer is Script {
 
     struct Poseidon2HashAndPublicInputs {
         string hash; // Poseidon Hash of "nullifier"
