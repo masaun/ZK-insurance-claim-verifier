@@ -27,6 +27,10 @@
 
 | Contract Name | Descripttion | Deployed-contract addresses on `Swell Chain` (Testnet) | Contract Source Code Verified |
 | ------------- |:------------:|:--------------------------------------------------:|:-----------------------------:|
+| UltraVerifier | The UltraPlonk Verifer contract (`./contracts/circuit/ultra-verifier/plonk_vk.sol`), which is generated based on ZK circuit in Noir (`./circuits/src/main.nr`). FYI: To generated this contract, the way of the [Noir's Solidity Verifier generation](https://noir-lang.org/docs/how_to/how-to-solidity-verifier) was used. | [0x68fC0B89aa8591ff49065971ADFECeE42eF4cA36](https://swell-testnet-explorer.alt.technology/address/0x68fc0b89aa8591ff49065971adfecee42ef4ca36) | [Contract Source Code Verified](https://swell-testnet-explorer.alt.technology/address/0x68fc0b89aa8591ff49065971adfecee42ef4ca36?tab=contract) |
+| InsuranceClaimProofVerifier | The InsuranceClaimProofVerifier contract, which the validation using the UltraVerifier contract is implemented | [0xE4531177030A7bD88eb58c6ADEe0e4155AfCaeCf](https://swell-testnet-explorer.alt.technology/address/0xe4531177030a7bd88eb58c6adee0e4155afcaecf) | [Contract Source Code Verified](https://swell-testnet-explorer.alt.technology/address/0xe4531177030a7bd88eb58c6adee0e4155afcaecf?tab=contract) |
+
+
 
 <br>
 
