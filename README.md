@@ -35,10 +35,18 @@
 # Installation
 
 ## SC - script
-- Run the `Verify.s.sol`
+- Run the `Verify.s.sol` on Local Network
 ```bash
 sh ./scripts/runningScript_Verify.sh
 ```
+
+<br>
+
+- Run the `Verify.s.sol` on `Swell Chain (Testnet)`
+```bash
+sh ./scripts/swellchain-testnet/runningScript_Verify_onSwellChainTestnet.sh
+```
+
 
 <br>
 
