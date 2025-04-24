@@ -69,6 +69,13 @@ curl -L https://foundry.paradigm.xyz | bash
 
 6. Then run `bbup`.
 
+<br>
+
+## Set the environment file (`env`)
+- Create the `env` file:
+```bash
+cp .env.example .env
+```
 
 <br>
 
