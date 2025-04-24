@@ -41,7 +41,7 @@ contract VerifyScript is Script {
         //verifier = new UltraVerifier();
         //insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
 
-        // @dev - Extract the public key and signed message from the output.json file
+        // @dev - [TEST]: Extract the public key and signed message from the output.json file
         extractPubkeyAndSignedMessage();
 
         // @dev - Retrieve the Poseidon2 hash and public inputs, which was read from the output.json file
