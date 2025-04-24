@@ -48,6 +48,14 @@ sh ./scripts/runningScript_Verify.sh
 sh ./test/circuit/runningTest_InsuranceClaimProofVerifier.sh
 ```
 
+<br>
+
+## Deployment
+- Run the `DeploymentAllContracts.s.sol`
+```bash
+sh ./scripts/swellchain-testnet/deployment/deploymentScript_AllContracts.sh
+```
+
 
 <br>
 
