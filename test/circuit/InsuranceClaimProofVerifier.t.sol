@@ -27,7 +27,11 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
     function test_verifyProof() public {
 
         /// @dev - [TEST]: Extract the public key and signed message from the output.json file
-        extractPubkeyAndSignedMessage();
+        PubkeyAndSignedMessage memory pubkeyAndSignedMessage = extractPubkeyAndSignedMessage();
+        uint256[] memory insurer_signature_bytes = pubkeyAndSignedMessage.insurer_signature_bytes;
+        uint256[] memory insurer_pubkey_bytes = pubkeyAndSignedMessage.insurer_pubkey_bytes;
+        uint256[] memory hospital_pubkey_bytes = pubkeyAndSignedMessage.hospital_pubkey_bytes;
+        uint256[] memory hospital_signature_bytes = pubkeyAndSignedMessage.hospital_signature_bytes;
 
 
 
@@ -59,8 +63,8 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
                   
                   // @dev - The InsurancePolicyData struct
                   .withStruct("insurance_policy_data")
-                  .withStructInput("insurer_pubkey_bytes", bytes32(uint256(0x8318535b54105d4a7aae60c08fc45f9687181b4fdfc625bd1a753fa7397fed753547f11ca8696646f2f3acb08e31016afac23e630c5d11f59f61fef57b0d2aa5))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("insurer_signature_bytes", bytes32(uint256(0xf875be44b382147d14f23ae10a3cd544e54996013ea390cef46c215f063862760011cd83eee30440d9dd72aa4a0c401d8ef014efd1c34b983217616bef8fbd401b)))
+                  .withStructInput("insurer_pubkey_bytes", bytes32(insurer_pubkey_bytes)) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("insurer_signature_bytes", bytes32(insurer_signature_bytes))
                   .withStructInput("patient_name", string('John Doe'))
                   .withStructInput("start_date", bytes32(uint256(1690982400))) // [NOTE]: 2023-08-01
                   .withStructInput("end_date", bytes32(uint256(1690982600)))   // [NOTE]: 2023-08-01
@@ -74,8 +78,8 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
                   .withStruct("hospital_bill_data")
                   .withStructInput("hospital_bill_hash_bytes", bytes32(uint256(0x5b001f2ad81fe86899545b51f8ecd1ca08674437d5c4748e1b70ba5dcf85ed86))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("hospital_bill_amount", bytes32(uint256(1000)))
-                  .withStructInput("hospital_pubkey_bytes", bytes32(uint256(0x8318535b54105d4a7aae60c08fc45f9687181b4fdfc625bd1a753fa7397fed753547f11ca8696646f2f3acb08e31016afac23e630c5d11f59f61fef57b0d2aa5))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("hospital_signature_bytes", bytes32(uint256(0xf875be44b382147d14f23ae10a3cd544e54996013ea390cef46c215f063862760011cd83eee30440d9dd72aa4a0c401d8ef014efd1c34b983217616bef8fbd401b)))
+                  .withStructInput("hospital_pubkey_bytes", bytes32(hospital_pubkey_bytes)) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("hospital_signature_bytes", bytes32(hospital_signature_bytes))
                   .withStructInput("patient_name", bytes32(abi.encodePacked(string('John Doe'))))
                   .withStructInput("treatment_date", bytes32(uint256(1690982500))) // [NOTE]: 2023-08-01
                   .withStructInput("treatment_icd_code", bytes32(abi.encodePacked(string('ICD-10-CM: A00.0'))))

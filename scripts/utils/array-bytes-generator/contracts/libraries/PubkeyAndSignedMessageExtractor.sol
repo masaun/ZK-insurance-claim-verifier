@@ -9,9 +9,19 @@ import "forge-std/console.sol";
 contract PubkeyAndSignedMessageExtractor is Script {
 
     /**
+     * @dev - Struct to store the PubkeyAndSignedMessage related data (to be the bytes64 Field data)
+     */
+    struct PubkeyAndSignedMessage {
+        uint256[] insurer_signature_bytes;
+        uint256[] insurer_pubkey_bytes;
+        uint256[] hospital_pubkey_bytes;
+        uint256[] hospital_signature_bytes;
+    }
+
+    /**
      * @dev - Extract the public key and signed message from the output.json file
      */
-    function extractPubkeyAndSignedMessage() public returns (bool) {
+    function extractPubkeyAndSignedMessage() public returns (PubkeyAndSignedMessage memory _pubkeyAndSignedMessage) {
         /// @dev - Run the Poseidon2 hash generator script
         string[] memory ffi_commands_for_generating_poseidon2_hash = new string[](2);
         ffi_commands_for_generating_poseidon2_hash[0] = "sh";
@@ -46,13 +56,13 @@ contract PubkeyAndSignedMessageExtractor is Script {
             console.log("_hospital_pubkey_bytes[%s] = %s", i, _hospital_pubkey_bytes[i]); // [Log - Success]: _hospital_pubkey_bytes[0] = 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629, _hospital_pubkey_bytes[1] = 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862, ...
         }
 
-        // string memory _insurer_pubkey_bytes = vm.parseJsonString(json, ".insurer_pubkey_bytes");
-        // bytes32 _insurer_signature_bytes = vm.parseJsonBytes32(json, ".insurer_signature_bytes");
-        // bytes32 _hospital_pubkey_bytes = vm.parseJsonBytes32(json, ".hospital_pubkey_bytes");
-        // bytes32 _hospital_signature_bytes = vm.parseJsonBytes32(json, ".hospital_signature_bytes");
-        // console.logString(_insurer_pubkey_bytes);
-        // console.logBytes32(_insurer_signature_bytes);
-        // console.logBytes32(_hospital_pubkey_bytes);
-        // console.logBytes32(_hospital_signature_bytes);
+        PubkeyAndSignedMessage memory pubkeyAndSignedMessage = PubkeyAndSignedMessage({
+            insurer_signature_bytes: _insurer_signature_bytes,
+            insurer_pubkey_bytes: _insurer_pubkey_bytes,
+            hospital_pubkey_bytes: _hospital_pubkey_bytes,
+            hospital_signature_bytes: _hospital_signature_bytes
+        });
+
+        return pubkeyAndSignedMessage;
     }
 }
