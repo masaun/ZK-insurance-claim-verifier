@@ -8,7 +8,7 @@ circuits/target/*
 
 circuits/libs/*
 circuits/archives/*
-circuits/Prover.toml
+#circuits/Prover.toml
 circuits/Verifier.toml
 circuits/test_verifyProof.toml
 circuits/test_wrongProof.toml
@@ -21,5 +21,5 @@ lib/foundry-noir-helper/*
 node_modules
 package-lock.json
 
-# The script file of Poseidon2 Hash
-output.json
+# JSON file, which is used in the scripts/utils
+#output.json
