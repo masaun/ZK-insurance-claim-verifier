@@ -1,4 +1,4 @@
-# 【IN PROGRESS】ZK Insurance Claim on Swell Chain 🛡️
+# ZK Insurance Claim on Swell Chain 🛡️
 
 ## Tech Stack
 
