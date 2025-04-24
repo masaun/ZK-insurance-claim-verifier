@@ -1,4 +1,4 @@
-# ZK Insurance Claim on Swell Chain 🛡️
+# ZK Insurance Claim Verifier on Swell Chain 🛡️
 
 ## Tech Stack
 
@@ -72,6 +72,7 @@ curl -L https://foundry.paradigm.xyz | bash
 <br>
 
 ## Set the environment file (`env`)
+
 - Create the `env` file:
 ```bash
 cp .env.example .env
