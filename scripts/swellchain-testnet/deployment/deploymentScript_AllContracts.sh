@@ -1,8 +1,8 @@
 echo "Load the environment variables from the .env file..."
 . ./.env
 
-echo "Deploying the UltraVerifier contract on Swell Chain Testnet..."
-forge script script/swell-chain-testnet/deployment/DeploymentAllContracts.s.sol \
+echo "Deploying the smart contracts (icl. UltraVerifier, InsuranceClaimProofVerifier) on Swell Chain Testnet..."
+forge script scripts/swellchain-testnet/deployment/DeploymentAllContracts.s.sol \
     --broadcast \
     --rpc-url ${SWELL_CHAIN_TESTNET_RPC} \
     --chain-id ${SWELL_CHAIN_CHAIN_ID} \
@@ -12,7 +12,7 @@ forge script script/swell-chain-testnet/deployment/DeploymentAllContracts.s.sol 
     --skip-simulation
 
 echo "Verify the deployed-smart contracts (icl. UltraVerifier, InsuranceClaimProofVerifier) on Swell Chain Testnet Explorer..."
-forge script script/edu-chain-testnet/deployment/DeploymentAllContracts.s.sol \
+forge script scripts/swellchain-testnet/deployment/DeploymentAllContracts.s.sol \
     --rpc-url ${SWELL_CHAIN_TESTNET_RPC} \
     --chain-id ${SWELL_CHAIN_CHAIN_ID} \
     --private-key ${SWELL_CHAIN_TESTNET_PRIVATE_KEY} \

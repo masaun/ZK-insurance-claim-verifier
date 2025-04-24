@@ -22,7 +22,8 @@ contract DeploymentAllContracts is Script {
     function setUp() public {}
 
     function run() public {
-        //vm.createSelectFork("swellchain-testnet"); // [NOTE]: Commmentout due to the error of the "Multi chain deployment does not support library linking at the moment"
+
+        //vm.createSelectFork('swellchain-testnet'); // [NOTE]: Commmentout due to the error of the "Multi chain deployment does not support library linking at the moment"
 
         uint256 deployerPrivateKey = vm.envUint("SWELL_CHAIN_TESTNET_PRIVATE_KEY");
         //uint256 deployerPrivateKey = vm.envUint("LOCALHOST_PRIVATE_KEY");
