@@ -9,8 +9,11 @@ import "forge-std/console.sol";
 import { Test } from "forge-std/Test.sol";
 import { NoirHelper } from "foundry-noir-helper/NoirHelper.sol";
 
+/// @dev - Import the PubkeyAndSignedMessageExtractor.sol from the scripts/utils/array-bytes-generator directory
+import { PubkeyAndSignedMessageExtractor } from "../../scripts/utils/array-bytes-generator/contracts/libraries/PubkeyAndSignedMessageExtractor.sol";
 
-contract InsuranceClaimProofVerifierTest is Test {
+
+contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtractor {
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     UltraVerifier public verifier;
     NoirHelper public noirHelper;
@@ -22,6 +25,16 @@ contract InsuranceClaimProofVerifierTest is Test {
     }
 
     function test_verifyProof() public {
+
+        /// @dev - [TEST]: Extract the public key and signed message from the output.json file
+        PubkeyAndSignedMessage memory pubkeyAndSignedMessage = extractPubkeyAndSignedMessage();
+        uint256[] memory insurer_signature_bytes = pubkeyAndSignedMessage.insurer_signature_bytes;
+        uint256[] memory insurer_pubkey_bytes = pubkeyAndSignedMessage.insurer_pubkey_bytes;
+        uint256[] memory hospital_pubkey_bytes = pubkeyAndSignedMessage.hospital_pubkey_bytes;
+        uint256[] memory hospital_signature_bytes = pubkeyAndSignedMessage.hospital_signature_bytes;
+
+
+
         uint256[] memory hash_path = new uint256[](2);
         hash_path[0] = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8;
         hash_path[1] = 0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77;
@@ -31,10 +44,10 @@ contract InsuranceClaimProofVerifierTest is Test {
         hash_path_bytes32[1] = bytes32(hash_path[1]);
 
         /// @dev - [TEST]: Convert a bytes32 value to an uint8 array bytes.
-        uint8[] memory valueInUint8ArrayBytes = DataTypeConverter.toUint8Array(bytes32(abi.encodePacked("hello")));
-        for (uint i = 0; i < valueInUint8ArrayBytes.length; i++) {
-            console.log("valueInUint8ArrayBytes[%s] = %s", i, valueInUint8ArrayBytes[i]);
-        }
+        // uint8[] memory valueInUint8ArrayBytes = DataTypeConverter.toUint8Array(bytes32(abi.encodePacked("hello")));
+        // for (uint i = 0; i < valueInUint8ArrayBytes.length; i++) {
+        //     console.log("valueInUint8ArrayBytes[%s] = %s", i, valueInUint8ArrayBytes[i]);
+        // }
 
         //console.log("valueInUint8ArrayBytes: %s", valueInUint8ArrayBytes);
 
@@ -50,8 +63,8 @@ contract InsuranceClaimProofVerifierTest is Test {
                   
                   // @dev - The InsurancePolicyData struct
                   .withStruct("insurance_policy_data")
-                  .withStructInput("insurer_pubkey_bytes", bytes32(uint256(0x8318535b54105d4a7aae60c08fc45f9687181b4fdfc625bd1a753fa7397fed753547f11ca8696646f2f3acb08e31016afac23e630c5d11f59f61fef57b0d2aa5))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("insurer_signature_bytes", bytes32(uint256(0xf875be44b382147d14f23ae10a3cd544e54996013ea390cef46c215f063862760011cd83eee30440d9dd72aa4a0c401d8ef014efd1c34b983217616bef8fbd401b)))
+                  .withStructInput("insurer_pubkey_bytes", insurer_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("insurer_signature_bytes", insurer_signature_bytes)
                   .withStructInput("patient_name", string('John Doe'))
                   .withStructInput("start_date", bytes32(uint256(1690982400))) // [NOTE]: 2023-08-01
                   .withStructInput("end_date", bytes32(uint256(1690982600)))   // [NOTE]: 2023-08-01
@@ -65,8 +78,8 @@ contract InsuranceClaimProofVerifierTest is Test {
                   .withStruct("hospital_bill_data")
                   .withStructInput("hospital_bill_hash_bytes", bytes32(uint256(0x5b001f2ad81fe86899545b51f8ecd1ca08674437d5c4748e1b70ba5dcf85ed86))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("hospital_bill_amount", bytes32(uint256(1000)))
-                  .withStructInput("hospital_pubkey_bytes", bytes32(uint256(0x8318535b54105d4a7aae60c08fc45f9687181b4fdfc625bd1a753fa7397fed753547f11ca8696646f2f3acb08e31016afac23e630c5d11f59f61fef57b0d2aa5))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("hospital_signature_bytes", bytes32(uint256(0xf875be44b382147d14f23ae10a3cd544e54996013ea390cef46c215f063862760011cd83eee30440d9dd72aa4a0c401d8ef014efd1c34b983217616bef8fbd401b)))
+                  .withStructInput("hospital_pubkey_bytes", hospital_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("hospital_signature_bytes", hospital_signature_bytes)
                   .withStructInput("patient_name", bytes32(abi.encodePacked(string('John Doe'))))
                   .withStructInput("treatment_date", bytes32(uint256(1690982500))) // [NOTE]: 2023-08-01
                   .withStructInput("treatment_icd_code", bytes32(abi.encodePacked(string('ICD-10-CM: A00.0'))))
