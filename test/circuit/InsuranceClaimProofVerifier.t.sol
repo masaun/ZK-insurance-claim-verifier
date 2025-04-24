@@ -44,10 +44,10 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
         hash_path_bytes32[1] = bytes32(hash_path[1]);
 
         /// @dev - [TEST]: Convert a bytes32 value to an uint8 array bytes.
-        uint8[] memory valueInUint8ArrayBytes = DataTypeConverter.toUint8Array(bytes32(abi.encodePacked("hello")));
-        for (uint i = 0; i < valueInUint8ArrayBytes.length; i++) {
-            console.log("valueInUint8ArrayBytes[%s] = %s", i, valueInUint8ArrayBytes[i]);
-        }
+        // uint8[] memory valueInUint8ArrayBytes = DataTypeConverter.toUint8Array(bytes32(abi.encodePacked("hello")));
+        // for (uint i = 0; i < valueInUint8ArrayBytes.length; i++) {
+        //     console.log("valueInUint8ArrayBytes[%s] = %s", i, valueInUint8ArrayBytes[i]);
+        // }
 
         //console.log("valueInUint8ArrayBytes: %s", valueInUint8ArrayBytes);
 
