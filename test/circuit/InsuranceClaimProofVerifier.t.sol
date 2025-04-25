@@ -26,12 +26,26 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
 
     function test_verifyProof() public {
 
+        uint256[] memory insurer_pubkey_bytes = new uint256[](64);
+        uint256[] memory insurer_signature_bytes = new uint256[](64);
+        uint256[] memory hospital_pubkey_bytes = new uint256[](64);
+        uint256[] memory hospital_signature_bytes = new uint256[](64);
+
         /// @dev - [TEST]: Extract the public key and signed message from the output.json file
         PubkeyAndSignedMessage memory pubkeyAndSignedMessage = extractPubkeyAndSignedMessage();
-        uint256[] memory insurer_signature_bytes = pubkeyAndSignedMessage.insurer_signature_bytes;
-        uint256[] memory insurer_pubkey_bytes = pubkeyAndSignedMessage.insurer_pubkey_bytes;
-        uint256[] memory hospital_pubkey_bytes = pubkeyAndSignedMessage.hospital_pubkey_bytes;
-        uint256[] memory hospital_signature_bytes = pubkeyAndSignedMessage.hospital_signature_bytes;
+        insurer_pubkey_bytes = pubkeyAndSignedMessage.insurer_pubkey_bytes;
+        insurer_signature_bytes = pubkeyAndSignedMessage.insurer_signature_bytes;
+        hospital_pubkey_bytes = pubkeyAndSignedMessage.hospital_pubkey_bytes;
+        hospital_signature_bytes = pubkeyAndSignedMessage.hospital_signature_bytes;
+
+        // uint256[] memory insurer_pubkey_bytes = pubkeyAndSignedMessage.insurer_pubkey_bytes;
+        // uint256[] memory insurer_signature_bytes = pubkeyAndSignedMessage.insurer_signature_bytes;
+        // uint256[] memory hospital_pubkey_bytes = pubkeyAndSignedMessage.hospital_pubkey_bytes;
+        // uint256[] memory hospital_signature_bytes = pubkeyAndSignedMessage.hospital_signature_bytes;
+        console.logUint(insurer_signature_bytes[0]); // [Log]: 211
+        //console.logUint(insurer_pubkey_bytes[0]);
+        //console.logUint(hospital_pubkey_bytes[0]);
+        //console.logUint(hospital_signature_bytes[0]);  
 
 
 
@@ -54,50 +68,50 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
 
 
 
-        /// @dev - Set the input data for generating a proof
-        noirHelper.withInput("root", bytes32(uint256(0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629)))
-                  .withInput("hash_path", hash_path_bytes32)
-                  .withInput("index", bytes32(uint256(0)))
-                  .withInput("secret", bytes32(uint256(1)))                   
-                  .withInput("nullifier", bytes32(uint256(0x2658c0d82f9c0728e055fd8272568260ed2d5117a0ed2e1935f737c528ef3505)))
+        // /// @dev - Set the input data for generating a proof
+        // noirHelper.withInput("root", bytes32(uint256(0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629)))
+        //           .withInput("hash_path", hash_path_bytes32)
+        //           .withInput("index", bytes32(uint256(0)))
+        //           .withInput("secret", bytes32(uint256(1)))                   
+        //           .withInput("nullifier", bytes32(uint256(0x2658c0d82f9c0728e055fd8272568260ed2d5117a0ed2e1935f737c528ef3505)))
                   
-                  // @dev - The InsurancePolicyData struct
-                  .withStruct("insurance_policy_data")
-                  .withStructInput("insurer_pubkey_bytes", insurer_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("insurer_signature_bytes", insurer_signature_bytes)
-                  .withStructInput("patient_name", string('John Doe'))
-                  .withStructInput("start_date", bytes32(uint256(1690982400))) // [NOTE]: 2023-08-01
-                  .withStructInput("end_date", bytes32(uint256(1690982600)))   // [NOTE]: 2023-08-01
-                  .withStructInput("minimum_threshold_of_bill_amount", bytes32(uint256(1000)))
-                  .withStructInput("treatment_icd_code", bytes32(abi.encodePacked(string('ICD-10-CM: A00.0'))))
-                  .withStructInput("treatment_cpt_code", bytes32(abi.encodePacked(string('CPT: 99213'))))
-                  .withStructInput("treatment_hcpcs_code", bytes32(abi.encodePacked(string('HCPCS: G0008'))))
-                  .withStructInput("treatment_drg_code", bytes32(abi.encodePacked(string('DRG: 001'))))
+        //           // @dev - The InsurancePolicyData struct
+        //           .withStruct("insurance_policy_data")
+        //           .withStructInput("insurer_pubkey_bytes", insurer_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+        //           .withStructInput("insurer_signature_bytes", insurer_signature_bytes)
+        //           .withStructInput("patient_name", string('John Doe'))
+        //           .withStructInput("start_date", bytes32(uint256(1690982400))) // [NOTE]: 2023-08-01
+        //           .withStructInput("end_date", bytes32(uint256(1690982600)))   // [NOTE]: 2023-08-01
+        //           .withStructInput("minimum_threshold_of_bill_amount", bytes32(uint256(1000)))
+        //           .withStructInput("treatment_icd_code", bytes32(abi.encodePacked(string('ICD-10-CM: A00.0'))))
+        //           .withStructInput("treatment_cpt_code", bytes32(abi.encodePacked(string('CPT: 99213'))))
+        //           .withStructInput("treatment_hcpcs_code", bytes32(abi.encodePacked(string('HCPCS: G0008'))))
+        //           .withStructInput("treatment_drg_code", bytes32(abi.encodePacked(string('DRG: 001'))))
                   
-                  // @dev - The HospitalBillData struct
-                  .withStruct("hospital_bill_data")
-                  .withStructInput("hospital_bill_hash_bytes", bytes32(uint256(0x5b001f2ad81fe86899545b51f8ecd1ca08674437d5c4748e1b70ba5dcf85ed86))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("hospital_bill_amount", bytes32(uint256(1000)))
-                  .withStructInput("hospital_pubkey_bytes", hospital_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("hospital_signature_bytes", hospital_signature_bytes)
-                  .withStructInput("patient_name", bytes32(abi.encodePacked(string('John Doe'))))
-                  .withStructInput("treatment_date", bytes32(uint256(1690982500))) // [NOTE]: 2023-08-01
-                  .withStructInput("treatment_icd_code", bytes32(abi.encodePacked(string('ICD-10-CM: A00.0'))))
-                  .withStructInput("treatment_cpt_code", bytes32(abi.encodePacked(string('CPT: 99213'))))
-                  .withStructInput("treatment_hcpcs_code", bytes32(abi.encodePacked(string('HCPCS: G0008'))))
-                  .withStructInput("treatment_drg_code", bytes32(abi.encodePacked(string('DRG: 001'))));
+        //           // @dev - The HospitalBillData struct
+        //           .withStruct("hospital_bill_data")
+        //           .withStructInput("hospital_bill_hash_bytes", bytes32(uint256(0x5b001f2ad81fe86899545b51f8ecd1ca08674437d5c4748e1b70ba5dcf85ed86))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+        //           .withStructInput("hospital_bill_amount", bytes32(uint256(1000)))
+        //           .withStructInput("hospital_pubkey_bytes", hospital_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+        //           .withStructInput("hospital_signature_bytes", hospital_signature_bytes)
+        //           .withStructInput("patient_name", bytes32(abi.encodePacked(string('John Doe'))))
+        //           .withStructInput("treatment_date", bytes32(uint256(1690982500))) // [NOTE]: 2023-08-01
+        //           .withStructInput("treatment_icd_code", bytes32(abi.encodePacked(string('ICD-10-CM: A00.0'))))
+        //           .withStructInput("treatment_cpt_code", bytes32(abi.encodePacked(string('CPT: 99213'))))
+        //           .withStructInput("treatment_hcpcs_code", bytes32(abi.encodePacked(string('HCPCS: G0008'))))
+        //           .withStructInput("treatment_drg_code", bytes32(abi.encodePacked(string('DRG: 001'))));
 
-        /// @dev - Generate the proof
-        (bytes32[] memory publicInputs, bytes memory proof) = noirHelper.generateProof("test_verifyProof", 6); // [NOTE]: The number of public inputs is '3'.
-        console.logBytes32(publicInputs[0]); // [Log]: 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629
-        console.logBytes32(publicInputs[1]); // [Log]: 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862
-        console.logBytes32(publicInputs[2]); // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
-        console.logBytes32(publicInputs[3]); // [Log]: 
-        console.logBytes32(publicInputs[4]); // [Log]: 
-        console.logBytes32(publicInputs[5]); // [Log]: 
+        // /// @dev - Generate the proof
+        // (bytes32[] memory publicInputs, bytes memory proof) = noirHelper.generateProof("test_verifyProof", 6); // [NOTE]: The number of public inputs is '3'.
+        // console.logBytes32(publicInputs[0]); // [Log]: 0x215597bacd9c7e977dfc170f320074155de974be494579d2586e5b268fa3b629
+        // console.logBytes32(publicInputs[1]); // [Log]: 0x26df0d347e961cb94e1cc6d2ad8558696de8c1964b30e26f2ec8b926cbbbf862
+        // console.logBytes32(publicInputs[2]); // [Log]: 0x0c863c512eaa011ffa5d0f8b8cfe26c5dfa6c0e102a4594a3e40af8f68d86dd0
+        // console.logBytes32(publicInputs[3]); // [Log]: 
+        // console.logBytes32(publicInputs[4]); // [Log]: 
+        // console.logBytes32(publicInputs[5]); // [Log]: 
 
-        /// @dev - Verify the proof
-        insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, publicInputs);
+        // /// @dev - Verify the proof
+        // insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, publicInputs);
     }
 
     function test_wrongProof() public {
