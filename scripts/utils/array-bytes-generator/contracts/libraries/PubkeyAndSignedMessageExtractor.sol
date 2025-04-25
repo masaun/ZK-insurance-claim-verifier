@@ -40,11 +40,11 @@ contract PubkeyAndSignedMessageExtractor is Script {
         uint256[] memory insurer_signature_bytes_array = new uint256[](64);
         uint256[] memory hospital_pubkey_bytes_array = new uint256[](64);
         uint256[] memory hospital_signature_bytes_array = new uint256[](64);
-
+        console.log("insurer_pubkey_bytes_array.length: %s", insurer_pubkey_bytes_array.length); // [Log]: 64
 
         /// @dev - Store a Uint8Array value, which was retrieved from the output.json, into the uint256 array variable (uint256[])
         uint256[] memory _insurer_signature_bytes = vm.parseJsonUintArray(json, ".insurer_signature_bytes");
-        console.log("_insurer_signature_bytes.length: %s", _insurer_signature_bytes.length); // [Log - Success]: 99
+        console.log("_insurer_signature_bytes.length: %s", _insurer_signature_bytes.length);     // [Log]: 99
         for (uint i = 0; i < _insurer_signature_bytes.length - 1; i++) {
             insurer_signature_bytes_array[i] = _insurer_signature_bytes[i];
             console.log("insurer_signature_bytes_array[%s] = %s", i, insurer_signature_bytes_array[i]); // [Log - Success]: _insurer_signature_bytes[0] = 211, _insurer_signature_bytes[1] = 23, ...
