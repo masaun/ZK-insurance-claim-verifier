@@ -67,4 +67,16 @@ library DataTypeConverter {
         return result;
     }
 
+    /**
+     * @dev - Converts a bytes32 value to an uint8 array bytes (length is 32 bytes).
+     * @dev - Target is to convert bytes32 in Solidity to [u8; 32] in Noir, which is same with uint8[] in Solidity.
+     * @dev - i.e). 2 is converted to [0, 0, 0, 0, 0, 0, 0, 2]
+     */
+    function bytes32ToUint8Array(bytes32 input) internal pure returns (uint8[32] memory) {
+        uint8[32] memory result;
+        for (uint256 i = 0; i < 32; i++) {
+            result[i] = uint8(input[i]);
+        }
+        return result;
+    }
 }
