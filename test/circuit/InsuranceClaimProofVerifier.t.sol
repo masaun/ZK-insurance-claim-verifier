@@ -52,6 +52,16 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
         uint8[32] memory _hospital_bill_hash_bytes = DataTypeConverter.bytes32ToUint8Array(0x5b001f2ad81fe86899545b51f8ecd1ca08674437d5c4748e1b70ba5dcf85ed86);
         console.logUint(_hospital_bill_hash_bytes[0]);
 
+        // uint8[32] memory uint8Array = [
+        //     1, 2, 3, 4, 5, 6, 7, 8,
+        //     9, 10, 11, 12, 13, 14, 15, 16,
+        //     17, 18, 19, 20, 21, 22, 23, 24,
+        //     25, 26, 27, 28, 29, 30, 31, 32
+        // ];
+     
+        bytes32 _hospital_bill_hash_bytes_bytes32 = DataTypeConverter.uint8ArrayToBytes32(_hospital_bill_hash_bytes);
+        console.logBytes32(_hospital_bill_hash_bytes_bytes32);
+
 
         uint256[] memory hash_path = new uint256[](2);
         hash_path[0] = 0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8;
