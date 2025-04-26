@@ -59,19 +59,6 @@ library DataTypeConverter {
      * @dev - Target is to convert bytes32 in Solidity to [u8; 32] in Noir, which is same with uint8[] in Solidity.
      * @dev - i.e). 2 is converted to [0, 0, 0, 0, 0, 0, 0, 2]
      */
-    function toUint8Array(bytes32 data) public pure returns (uint8[] memory uint8ArrayBytesValue) {
-        uint8[] memory result;
-        for (uint i = 0; i < 32; i++) {
-            result[i] = uint8(data[i]);
-        }
-        return result;
-    }
-
-    /**
-     * @dev - Converts a bytes32 value to an uint8 array bytes (length is 32 bytes).
-     * @dev - Target is to convert bytes32 in Solidity to [u8; 32] in Noir, which is same with uint8[] in Solidity.
-     * @dev - i.e). 2 is converted to [0, 0, 0, 0, 0, 0, 0, 2]
-     */
     function bytes32ToUint8Array(bytes32 input) internal pure returns (uint8[32] memory) {
         uint8[32] memory result;
         for (uint256 i = 0; i < 32; i++) {
@@ -79,4 +66,27 @@ library DataTypeConverter {
         }
         return result;
     }
+
+    /**
+     * @dev - Converts a uint8 array bytes (length is 32 bytes) value to a bytes32 value.
+     *
+     * Example usage:
+     *
+     *   function testConversion() public pure returns (bytes32) {
+     *       uint8[32] memory uint8Array = [
+     *           1, 2, 3, 4, 5, 6, 7, 8,
+     *           9, 10, 11, 12, 13, 14, 15, 16,
+     *           17, 18, 19, 20, 21, 22, 23, 24,
+     *           25, 26, 27, 28, 29, 30, 31, 32
+     *       ];
+     *
+     *       return uint8ArrayToBytes32(uint8Array);
+     *   }
+     */
+    function uint8ArrayToBytes32(uint8[32] memory uint8Array) internal pure returns (bytes32 result) {
+        for (uint256 i = 0; i < 32; i++) {
+            result |= bytes32(uint256(uint8Array[i]) & 0xFF) >> (i * 8);
+        }
+    }
+
 }
