@@ -1,4 +1,4 @@
-# ZK Insurance Claim Verifier on Swell Chain 🛡️
+# 【IN PROGRESS】ZK Insurance Claim Verifier on Swell Chain 🛡️
 
 ## Tech Stack
 

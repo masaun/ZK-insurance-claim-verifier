@@ -12,7 +12,7 @@ pub struct InsurancePolicyData {
 }
 
 pub struct HospitalBillData { // @dev - Bill data, which is issued by a Hospital. (Healthcare Provider)
-    hospital_bill_hash_bytes: [u8; 32], // @dev - The hash of the hospital bill
+    hospital_bill_hash_bytes: [u8; 32], // @dev - The Message Hash of the hospital bill
     //hospital_bill_hash: Field,
     hospital_bill_amount: Field,        // @dev - Charges for the treatment
     hospital_pubkey_bytes: [u8; 64],    // @dev - The public key of the hospital, which must be registered in the on-Chain Registry contract (HospitalRegistry.sol).
