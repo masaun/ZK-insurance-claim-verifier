@@ -26,10 +26,14 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
 
     function test_verifyProof() public {
 
-        uint256[] memory insurer_pubkey_bytes = new uint256[](64);
-        uint256[] memory insurer_signature_bytes = new uint256[](64);
-        uint256[] memory hospital_pubkey_bytes = new uint256[](64);
-        uint256[] memory hospital_signature_bytes = new uint256[](64);
+        uint8[] memory insurer_pubkey_bytes = new uint8[](64);
+        uint8[] memory insurer_signature_bytes = new uint8[](64);
+        uint8[] memory hospital_pubkey_bytes = new uint8[](64);
+        uint8[] memory hospital_signature_bytes = new uint8[](64);
+        // uint256[] memory insurer_pubkey_bytes = new uint256[](64);
+        // uint256[] memory insurer_signature_bytes = new uint256[](64);
+        // uint256[] memory hospital_pubkey_bytes = new uint256[](64);
+        // uint256[] memory hospital_signature_bytes = new uint256[](64);
 
         /// @dev - [TEST]: Extract the public key and signed message from the output.json file
         PubkeyAndSignedMessage memory pubkeyAndSignedMessage = extractPubkeyAndSignedMessage();
@@ -114,7 +118,8 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
                   
                   // @dev - The HospitalBillData struct
                   .withStruct("hospital_bill_data")
-                  .withStructInput("hospital_bill_hash_bytes", _hospital_bill_hash_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("hospital_bill_hash_bytes", _hospital_bill_hash_bytes_uint8array)
+                  //.withStructInput("hospital_bill_hash_bytes", _hospital_bill_hash_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   //.withStructInput("hospital_bill_hash_bytes", bytes32(uint256(0x5b001f2ad81fe86899545b51f8ecd1ca08674437d5c4748e1b70ba5dcf85ed86))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("hospital_bill_amount", bytes32(uint256(1000)))
                   .withStructInput("hospital_pubkey_bytes", hospital_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
