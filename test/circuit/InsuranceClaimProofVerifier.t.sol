@@ -47,13 +47,16 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
         //console.logUint(hospital_signature_bytes[0]);  
 
         /// @dev - [TEST]: Convert a bytes32 value to an uint8 array bytes.
-        //uint8[32] memory _hospital_bill_hash_bytes_uint8array = DataTypeConverter.bytes32ToUint8Array(0x5b001f2ad81fe86899545b51f8ecd1ca08674437d5c4748e1b70ba5dcf85ed86);
-        uint8[32] memory hospital_bill_hash_bytes = [
-            3,  57, 199, 96, 145,  58, 183, 241,
-            206, 140,  36, 34, 165, 163,  17, 210,
-            97, 254, 154, 79,  91, 223, 149,  18,
-            3, 210, 111, 56, 246, 219,  19, 104
-        ];
+        uint8[] memory hospital_bill_hash_bytes = new uint8[](32);
+        for (uint256 i = 0; i < 32; i++) {
+            hospital_bill_hash_bytes[i] = [
+                3,  57, 199, 96, 145,  58, 183, 241,
+                206, 140,  36, 34, 165, 163,  17, 210,
+                97, 254, 154, 79,  91, 223, 149,  18,
+                3, 210, 111, 56, 246, 219,  19, 104
+            ][i];
+        }
+
         //console.logUint(_hospital_bill_hash_bytes_uint8array[0]);
 
         uint256[] memory hash_path = new uint256[](2);
