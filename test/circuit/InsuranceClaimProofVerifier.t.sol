@@ -51,7 +51,6 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
         //console.logUint(hospital_pubkey_bytes[0]);
         //console.logUint(hospital_signature_bytes[0]);  
 
-
         /// @dev - [TEST]: Convert a bytes32 value to an uint8 array bytes.
         //uint8[32] memory _hospital_bill_hash_bytes_uint8array = DataTypeConverter.bytes32ToUint8Array(0x5b001f2ad81fe86899545b51f8ecd1ca08674437d5c4748e1b70ba5dcf85ed86);
         uint8[32] memory _hospital_bill_hash_bytes_uint8array = [
@@ -72,6 +71,32 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
         //     _hospital_bill_hash_bytes[i] = _hospital_bill_hash_bytes_uint256array[i];
         //     console.log("_hospital_bill_hash_bytes[%s] = %s", i, _hospital_bill_hash_bytes[i]);
         // }
+
+        // @dev - Convert uint8[32] to uint8[]
+        uint8[] memory insurer_pubkey_bytes_dynamic = new uint8[](64);
+        uint8[] memory insurer_signature_bytes_dynamic = new uint8[](64);
+        uint8[] memory hospital_pubkey_bytes_dynamic = new uint8[](64);
+        uint8[] memory hospital_signature_bytes_dynamic = new uint8[](64);
+        for (uint256 i = 0; i < 32; i++) {
+            insurer_pubkey_bytes_dynamic[i] = insurer_pubkey_bytes[i];
+        }
+
+        for (uint256 i = 0; i < 32; i++) {
+            insurer_signature_bytes_dynamic[i] = insurer_signature_bytes[i];
+        }
+
+        for (uint256 i = 0; i < 32; i++) {
+            hospital_pubkey_bytes_dynamic[i] = hospital_pubkey_bytes[i];
+        }
+
+        for (uint256 i = 0; i < 32; i++) {
+            hospital_signature_bytes_dynamic[i] = hospital_signature_bytes[i];
+        }
+
+        uint8[] memory hospital_bill_hash_bytes_dynamic = new uint8[](32);
+        for (uint256 i = 0; i < 32; i++) {
+            hospital_bill_hash_bytes_dynamic[i] = _hospital_bill_hash_bytes_uint8array[i];
+        }
 
 
         // uint8[32] memory uint8Array = [
@@ -105,8 +130,10 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
                   
                   // @dev - The InsurancePolicyData struct
                   .withStruct("insurance_policy_data")
-                  .withStructInput("insurer_pubkey_bytes", insurer_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("insurer_signature_bytes", insurer_signature_bytes)
+                  .withStructInput("insurer_pubkey_bytes", insurer_pubkey_bytes_dynamic) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  //.withStructInput("insurer_pubkey_bytes", insurer_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("insurer_signature_bytes", insurer_signature_bytes_dynamic)
+                  //.withStructInput("insurer_signature_bytes", insurer_signature_bytes)
                   .withStructInput("patient_name", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('John Doe')))))
                   .withStructInput("start_date", bytes32(uint256(1690982400))) // [NOTE]: 2023-08-01
                   .withStructInput("end_date", bytes32(uint256(1690982600)))   // [NOTE]: 2023-08-01
@@ -118,12 +145,15 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
                   
                   // @dev - The HospitalBillData struct
                   .withStruct("hospital_bill_data")
-                  .withStructInput("hospital_bill_hash_bytes", _hospital_bill_hash_bytes_uint8array)
+                  .withStructInput("hospital_bill_hash_bytes", hospital_bill_hash_bytes_dynamic)
+                  //.withStructInput("hospital_bill_hash_bytes", _hospital_bill_hash_bytes_uint8array)
                   //.withStructInput("hospital_bill_hash_bytes", _hospital_bill_hash_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   //.withStructInput("hospital_bill_hash_bytes", bytes32(uint256(0x5b001f2ad81fe86899545b51f8ecd1ca08674437d5c4748e1b70ba5dcf85ed86))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("hospital_bill_amount", bytes32(uint256(1000)))
-                  .withStructInput("hospital_pubkey_bytes", hospital_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  .withStructInput("hospital_signature_bytes", hospital_signature_bytes)
+                  .withStructInput("hospital_pubkey_bytes", hospital_pubkey_bytes_dynamic) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  //.withStructInput("hospital_pubkey_bytes", hospital_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
+                  .withStructInput("hospital_signature_bytes", hospital_signature_bytes_dynamic)
+                  //.withStructInput("hospital_signature_bytes", hospital_signature_bytes)
                   .withStructInput("patient_name", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('John Doe')))))
                   .withStructInput("treatment_date", bytes32(uint256(1690982500))) // [NOTE]: 2023-08-01
                   .withStructInput("treatment_icd_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('ICD-10-CM: A00.0')))))
