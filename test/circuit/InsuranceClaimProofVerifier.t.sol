@@ -73,10 +73,14 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
         // }
 
         // @dev - Convert uint8[32] to uint8[]
-        uint8[] memory insurer_pubkey_bytes_dynamic = new uint8[](64);
-        uint8[] memory insurer_signature_bytes_dynamic = new uint8[](64);
-        uint8[] memory hospital_pubkey_bytes_dynamic = new uint8[](64);
-        uint8[] memory hospital_signature_bytes_dynamic = new uint8[](64);
+        uint256[] memory insurer_pubkey_bytes_dynamic = new uint256[](64);
+        uint256[] memory insurer_signature_bytes_dynamic = new uint256[](64);
+        uint256[] memory hospital_pubkey_bytes_dynamic = new uint256[](64);
+        uint256[] memory hospital_signature_bytes_dynamic = new uint256[](64);
+        // uint8[] memory insurer_pubkey_bytes_dynamic = new uint8[](64);
+        // uint8[] memory insurer_signature_bytes_dynamic = new uint8[](64);
+        // uint8[] memory hospital_pubkey_bytes_dynamic = new uint8[](64);
+        // uint8[] memory hospital_signature_bytes_dynamic = new uint8[](64);
         for (uint256 i = 0; i < 32; i++) {
             insurer_pubkey_bytes_dynamic[i] = insurer_pubkey_bytes[i];
         }
