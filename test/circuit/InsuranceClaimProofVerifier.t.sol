@@ -107,14 +107,14 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
                   .withStruct("insurance_policy_data")
                   .withStructInput("insurer_pubkey_bytes", insurer_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("insurer_signature_bytes", insurer_signature_bytes)
-                  .withStructInput("patient_name", bytes32(abi.encodePacked(string('John Doe'))))
+                  .withStructInput("patient_name", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('John Doe')))))
                   .withStructInput("start_date", bytes32(uint256(1690982400))) // [NOTE]: 2023-08-01
                   .withStructInput("end_date", bytes32(uint256(1690982600)))   // [NOTE]: 2023-08-01
                   .withStructInput("minimum_threshold_of_bill_amount", bytes32(uint256(1000)))
-                  .withStructInput("treatment_icd_code", bytes32(abi.encodePacked(string('ICD-10-CM: A00.0'))))
-                  .withStructInput("treatment_cpt_code", bytes32(abi.encodePacked(string('CPT: 99213'))))
-                  .withStructInput("treatment_hcpcs_code", bytes32(abi.encodePacked(string('HCPCS: G0008'))))
-                  .withStructInput("treatment_drg_code", bytes32(abi.encodePacked(string('DRG: 001'))))
+                  .withStructInput("treatment_icd_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('ICD-10-CM: A00.0')))))
+                  .withStructInput("treatment_cpt_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('CPT: 99213')))))
+                  .withStructInput("treatment_hcpcs_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('HCPCS: G0008')))))
+                  .withStructInput("treatment_drg_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('DRG: 001')))))
                   
                   // @dev - The HospitalBillData struct
                   .withStruct("hospital_bill_data")
