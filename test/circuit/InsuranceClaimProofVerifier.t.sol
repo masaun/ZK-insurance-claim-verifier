@@ -62,16 +62,16 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
         ];
         //console.logUint(_hospital_bill_hash_bytes_uint8array[0]);
 
-        uint256[32] memory _hospital_bill_hash_bytes_uint256array;
-        for (uint256 i = 0; i < 32; i++) {
-            _hospital_bill_hash_bytes_uint256array[i] = uint256(_hospital_bill_hash_bytes_uint8array[i]);
-        }
+        // uint256[32] memory _hospital_bill_hash_bytes_uint256array;
+        // for (uint256 i = 0; i < 32; i++) {
+        //     _hospital_bill_hash_bytes_uint256array[i] = uint256(_hospital_bill_hash_bytes_uint8array[i]);
+        // }
 
-        uint256[32] memory _hospital_bill_hash_bytes;
-        for (uint i = 0; i < _hospital_bill_hash_bytes.length; i++) {
-            _hospital_bill_hash_bytes[i] = _hospital_bill_hash_bytes_uint256array[i];
-            console.log("_hospital_bill_hash_bytes[%s] = %s", i, _hospital_bill_hash_bytes[i]);
-        }
+        // uint256[32] memory _hospital_bill_hash_bytes;
+        // for (uint i = 0; i < _hospital_bill_hash_bytes.length; i++) {
+        //     _hospital_bill_hash_bytes[i] = _hospital_bill_hash_bytes_uint256array[i];
+        //     console.log("_hospital_bill_hash_bytes[%s] = %s", i, _hospital_bill_hash_bytes[i]);
+        // }
 
 
         // uint8[32] memory uint8Array = [
@@ -124,12 +124,12 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
                   .withStructInput("hospital_bill_amount", bytes32(uint256(1000)))
                   .withStructInput("hospital_pubkey_bytes", hospital_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("hospital_signature_bytes", hospital_signature_bytes)
-                  .withStructInput("patient_name", bytes32(abi.encodePacked(string('John Doe'))))
+                  .withStructInput("patient_name", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('John Doe')))))
                   .withStructInput("treatment_date", bytes32(uint256(1690982500))) // [NOTE]: 2023-08-01
-                  .withStructInput("treatment_icd_code", bytes32(abi.encodePacked(string('ICD-10-CM: A00.0'))))
-                  .withStructInput("treatment_cpt_code", bytes32(abi.encodePacked(string('CPT: 99213'))))
-                  .withStructInput("treatment_hcpcs_code", bytes32(abi.encodePacked(string('HCPCS: G0008'))))
-                  .withStructInput("treatment_drg_code", bytes32(abi.encodePacked(string('DRG: 001'))));
+                  .withStructInput("treatment_icd_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('ICD-10-CM: A00.0')))))
+                  .withStructInput("treatment_cpt_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('CPT: 99213')))))
+                  .withStructInput("treatment_hcpcs_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('HCPCS: G0008')))))
+                  .withStructInput("treatment_drg_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('DRG: 001')))));
 
         /// @dev - Generate the proof
         (bytes32[] memory publicInputs, bytes memory proof) = noirHelper.generateProof("test_verifyProof", 6); // [NOTE]: The number of public inputs is '3'.
