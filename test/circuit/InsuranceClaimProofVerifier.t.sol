@@ -26,14 +26,14 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
 
     function test_verifyProof() public {
 
-        uint8[] memory insurer_pubkey_bytes = new uint8[](64);
-        uint8[] memory insurer_signature_bytes = new uint8[](64);
-        uint8[] memory hospital_pubkey_bytes = new uint8[](64);
-        uint8[] memory hospital_signature_bytes = new uint8[](64);
-        // uint256[] memory insurer_pubkey_bytes = new uint256[](64);
-        // uint256[] memory insurer_signature_bytes = new uint256[](64);
-        // uint256[] memory hospital_pubkey_bytes = new uint256[](64);
-        // uint256[] memory hospital_signature_bytes = new uint256[](64);
+        // uint8[] memory insurer_pubkey_bytes = new uint8[](64);
+        // uint8[] memory insurer_signature_bytes = new uint8[](64);
+        // uint8[] memory hospital_pubkey_bytes = new uint8[](64);
+        // uint8[] memory hospital_signature_bytes = new uint8[](64);
+        uint256[] memory insurer_pubkey_bytes = new uint256[](64);
+        uint256[] memory insurer_signature_bytes = new uint256[](64);
+        uint256[] memory hospital_pubkey_bytes = new uint256[](64);
+        uint256[] memory hospital_signature_bytes = new uint256[](64);
 
         /// @dev - [TEST]: Extract the public key and signed message from the output.json file
         PubkeyAndSignedMessage memory pubkeyAndSignedMessage = extractPubkeyAndSignedMessage();
@@ -83,7 +83,8 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
         }
 
         /// @dev - [TEST]: Convert a bytes32 value to an uint8 array bytes.
-        uint8[] memory hospital_bill_hash_bytes = new uint8[](32);
+        //uint8[] memory hospital_bill_hash_bytes = new uint8[](32);
+        uint256[] memory hospital_bill_hash_bytes = new uint256[](32);
         for (uint256 i = 0; i < 32; i++) {
             hospital_bill_hash_bytes[i] = [
                 3,  57, 199, 96, 145,  58, 183, 241,
