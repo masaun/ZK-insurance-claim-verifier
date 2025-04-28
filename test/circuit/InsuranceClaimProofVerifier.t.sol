@@ -116,9 +116,7 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
                   // @dev - The InsurancePolicyData struct
                   .withStruct("insurance_policy_data")
                   .withStructInput("insurer_pubkey_bytes", insurer_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  //.withStructInput("insurer_pubkey_bytes", insurer_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("insurer_signature_bytes", insurer_signature_bytes)
-                  //.withStructInput("insurer_signature_bytes", insurer_signature_bytes)
                   .withStructInput("patient_name", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
                   //.withStructInput("patient_name", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('John Doe')))))
                   .withStructInput("start_date", bytes32(uint256(1690982400))) // [NOTE]: 2023-08-01
@@ -136,14 +134,9 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
                   // @dev - The HospitalBillData struct
                   .withStruct("hospital_bill_data")
                   .withStructInput("hospital_bill_hash_bytes", hospital_bill_hash_bytes)
-                  //.withStructInput("hospital_bill_hash_bytes", _hospital_bill_hash_bytes_uint8array)
-                  //.withStructInput("hospital_bill_hash_bytes", _hospital_bill_hash_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  //.withStructInput("hospital_bill_hash_bytes", bytes32(uint256(0x5b001f2ad81fe86899545b51f8ecd1ca08674437d5c4748e1b70ba5dcf85ed86))) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("hospital_bill_amount", bytes32(uint256(1000)))
                   .withStructInput("hospital_pubkey_bytes", hospital_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
-                  //.withStructInput("hospital_pubkey_bytes", hospital_pubkey_bytes) // [NOTE]: An input data of 'Address' type must be cast to uint160 first. Then, it should be cast to uint256 and bytes32.
                   .withStructInput("hospital_signature_bytes", hospital_signature_bytes)
-                  //.withStructInput("hospital_signature_bytes", hospital_signature_bytes)
                   .withStructInput("patient_name", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
                   .withStructInput("treatment_date", bytes32(uint256(1690982500))) // [NOTE]: 2023-08-01
                   .withStructInput("treatment_icd_code", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
@@ -153,7 +146,7 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
                   //.withStructInput("treatment_icd_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('ICD-10-CM: A00.0')))))
                   //.withStructInput("treatment_cpt_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('CPT: 99213')))))
                   //.withStructInput("treatment_hcpcs_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('HCPCS: G0008')))))
-                  //.withStructInput("treatment_drg_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('DRG: 001')))))
+                  //.withStructInput("treatment_drg_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('DRG: 001')))));
 
         /// @dev - Generate the proof
         (bytes32[] memory publicInputs, bytes memory proof) = noirHelper.generateProof("test_verifyProof", 6); // [NOTE]: The number of public inputs is '3'.
