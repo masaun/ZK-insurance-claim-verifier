@@ -54,6 +54,11 @@ library DataTypeConverter {
         }
     }
 
+    function bytesToUint256(bytes memory b) public pure returns (uint256) {
+        require(b.length == 32, "Bytes length must be exactly 32");
+        return abi.decode(b, (uint256));
+    }
+
     /**
      * @dev - Converts a bytes32 value to an uint8 array bytes (length is 32 bytes).
      * @dev - Target is to convert bytes32 in Solidity to [u8; 32] in Noir, which is same with uint8[] in Solidity.
