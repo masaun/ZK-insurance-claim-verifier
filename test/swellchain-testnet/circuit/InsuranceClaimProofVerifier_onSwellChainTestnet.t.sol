@@ -1,27 +1,38 @@
 pragma solidity ^0.8.17;
 
-import { UltraVerifier } from "../../contracts/circuit/ultra-verifier/plonk_vk.sol";
-import { InsuranceClaimProofVerifier } from "../../contracts/circuit/InsuranceClaimProofVerifier.sol";
+import { UltraVerifier } from "../../../contracts/circuit/ultra-verifier/plonk_vk.sol";
+import { InsuranceClaimProofVerifier } from "../../../contracts/circuit/InsuranceClaimProofVerifier.sol";
 //import "../circuits/target/contract.sol";
-import { DataTypeConverter } from "../../contracts/libraries/DataTypeConverter.sol";
+import { DataTypeConverter } from "../../../contracts/libraries/DataTypeConverter.sol";
 
 import "forge-std/console.sol";
 import { Test } from "forge-std/Test.sol";
 import { NoirHelper } from "foundry-noir-helper/NoirHelper.sol";
 
 /// @dev - Import the PubkeyAndSignedMessageExtractor.sol from the scripts/utils/array-bytes-generator directory
-import { PubkeyAndSignedMessageExtractor } from "../../scripts/utils/array-bytes-generator/contracts/libraries/PubkeyAndSignedMessageExtractor.sol";
+import { PubkeyAndSignedMessageExtractor } from "../../../scripts/utils/array-bytes-generator/contracts/libraries/PubkeyAndSignedMessageExtractor.sol";
 
 
-contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtractor {
+/**
+ * @title - The test of the InsuranceClaimProofVerifier contract on Swell Chain Testnet
+ */
+contract InsuranceClaimProofVerifierTest_OnSwellChainTestnet is Test, PubkeyAndSignedMessageExtractor {
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     UltraVerifier public verifier;
     NoirHelper public noirHelper;
 
     function setUp() public {
         noirHelper = new NoirHelper();
-        verifier = new UltraVerifier();
-        insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
+
+        /// @dev - Read the each deployed address from the configuration file.
+        address ULTRAVERIFER = vm.envAddress("ULTRAVERIFER_ON_SWELL_CHAIN_TESTNET");
+        address INSURANCE_CLAIM_PROOF_VERIFIER = vm.envAddress("INSURANCE_CLAIM_PROOF_VERIFIER_ON_SWELL_CHAIN_TESTNET");
+
+        /// @dev - Create the SC instances /w deployed SC addresses
+        verifier = UltraVerifier(ULTRAVERIFER);
+        insuranceClaimProofVerifier = InsuranceClaimProofVerifier(INSURANCE_CLAIM_PROOF_VERIFIER);
+        //verifier = new UltraVerifier();
+        //insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
     }
 
     function test_verifyProof() public {
