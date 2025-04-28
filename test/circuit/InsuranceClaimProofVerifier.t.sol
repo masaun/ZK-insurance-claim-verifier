@@ -37,14 +37,50 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
 
         /// @dev - [TEST]: Extract the public key and signed message from the output.json file
         PubkeyAndSignedMessage memory pubkeyAndSignedMessage = extractPubkeyAndSignedMessage();
-        insurer_pubkey_bytes = pubkeyAndSignedMessage.insurer_pubkey_bytes;
-        insurer_signature_bytes = pubkeyAndSignedMessage.insurer_signature_bytes;
-        hospital_pubkey_bytes = pubkeyAndSignedMessage.hospital_pubkey_bytes;
-        hospital_signature_bytes = pubkeyAndSignedMessage.hospital_signature_bytes;
-        console.logUint(insurer_signature_bytes[0]); // [Log]: 211
-        //console.logUint(insurer_pubkey_bytes[0]);
-        //console.logUint(hospital_pubkey_bytes[0]);
-        //console.logUint(hospital_signature_bytes[0]);  
+        //insurer_pubkey_bytes = pubkeyAndSignedMessage.insurer_pubkey_bytes;
+        //insurer_signature_bytes = pubkeyAndSignedMessage.insurer_signature_bytes;
+        //hospital_pubkey_bytes = pubkeyAndSignedMessage.hospital_pubkey_bytes;
+        //hospital_signature_bytes = pubkeyAndSignedMessage.hospital_signature_bytes;
+        for (uint256 i = 0; i < 64; i++) {
+            insurer_pubkey_bytes[i] = [
+                131,  24,  83,  91,  84,  16, 93,  74, 122, 174,  96,
+                192, 143, 196,  95, 150, 135, 24,  27,  79, 223, 198,
+                37, 189,  26, 117,  63, 167, 57, 127, 237, 117,  53,
+                71, 241,  28, 168, 105, 102, 70, 242, 243, 172, 176,
+                142,  49,   1, 106, 250, 194, 62,  99,  12, 93,  17,
+                245, 159,  97, 254, 245, 123, 13,  42, 165
+            ][i];
+        }
+        for (uint256 i = 0; i < 64; i++) {
+            insurer_signature_bytes[i] = [
+                1,  83,  82, 167, 184,  77, 226, 104,   5,  27, 151,
+                91, 202, 127,  17, 183,  75,  31, 190, 253, 159, 116,
+                155,  13,  24, 178,  40, 165, 129,  90, 103, 204,  42,
+                164, 230,  62,  73, 181, 169,  61, 251, 221, 128, 221,
+                14,  19, 179,  25, 107, 132,  10, 188, 149,   0, 197,
+                52, 151, 239, 244, 103, 215, 224,  56, 242
+            ][i];
+        }
+        for (uint256 i = 0; i < 64; i++) {
+            hospital_pubkey_bytes[i] = [
+                131,  24,  83,  91,  84,  16, 93,  74, 122, 174,  96,
+                192, 143, 196,  95, 150, 135, 24,  27,  79, 223, 198,
+                37, 189,  26, 117,  63, 167, 57, 127, 237, 117,  53,
+                71, 241,  28, 168, 105, 102, 70, 242, 243, 172, 176,
+                142,  49,   1, 106, 250, 194, 62,  99,  12,  93,  17,
+                245, 159,  97, 254, 245, 123, 13,  42, 165
+            ][i];
+        }
+        for (uint256 i = 0; i < 64; i++) {
+            hospital_signature_bytes[i] = [
+                1,  83,  82, 167, 184,  77, 226, 104,   5,  27, 151,
+                91, 202, 127,  17, 183,  75,  31, 190, 253, 159, 116,
+                155,  13,  24, 178,  40, 165, 129,  90, 103, 204,  42,
+                164, 230,  62,  73, 181, 169,  61, 251, 221, 128, 221,
+                14,  19, 179,  25, 107, 132,  10, 188, 149,   0, 197,
+                52, 151, 239, 244, 103, 215, 224,  56, 242
+            ][i];
+        }
 
         /// @dev - [TEST]: Convert a bytes32 value to an uint8 array bytes.
         uint8[] memory hospital_bill_hash_bytes = new uint8[](32);
