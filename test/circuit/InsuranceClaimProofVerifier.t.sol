@@ -36,6 +36,7 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
         uint256[] memory hospital_signature_bytes = new uint256[](64);
 
         /// @dev - [TEST]: Extract the public key and signed message from the output.json file
+        /// [🟣Key Point]: bytes64 array value should be directly stored into the "uint256[]" array variable like this:
         PubkeyAndSignedMessage memory pubkeyAndSignedMessage = extractPubkeyAndSignedMessage();
         //insurer_pubkey_bytes = pubkeyAndSignedMessage.insurer_pubkey_bytes;
         //insurer_signature_bytes = pubkeyAndSignedMessage.insurer_signature_bytes;
