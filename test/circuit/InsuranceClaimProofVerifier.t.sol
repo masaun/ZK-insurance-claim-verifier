@@ -139,14 +139,14 @@ contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtracto
                   .withStructInput("hospital_signature_bytes", hospital_signature_bytes)
                   .withStructInput("patient_name", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
                   .withStructInput("treatment_date", bytes32(uint256(1690982500))) // [NOTE]: 2023-08-01
-                  .withStructInput("treatment_icd_code", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
-                  .withStructInput("treatment_cpt_code", bytes32(uint256(0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77)))
-                  .withStructInput("treatment_hcpcs_code", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
-                  .withStructInput("treatment_drg_code", bytes32(uint256(0x2658c0d82f9c0728e055fd8272568260ed2d5117a0ed2e1935f737c528ef3505)));
-                  //.withStructInput("treatment_icd_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('ICD-10-CM: A00.0')))))
-                  //.withStructInput("treatment_cpt_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('CPT: 99213')))))
-                  //.withStructInput("treatment_hcpcs_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('HCPCS: G0008')))))
-                  //.withStructInput("treatment_drg_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('DRG: 001')))));
+                  //.withStructInput("treatment_icd_code", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
+                  //.withStructInput("treatment_cpt_code", bytes32(uint256(0x2a653551d87767c545a2a11b29f0581a392b4e177a87c8e3eb425c51a26a8c77)))
+                  //.withStructInput("treatment_hcpcs_code", bytes32(uint256(0x1efa9d6bb4dfdf86063cc77efdec90eb9262079230f1898049efad264835b6c8)))
+                  //.withStructInput("treatment_drg_code", bytes32(uint256(0x2658c0d82f9c0728e055fd8272568260ed2d5117a0ed2e1935f737c528ef3505)));
+                  .withStructInput("treatment_icd_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('ICD-10-CM: A00.0')))))
+                  .withStructInput("treatment_cpt_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('CPT: 99213')))))
+                  .withStructInput("treatment_hcpcs_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('HCPCS: G0008')))))
+                  .withStructInput("treatment_drg_code", bytes32(DataTypeConverter.bytesToUint256(abi.encodePacked(string('DRG: 001')))));
 
         /// @dev - Generate the proof
         (bytes32[] memory publicInputs, bytes memory proof) = noirHelper.generateProof("test_verifyProof", 6); // [NOTE]: The number of public inputs is '3'.
