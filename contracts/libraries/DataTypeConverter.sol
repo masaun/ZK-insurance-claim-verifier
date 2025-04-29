@@ -56,9 +56,11 @@ library DataTypeConverter {
 
     /// @notice - Convert bytes to uint256
     function bytesToUint256(bytes memory b) public pure returns (uint256) {
-        bytes memory _b = _ensureBytes32Length(b);
-        require(_b.length == 32, "Bytes length must be exactly 32");
-        return abi.decode(_b, (uint256));
+        // bytes memory _b = _ensureBytes32Length(b);
+        // require(_b.length == 32, "Bytes length must be exactly 32");
+        // return abi.decode(_b, (uint256));
+        require(b.length == 32, "Bytes length must be exactly 32");
+        return abi.decode(b, (uint256));
     }
 
     /// @notice - Padding or truncating to ensure the length is 32 bytes
