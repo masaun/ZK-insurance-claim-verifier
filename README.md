@@ -143,10 +143,15 @@ sh ./scripts/swellchain-testnet/runningScript_Verify_onSwellChainTestnet.sh
 
 <br>
 
-## Smart Contract - Test (NOTE: This is still *in progress*)
-- Run the `InsuranceClaimProofVerifier.t.sol` on the Local Network (NOTE: This is still *in progress*)
+## Smart Contract - Test
+- Run the `InsuranceClaimProofVerifier.t.sol` on the Local Network:
 ```bash
 sh ./test/circuit/runningTest_InsuranceClaimProofVerifier.sh
+```
+
+- Run the `InsuranceClaimProofVerifier_onSwellChainTestnet.t.sol` on the `Swell Chain` Testnet:
+```bash
+sh ./test/swellchain-testnet/circuit/runningTest_InsuranceClaimProofVerifier_onSwellChainTestnet.sh
 ```
 
 <br>
