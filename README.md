@@ -19,9 +19,17 @@
 
 ## Userflow
 
+- 
+
+
 <br>
 
-## Diagram of Userflow
+## Diagram of Architecure
+- Diagram of Architecure: https://github.com/masaun/ZK-insurance-claim/tree/main/doc/diagram-of-architecture
+
+- NOTE: 
+  - The `InsuranceClaim.sol` in the diagram above is an example smart contract. (Not implemented yet)
+  - Any project, which hope to integrate the `InsuranceClaimProofVerifier.sol`, can freely implement an **custom contract** like `InsuranceClaim.sol` in the diagram above that handle a insurance payout
 
 <br>
 
