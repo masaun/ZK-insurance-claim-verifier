@@ -1,8 +1,8 @@
-# 【IN PROGRESS】ZK Insurance Claim Verifier on Swell Chain 🛡️
+# ZK Insurance Claim Verifier on Swell Chain 🛡️
 
 ## Tech Stack
 
-- `ZK circuit`: Implemented in [`Noir`](https://noir-lang.org/docs/) powered by [Aztec](https://aztec.network/)) 
+- `ZK circuit`: Implemented in [`Noir`](https://noir-lang.org/docs/), which is powered by [Aztec](https://aztec.network/)
 - Smart Contract: Implemented in Solidity (Framework: Foundry)
 - Blockchain: [`Swell Chain`](https://build.swellnetwork.io/docs/guides/getting-started) (Testnet)
 
@@ -10,7 +10,10 @@
 
 ## Overview
 
-- This is the Zero-Knowledge (ZK) based Insurance Claim protocol, which allow a patient to claim a payout without revealing the sensitive information (i.e. exact treatment, treatment cost, coverage, etc) to a insurer by submitting a hospital bill proof (which is a ZK Proof).
+- This is the Zero-Knowledge (ZK) based Insurance Claim protocol, which allow a patient to claim a payout without revealing the sensitive informations-included in their insurance policy (i.e. exact treatment, treatment cost, coverage, etc) to a insurer by submitting a `insurance claim proof` (which is a `ZK Proof`).
+
+- In other words, this protocol allow a patient to claim a payout in a `privacy-preserving` way thanks to using `Zero-Knowledge Proof` (`ZK Proof`).
+
 
 <br>
 
@@ -20,6 +23,9 @@
 
 ## Diagram of Userflow
 
+<br>
+
+## DEMO Video
 
 <br>
 
