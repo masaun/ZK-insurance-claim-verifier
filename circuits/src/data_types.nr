@@ -31,6 +31,6 @@ pub struct HospitalBillData {           // @dev - Hospital Bill data, which is i
 pub struct RevealedData {
     nullifier: Field,
     is_bill_signed: bool,
-    is_bill_amount_exceed_threshold: bool,
+    is_bill_amount_exceed_threshold: bool, // @dev - Is the bill amount exceeding the minimum threshold
     is_policy_valid: bool
 }
