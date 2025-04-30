@@ -29,10 +29,7 @@ fn main(
     // let value_in_field: Field = Field::from_be_bytes::<64>(0xf875be44b382147d14f23ae10a3cd544e54996013ea390cef46c215f063862760011cd83eee30440d9dd72aa4a0c401d8ef014efd1c34b983217616bef8fbd401b);
     // //let value_in_field: Field = Field::from_be_bytes::<64>(hospital_bill_data.hospital_signature_bytes);
     // let uint8_array_value_64:[u8; 64]= convert_field_bytes64_to_uint8_array(value_in_field);
-    // println(f"uint8_array_value (bytes64): {uint8_array_value_64}"); // [Log]: uint8_array_value (bytes64): 
-
-
-
+    // println(f"uint8_array_value (bytes64): {uint8_array_value_64}"); // [Log]: uint8_array_value (bytes64):
 
     // @dev - Convert data type from "Field" to "uint32"
     let hospital_bill_amount_as_uint: u32 = hospital_bill_data.hospital_bill_amount as u32;
