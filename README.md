@@ -148,7 +148,7 @@ cd circuits
 cp Prover.example.toml Prover.toml
 ```
 
-- Run the ZK circuit (`./circuits/src/main.nr`) via the `./circuits/build.sh` to generate a ZKP (Zero-Knowledge Proof), which is called a `ip_nft_ownership` proof:
+- Run the ZK circuit (`./circuits/src/main.nr`) via the `./circuits/build.sh` to generate a ZKP (Zero-Knowledge Proof), which is called a `insurance_claim_proof` proof:
 ```bash
 cd circuits
 sh build.sh
