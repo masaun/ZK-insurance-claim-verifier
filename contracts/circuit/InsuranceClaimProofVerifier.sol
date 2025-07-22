@@ -19,8 +19,4 @@ contract InsuranceClaimProofVerifier {
         require(proofResult, "A given InsuranceClaimProof is not valid");
         return proofResult;
     }
-
-    function pock() public returns (bool) {
-        return true;
-    }
 }
