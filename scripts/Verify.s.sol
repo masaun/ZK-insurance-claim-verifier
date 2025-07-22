@@ -68,7 +68,12 @@ contract VerifyScript is Script {
         correctPublicInputs[3] = is_bill_signed;
         correctPublicInputs[4] = is_bill_amount_exceed_threshold;
         correctPublicInputs[5] = is_policy_valid;
-    
+        console.logString("correctPublicInputs:");
+        for (uint i = 0; i < correctPublicInputs.length; i++) {
+            console.log("correctPublicInputs[%s]:", i);
+            console.logBytes32(correctPublicInputs[i]);
+        }
+
         bool isValidProof = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proofBytes, correctPublicInputs);
         require(isValidProof == true, "isValidProof should be true");
         console.logString("isValidProof:");
