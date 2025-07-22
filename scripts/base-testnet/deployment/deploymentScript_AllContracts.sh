@@ -7,6 +7,7 @@ forge script scripts/base-testnet/deployment/DeploymentAllContracts.s.sol \
     --rpc-url ${BASE_TESTNET_RPC} \
     --chain-id ${BASE_TESTNET_CHAIN_ID} \
     --private-key ${BASE_TESTNET_PRIVATE_KEY} \
+    --gas-limit 30000000 \
     ./contracts/circuit/ultra-verifier/plonk_vk.sol:UltraVerifier \
     ./contracts/circuit/InsuranceClaimProofVerifier.sol:InsuranceClaimProofVerifier \
     --skip-simulation
@@ -16,6 +17,7 @@ forge script scripts/base-testnet/deployment/DeploymentAllContracts.s.sol \
     --rpc-url ${BASE_TESTNET_RPC} \
     --chain-id ${BASE_TESTNET_CHAIN_ID} \
     --private-key ${BASE_TESTNET_PRIVATE_KEY} \
+    --gas-limit 30000000 \
     --resume \
     --verify \
     --verifier blockscout \
