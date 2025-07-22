@@ -10,6 +10,7 @@ forge script scripts/base-testnet/deployment/DeploymentAllContracts.s.sol \
     --gas-limit 30000000 \
     ./contracts/circuit/ultra-verifier/plonk_vk.sol:UltraVerifier \
     ./contracts/circuit/InsuranceClaimProofVerifier.sol:InsuranceClaimProofVerifier \
+    ./contracts/InsuranceClaim.sol:InsuranceClaim \
     --skip-simulation
 
 echo "Verify the deployed-smart contracts (icl. UltraVerifier, InsuranceClaimProofVerifier) on Base Testnet Explorer..."
