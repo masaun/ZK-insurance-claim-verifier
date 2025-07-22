@@ -55,6 +55,8 @@ contract VerifyScript is Script {
         bytes memory proofBytes = ProofConverter.sliceAfter192Bytes(proof_w_inputs);    /// @dev - In case of that there are 6 public inputs (bytes32 * 6 = 192 bytes), the proof file includes 192 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
         //bytes memory proofBytes = ProofConverter.sliceAfter96Bytes(proof_w_inputs);    /// @dev - In case of that there are 3 public inputs (bytes32 * 3 = 96 bytes), the proof file includes 96 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
         //bytes memory proofBytes = ProofConverter.sliceAfter64Bytes(proof_w_inputs);  /// @dev - In case of that there are 2 public inputs (bytes32 * 2 = 64 bytes), the proof file includes 64 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
+        console.logString("proofBytes:");
+        console.logBytes(proofBytes);
 
         // string memory proof = vm.readLine("./circuits/target/ip_nft_ownership_proof.bin");
         // bytes memory proofBytes = vm.parseBytes(proof);
@@ -69,6 +71,7 @@ contract VerifyScript is Script {
     
         bool isValidProof = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proofBytes, correctPublicInputs);
         require(isValidProof == true, "isValidProof should be true");
+        console.logString("isValidProof:");
         console.logBool(isValidProof); // [Log]: true
         return isValidProof;
     }
