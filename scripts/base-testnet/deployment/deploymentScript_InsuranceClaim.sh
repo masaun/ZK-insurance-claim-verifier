@@ -1,7 +1,7 @@
 echo "Load the environment variables from the .env file..."
 . ./.env
 
-echo "Deploying the InsuranceClaim.sol on BASE Testnet..."
+echo "Deploying the smart contracts (icl. UltraVerifier, InsuranceClaimProofVerifier) on Swell Chain Testnet..."
 forge script scripts/base-testnet/deployment/Deployment_InsuranceClaim.s.sol \
     --broadcast \
     --rpc-url ${BASE_TESTNET_RPC} \
@@ -11,7 +11,7 @@ forge script scripts/base-testnet/deployment/Deployment_InsuranceClaim.s.sol \
     ./contracts/InsuranceClaim.sol:InsuranceClaim \
     --skip-simulation
 
-echo "Verify the deployed-InsuranceClaim.sol on Base Testnet Explorer..."
+echo "Verify the deployed-smart contracts (icl. UltraVerifier, InsuranceClaimProofVerifier) on Base Testnet Explorer..."
 forge script scripts/base-testnet/deployment/Deployment_InsuranceClaim.s.sol \
     --rpc-url ${BASE_TESTNET_RPC} \
     --chain-id ${BASE_TESTNET_CHAIN_ID} \

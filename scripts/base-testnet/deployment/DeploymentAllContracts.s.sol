@@ -33,7 +33,7 @@ contract DeploymentAllContracts is Script {
         /// @dev - Deploy SCs
         verifier = new UltraVerifier();
         insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
-        insuranceClaim = new InsuranceClaim(insuranceClaimProofVerifier);
+        //insuranceClaim = new InsuranceClaim(insuranceClaimProofVerifier);
         //insuranceClaimRegistry = new InsuranceClaimRegistry();
 
         vm.stopBroadcast();
@@ -44,8 +44,8 @@ contract DeploymentAllContracts is Script {
         console.log("%s: %s", "UltraVerifier SC", address(verifier));
         console.logString("\n");
         console.log("%s: %s", "InsuranceClaimProofVerifier SC", address(insuranceClaimProofVerifier));
-        console.logString("\n");
-        console.log("%s: %s", "InsuranceClaim SC", address(insuranceClaim));
+        //console.logString("\n");
+        //console.log("%s: %s", "InsuranceClaim SC", address(insuranceClaim));
         //console.logString("\n");
         //console.log("%s: %s", "InsuranceClaimRegistry SC", address(insuranceClaimRegistry));
     }
