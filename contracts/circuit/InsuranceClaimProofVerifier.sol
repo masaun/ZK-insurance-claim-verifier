@@ -11,7 +11,8 @@ contract InsuranceClaimProofVerifier {
 
     mapping(address => bool) public insurers;
     mapping(address => bool) public claimants;
-    mapping(address => bool) public claimed;
+    mapping(address => mapping(address => bool)) public claimRequests;
+    mapping(address => mapping(address => bool)) public approvedClaims;
 
     constructor(UltraVerifier _verifier) {
         verifier = _verifier;
@@ -32,18 +33,31 @@ contract InsuranceClaimProofVerifier {
     /**
      * @notice - Submit the insurance claim
      */
-    function submitInsuranceClaim(bytes calldata proof, bytes32[] calldata publicInputs) public returns (bool) {
+    function submitInsuranceClaim(bytes calldata proof, bytes32[] calldata publicInputs, address insurer) public returns (bool) {
         require(claimants[msg.sender], "You are not registered as a claimant");
 
         bool proofResult = verifyInsuranceClaimProof(proof, publicInputs);
         //bool proofResult = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, publicInputs);
         require(proofResult, "A given InsuranceClaimProof is not valid");
 
-        claimed[msg.sender] = true;
-
-        return proofResult;
+        claimRequests[insurer][msg.sender] = true;
     }
 
+    /**
+     * @notice - Approve the insurance claim
+     */
+    function approveInsuranceClaim(address claimant) public returns (bool) {
+        require(insurers[msg.sender], "You are not registered as an insurer");
+        require(claimants[claimant], "No claim request found for this address");
+
+        approvedClaims[msg.sender][claimant] = true;
+
+        return true;
+    }
+
+    /**
+     * @notice - Register as a claimant or an insurer
+     */
     function registerAsClaimant() public returns (bool) {
         require(!claimants[msg.sender], "You have already registered as a claimant");
         claimants[msg.sender] = true;
@@ -56,6 +70,9 @@ contract InsuranceClaimProofVerifier {
         return true;
     }
 
+    /**
+     * @notice - Deregister as a claimant or an insurer
+     */
     function deregisterAsClaimant() public returns (bool) {
         require(claimants[msg.sender], "You are not registered as a claimant");
         claimants[msg.sender] = false;
