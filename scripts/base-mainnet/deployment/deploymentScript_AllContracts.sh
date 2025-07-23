@@ -1,7 +1,7 @@
 echo "Load the environment variables from the .env file..."
 . ./.env
 
-echo "Deploying the smart contracts (icl. UltraVerifier, InsuranceClaimProofVerifier) on BASE Mainnet..."
+echo "Deploying the smart contracts (icl. UltraVerifier, InsuranceClaimProofVerifier) on BASE Mainnet + Gas Cost Simulation..."
 forge script scripts/base-mainnet/deployment/DeploymentAllContracts.s.sol \
     --broadcast \
     --rpc-url ${BASE_MAINNET_RPC} \
