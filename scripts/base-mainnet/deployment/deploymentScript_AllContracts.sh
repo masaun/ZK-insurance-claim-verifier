@@ -11,7 +11,7 @@ forge script scripts/base-mainnet/deployment/DeploymentAllContracts.s.sol \
     ./contracts/circuit/ultra-verifier/plonk_vk.sol:UltraVerifier \
     ./contracts/circuit/InsuranceClaimProofVerifier.sol:InsuranceClaimProofVerifier \
     ./contracts/InsuranceClaim.sol:InsuranceClaim \
-    --skip-simulation
+    #--skip-simulation
 
 echo "Verify the deployed-smart contracts (icl. UltraVerifier, InsuranceClaimProofVerifier) on BASE Mainnet Explorer..."
 forge script scripts/base-mainnet/deployment/DeploymentAllContracts.s.sol \
