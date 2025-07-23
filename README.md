@@ -221,6 +221,14 @@ sh ./scripts/swellchain-testnet/deployment/deploymentScript_AllContracts.sh
 sh ./scripts/base-testnet/deployment/deploymentScript_AllContracts.sh
 ```
 
+<br>
+
+## Deployment on BASE mainnet
+- Run the `DeploymentAllContracts.s.sol` to deploy the `UltraVerifier` contract and the `InsuranceClaimProofVerifier` contract on BASE mainnet:
+  - NOTE: The smart contract is verified in `BlockScount` of Base Mainnet (https://base.blockscout.com)
+```bash
+sh ./scripts/base-mainnet/deployment/deploymentScript_AllContracts.sh
+```
 
 
 <br>
