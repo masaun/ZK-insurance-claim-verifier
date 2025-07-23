@@ -3,21 +3,16 @@ pragma solidity ^0.8.17;
 import "forge-std/Script.sol";
 
 /// @dev - ZK (Ultraplonk) circuit, which is generated in Noir.
-import { UltraVerifier } from "../../../contracts/circuit/ultra-verifier/plonk_vk.sol"; /// @dev - Deployed-Verifier SC, which was generated based on the main.nr
 import { InsuranceClaimProofVerifier } from "../../../contracts/circuit/InsuranceClaimProofVerifier.sol";
-//import { InsuranceClaim } from "../../../contracts/InsuranceClaim.sol";
-//import { InsuranceClaimRegistry } from "../../../contracts/InsuranceClaimRegistry.sol";
+import { InsuranceClaim } from "../../../contracts/InsuranceClaim.sol";
 
 
 /**
- * @notice - Deployment script to deploy all SCs at once - on Sonic Blaze Testnet
- * @dev - [CLI]: Using the CLI, which is written in the bottom of this file, to deploy all SCs
+ * @notice - Deployment script to deploy all SCs at once - on BASE Testnet
  */
-contract DeploymentAllContracts is Script {
-    UltraVerifier public verifier;
+contract DeploymentInsuranceClaim is Script {
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
-    //InsuranceClaim public insuranceClaim;
-    //InsuranceClaimRegistry public insuranceClaimRegistry;
+    InsuranceClaim public insuranceClaim;
 
     function setUp() public {}
 
@@ -30,9 +25,10 @@ contract DeploymentAllContracts is Script {
         vm.startBroadcast(deployerPrivateKey);
         //vm.startBroadcast();
 
+        address INSURANCE_CLAIM_PROOF_VERIFIER = vm.envAddress("INSURANCE_CLAIM_PROOF_VERIFIER_ON_BASE_TESTNET");
+
         /// @dev - Deploy SCs
-        verifier = new UltraVerifier();
-        insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
+        insuranceClaimProofVerifier = InsuranceClaimProofVerifier(INSURANCE_CLAIM_PROOF_VERIFIER);
         insuranceClaim = new InsuranceClaim(insuranceClaimProofVerifier);
         //insuranceClaimRegistry = new InsuranceClaimRegistry();
 
@@ -41,9 +37,7 @@ contract DeploymentAllContracts is Script {
         /// @dev - Logs of the deployed-contracts on BASE Testnet
         console.logString("Logs of the deployed-contracts on BASE Testnet");
         console.logString("\n");
-        console.log("%s: %s", "UltraVerifier SC", address(verifier));
-        console.logString("\n");
-        console.log("%s: %s", "InsuranceClaimProofVerifier SC", address(insuranceClaimProofVerifier));
+        console.log("%s: %s", "InsuranceClaimProofVerifier SC", INSURANCE_CLAIM_PROOF_VERIFIER);
         console.logString("\n");
         console.log("%s: %s", "InsuranceClaim SC", address(insuranceClaim));
         //console.logString("\n");
