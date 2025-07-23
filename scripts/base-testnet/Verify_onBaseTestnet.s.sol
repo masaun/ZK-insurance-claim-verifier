@@ -3,18 +3,18 @@ pragma solidity ^0.8.17;
 import { Script } from "forge-std/Script.sol";
 import "forge-std/console.sol";
 
-import { UltraVerifier } from "../contracts/circuit/ultra-verifier/plonk_vk.sol";
-//import "../circuits/target/contract.sol";
-import { InsuranceClaimProofVerifier } from "../contracts/circuit/InsuranceClaimProofVerifier.sol";
-import { ProofConverter } from "./utils/ProofConverter.sol";
-import { Poseidon2HashComputer } from "./utils/poseidon2-hash-generator/contracts/libraries/Poseidon2HashComputer.sol";
-
-import { DataTypeConverter } from "../../contracts/libraries/DataTypeConverter.sol";
+import { InsuranceClaimProofVerifier } from "../../contracts/circuit/InsuranceClaimProofVerifier.sol";
+import { UltraVerifier } from "../../contracts/circuit/ultra-verifier/plonk_vk.sol"; /// @dev - Deployed-Verifier SC, which was generated based on the main.nr
+//import { UltraVerifier } from "../../circuits/target/contract.sol";
+import { ProofConverter } from "../utils/ProofConverter.sol";
 
 
+/**
+ * @notice - Verify the insurance claim proof on Swell Chain Testnet
+ */
 contract VerifyScript is Script {
-    InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     UltraVerifier public verifier;
+    InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
 
     struct PublicInputs {
         bytes32 merkle_root; // root
@@ -28,10 +28,18 @@ contract VerifyScript is Script {
     function setUp() public {}
 
     function run() public returns (bool) {
-        verifier = new UltraVerifier();
-        insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
+        uint256 deployerPrivateKey = vm.envUint("SWELL_CHAIN_TESTNET_PRIVATE_KEY");
+        vm.startBroadcast(deployerPrivateKey);
 
+        /// @dev - Read the each deployed address from the configuration file.
+        address ULTRAVERIFER = vm.envAddress("ULTRAVERIFER_ON_SWELL_CHAIN_TESTNET");
+        address INSURANCE_CLAIM_PROOF_VERIFIER = vm.envAddress("INSURANCE_CLAIM_PROOF_VERIFIER_ON_SWELL_CHAIN_TESTNET");
 
+        /// @dev - Create the SC instances /w deployed SC addresses
+        verifier = UltraVerifier(ULTRAVERIFER);
+        insuranceClaimProofVerifier = InsuranceClaimProofVerifier(INSURANCE_CLAIM_PROOF_VERIFIER);
+        //verifier = new UltraVerifier();
+        //insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
 
         // @dev - [TEST]: Extract the public key and signed message from the output.json file
         extractPubkeyAndSignedMessage();
@@ -55,8 +63,6 @@ contract VerifyScript is Script {
         bytes memory proofBytes = ProofConverter.sliceAfter192Bytes(proof_w_inputs);    /// @dev - In case of that there are 6 public inputs (bytes32 * 6 = 192 bytes), the proof file includes 192 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
         //bytes memory proofBytes = ProofConverter.sliceAfter96Bytes(proof_w_inputs);    /// @dev - In case of that there are 3 public inputs (bytes32 * 3 = 96 bytes), the proof file includes 96 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
         //bytes memory proofBytes = ProofConverter.sliceAfter64Bytes(proof_w_inputs);  /// @dev - In case of that there are 2 public inputs (bytes32 * 2 = 64 bytes), the proof file includes 64 bytes of the public inputs at the beginning. Hence it should be removed by using this function.
-        console.logString("proofBytes:");
-        console.logBytes(proofBytes);
 
         // string memory proof = vm.readLine("./circuits/target/ip_nft_ownership_proof.bin");
         // bytes memory proofBytes = vm.parseBytes(proof);
@@ -68,15 +74,9 @@ contract VerifyScript is Script {
         correctPublicInputs[3] = is_bill_signed;
         correctPublicInputs[4] = is_bill_amount_exceed_threshold;
         correctPublicInputs[5] = is_policy_valid;
-        console.logString("correctPublicInputs:");
-        for (uint i = 0; i < correctPublicInputs.length; i++) {
-            console.log("correctPublicInputs[%s]:", i);
-            console.logBytes32(correctPublicInputs[i]);
-        }
-
+    
         bool isValidProof = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proofBytes, correctPublicInputs);
         require(isValidProof == true, "isValidProof should be true");
-        console.logString("isValidProof:");
         console.logBool(isValidProof); // [Log]: true
         return isValidProof;
     }
@@ -163,6 +163,4 @@ contract VerifyScript is Script {
         // console.logBytes32(_hospital_pubkey_bytes);
         // console.logBytes32(_hospital_signature_bytes);
     }
-
 }
-
