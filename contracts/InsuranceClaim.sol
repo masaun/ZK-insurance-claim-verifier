@@ -25,7 +25,7 @@ contract InsuranceClaim {
         return proofResult;
     }
 
-    function pock() public returns (bool) {
+    function poke() public returns (bool) {
         return true;
     }
 }
