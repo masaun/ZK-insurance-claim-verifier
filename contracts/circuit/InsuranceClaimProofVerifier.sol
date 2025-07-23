@@ -31,7 +31,7 @@ contract InsuranceClaimProofVerifier {
     }
 
     /**
-     * @notice - Submit the insurance claim
+     * @notice - Submit the insurance claim by a claimant
      */
     function submitInsuranceClaim(bytes calldata proof, bytes32[] calldata publicInputs, address insurer) public returns (bool) {
         require(claimants[msg.sender], "You are not registered as a claimant");
@@ -44,7 +44,7 @@ contract InsuranceClaimProofVerifier {
     }
 
     /**
-     * @notice - Approve the insurance claim
+     * @notice - Approve the insurance claim by an insurer
      */
     function approveInsuranceClaim(address claimant) public returns (bool) {
         require(insurers[msg.sender], "You are not registered as an insurer");
