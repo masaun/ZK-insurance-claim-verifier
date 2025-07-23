@@ -9,6 +9,8 @@ contract InsuranceClaimProofVerifier {
 
     UltraVerifier public verifier;
 
+    mapping(address => bool) public insurers;
+    mapping(address => bool) public claimants;
     mapping(address => bool) public claimed;
 
     constructor(UltraVerifier _verifier) {
@@ -31,6 +33,8 @@ contract InsuranceClaimProofVerifier {
      * @notice - Submit the insurance claim
      */
     function submitInsuranceClaim(bytes calldata proof, bytes32[] calldata publicInputs) public returns (bool) {
+        require(claimants[msg.sender], "You are not registered as a claimant");
+
         bool proofResult = verifyInsuranceClaimProof(proof, publicInputs);
         //bool proofResult = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, publicInputs);
         require(proofResult, "A given InsuranceClaimProof is not valid");
@@ -40,6 +44,29 @@ contract InsuranceClaimProofVerifier {
         return proofResult;
     }
 
+    function registerAsClaimant() public returns (bool) {
+        require(!claimants[msg.sender], "You have already registered as a claimant");
+        claimants[msg.sender] = true;
+        return true;
+    }
+
+    function registerAsInsurer() public returns (bool) {
+        require(!insurers[msg.sender], "You have already registered as an insurer");
+        insurers[msg.sender] = true;
+        return true;
+    }
+
+    function deregisterAsClaimant() public returns (bool) {
+        require(claimants[msg.sender], "You are not registered as a claimant");
+        claimants[msg.sender] = false;
+        return true;
+    }
+
+    function deregisterAsInsurer() public returns (bool) {
+        require(insurers[msg.sender], "You are not registered as an insurer");
+        insurers[msg.sender] = false;
+        return true;
+    }
 
     /**
      * @notice - This function is a test function
