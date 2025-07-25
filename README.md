@@ -239,6 +239,16 @@ sh ./scripts/base-mainnet/deployment/deploymentScript_AllContracts.sh
 sh ./scripts/base-mainnet/deployment/deploymentScript_InsuranceClaimProofVerifier.sh
 ```
 
+<br>
+
+## Verification on BASE mainnet (`Each SC`)
+- Run for verifying the  `InsuranceClaimProofVerifier` contract on BASE mainnet:
+  - NOTE: The smart contract is verified in `BaseScan` of Base Mainnet ()
+```bash
+sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimProofVerifier.sh
+```
+
+
 
 <br>
 
