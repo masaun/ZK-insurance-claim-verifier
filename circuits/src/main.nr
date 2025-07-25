@@ -94,8 +94,8 @@ fn main(
     //let inputs_for_nullifier: [Field; 1] = [ip_nft_data.nft_token_id];
     let inputs_for_nullifier: [Field; 3] = [root, secret, hospital_bill_data.hospital_bill_amount];
     let expected_nullifier = poseidon2::Poseidon2::hash(inputs_for_nullifier, inputs_for_nullifier.len());
-    println(nullifier);
-    println(expected_nullifier); // [Log]: 0x1265c921cb8e0dc6c91f70ae08b14352b8f10451aee7582b9ed44abea8d4123c
+    println(f"nullifier: {nullifier}");
+    println(f"expected_nullifier: {expected_nullifier}"); // [Log]: 0x1265c921cb8e0dc6c91f70ae08b14352b8f10451aee7582b9ed44abea8d4123c
 
     // Constraint: nullifier (hash) == expected_nullifier (hash)
     assert(nullifier == expected_nullifier);
