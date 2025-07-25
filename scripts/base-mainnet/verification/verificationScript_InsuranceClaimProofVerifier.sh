@@ -13,6 +13,8 @@ forge verify-contract \
     --etherscan-api-key ${BASESCAN_API_KEY}
 
 
+echo "Verifying the InsuranceClaimProofVerifier contract on Base Mainnet via Curl command..."
+curl "https://api.basescan.org/api?module=contract&action=checkverifystatus&guid=${GUID}&apikey=${BASESCAN_API_KEY}"
 
 #echo "Deploying & Verifying the InsuranceClaimProofVerifier contract on Base Mainnet..."
 #forge script scripts/base-mainnet/deployment/DeploymentForInsuranceClaimProofVerifier.s.sol --slow --multi --broadcast --private-key ${BASE_MAINNET_PRIVATE_KEY} --verify --etherscan-api-key ${BASESCAN_API_KEY}
