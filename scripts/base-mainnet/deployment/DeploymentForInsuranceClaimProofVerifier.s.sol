@@ -9,9 +9,9 @@ import { InsuranceClaimProofVerifier } from "../../../contracts/circuit/Insuranc
 
 
 /**
- * @notice - Deployment script to deploy all SCs at once - on BASE Mainnet
+ * @notice - Deployment script to deploy the InsuranceClaimProofVerifier SC - on BASE Mainnet
  */
-contract DeploymentAllContracts is Script {
+contract DeploymentForInsuranceClaimProofVerifier is Script {
     UltraVerifier public verifier;
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     //InsuranceClaim public insuranceClaim;
@@ -28,8 +28,8 @@ contract DeploymentAllContracts is Script {
         //vm.startBroadcast();
 
         /// @dev - Deploy SCs
-        //verifier = UltraVerifier(vm.envAddress("ULTRA_VERIFIER_ON_BASE_MAINNET"));
-        verifier = new UltraVerifier();
+        verifier = UltraVerifier(vm.envAddress("ULTRAVERIFIER_ON_BASE_MAINNET"));
+        //verifier = new UltraVerifier();
         insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
         //insuranceClaim = new InsuranceClaim(insuranceClaimProofVerifier);
 

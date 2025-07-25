@@ -223,11 +223,20 @@ sh ./scripts/base-testnet/deployment/deploymentScript_AllContracts.sh
 
 <br>
 
-## Deployment on BASE mainnet
+## Deployment on BASE mainnet (`All`)
 - Run the `DeploymentAllContracts.s.sol` to deploy the `UltraVerifier` contract and the `InsuranceClaimProofVerifier` contract on BASE mainnet:
   - NOTE: The smart contract is verified in `BlockScount` of Base Mainnet (https://base.blockscout.com)
 ```bash
 sh ./scripts/base-mainnet/deployment/deploymentScript_AllContracts.sh
+```
+
+<br>
+
+## Deployment on BASE mainnet (`Each SC`)
+- Run the `DeploymentForInsuranceClaimProofVerifier.s.sol` to deploy the  `InsuranceClaimProofVerifier` contract on BASE mainnet:
+  - NOTE: The smart contract is verified in `BlockScount` of Base Mainnet (https://base.blockscout.com)
+```bash
+sh ./scripts/base-mainnet/deployment/deploymentScript_InsuranceClaimProofVerifier.sh
 ```
 
 
