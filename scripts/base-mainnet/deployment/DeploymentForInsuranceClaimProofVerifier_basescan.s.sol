@@ -11,7 +11,7 @@ import { InsuranceClaimProofVerifier } from "../../../contracts/circuit/Insuranc
 /**
  * @notice - Deployment script to deploy the InsuranceClaimProofVerifier SC - on BASE Mainnet
  */
-contract DeploymentForInsuranceClaimProofVerifier is Script {
+contract DeploymentForInsuranceClaimProofVerifier_basescan is Script {
     UltraVerifier public verifier;
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     //InsuranceClaim public insuranceClaim;
@@ -20,7 +20,8 @@ contract DeploymentForInsuranceClaimProofVerifier is Script {
 
     function run() public {
 
-        //vm.createSelectFork('base-testnet'); // [NOTE]: Commmentout due to the error of the "Multi chain deployment does not support library linking at the moment"
+        vm.createSelectFork("https://mainnet.base.org"); // @dev - [NOTE]: Hardcoded the Base Mainnet RPC URL - Instead of using the environment variable via the foundry.toml
+        //vm.createSelectFork('base-mainnet');
 
         uint256 deployerPrivateKey = vm.envUint("BASE_MAINNET_PRIVATE_KEY");
         //uint256 deployerPrivateKey = vm.envUint("LOCALHOST_PRIVATE_KEY");
