@@ -233,13 +233,16 @@ sh ./scripts/base-mainnet/deployment/deploymentScript_AllContracts.sh
 <br>
 
 ## Deployment on BASE mainnet (`Each SC`)
-- Run the `DeploymentForInsuranceClaimProofVerifier.s.sol` to deploy the  `InsuranceClaimProofVerifier` contract on BASE mainnet:
-  - NOTE: The smart contract is verified in `BlockScount` of Base Mainnet (https://base.blockscout.com)
+- Run the `DeploymentForInsuranceClaimProofVerifier_blockscout.s.sol` to deploy the  `InsuranceClaimProofVerifier` contract on BASE mainnet:
+  - NOTE: The smart contract is verified via the `BlockScount` of Base Mainnet (https://base.blockscout.com)
 ```bash
 sh ./scripts/base-mainnet/deployment/deploymentScript_InsuranceClaimProofVerifier_via_blockscout.sh
 ```
 
-  - NOTE: Here is for `BaseScan`
+<br>
+
+- Run the `DeploymentForInsuranceClaimProofVerifier_basescan.s.sol` to deploy the  `InsuranceClaimProofVerifier` contract on BASE mainnet:
+  - NOTE: The smart contract is verified via the `BaseScan` of Base Mainnet (https://basescan.org)
 ```bash
 sh ./scripts/base-mainnet/deployment/deploymentScript_InsuranceClaimProofVerifier_via_basescan.sh
 ```
@@ -250,7 +253,7 @@ sh ./scripts/base-mainnet/deployment/deploymentScript_InsuranceClaimProofVerifie
 - Run for verifying the  `InsuranceClaimProofVerifier` contract on BASE mainnet:
   - NOTE: The smart contract is verified in `BaseScan` of Base Mainnet ()
 ```bash
-sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimProofVerifier.sh
+sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimProofVerifier_via_basescan.sh
 ```
 
 

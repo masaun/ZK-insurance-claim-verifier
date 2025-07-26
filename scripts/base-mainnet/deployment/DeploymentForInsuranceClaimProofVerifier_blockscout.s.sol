@@ -11,7 +11,7 @@ import { InsuranceClaimProofVerifier } from "../../../contracts/circuit/Insuranc
 /**
  * @notice - Deployment script to deploy the InsuranceClaimProofVerifier SC - on BASE Mainnet
  */
-contract DeploymentForInsuranceClaimProofVerifier is Script {
+contract DeploymentForInsuranceClaimProofVerifier_blockscout is Script {
     UltraVerifier public verifier;
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     //InsuranceClaim public insuranceClaim;
