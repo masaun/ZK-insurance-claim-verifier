@@ -256,6 +256,13 @@ sh ./scripts/base-mainnet/deployment/deploymentScript_InsuranceClaimProofVerifie
 sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimProofVerifier_via_basescan.sh
 ```
 
+<br>
+
+- Run for verifying the  `InsuranceClaimProofVerifier` contract on BASE mainnet:
+  - NOTE: The smart contract is verified in `BlockScout` of Base Mainnet ()
+```bash
+sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimProofVerifier_via_blockscout.sh
+```
 
 
 <br>
