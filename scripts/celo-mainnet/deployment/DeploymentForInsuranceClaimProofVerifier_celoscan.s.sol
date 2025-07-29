@@ -20,7 +20,7 @@ contract DeploymentForInsuranceClaimProofVerifier_basescan is Script {
 
     function run() public {
 
-        vm.createSelectFork("https://mainnet.celo.org"); // @dev - [NOTE]: Hardcoded the Celo Mainnet RPC URL - Instead of using the environment variable via the foundry.toml
+        vm.createSelectFork("https://forno.celo.org"); // @dev - [NOTE]: Hardcoded the Celo Mainnet RPC URL - Instead of using the environment variable via the foundry.toml
         //vm.createSelectFork('celo-mainnet');
 
         uint256 deployerPrivateKey = vm.envUint("CELO_MAINNET_PRIVATE_KEY");
