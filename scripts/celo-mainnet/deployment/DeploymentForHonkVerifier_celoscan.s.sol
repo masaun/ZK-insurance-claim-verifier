@@ -8,7 +8,7 @@ import { UltraVerifier } from "../../../contracts/circuit/ultra-verifier/plonk_v
 /**
  * @notice - Deployment script to deploy all SCs at once - on Celo Mainnet
  */
-contract DeploymentForHonkVerifier_basescan is Script {
+contract DeploymentForHonkVerifier_celoscan is Script {
     UltraVerifier public verifier;
 
     function setUp() public {}
