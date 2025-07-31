@@ -233,6 +233,15 @@ sh ./scripts/base-mainnet/deployment/deploymentScript_AllContracts.sh
 <br>
 
 ## Deployment on BASE mainnet (`Each SC`)
+
+- Run the `DeploymentForHonkVerifier_basescan.s.sol` to deploy the  `HonkVerifier` contract on BASE mainnet:
+  - NOTE: The smart contract is verified via the `BaseScan` of BASE Mainnet (ttps://basescan.org)
+```bash
+sh ./scripts/base-mainnet/deployment/deploymentScript_HonkVerifier_via_basescan.sh
+```
+
+<br>
+
 - Run the `DeploymentForInsuranceClaimProofVerifier_blockscout.s.sol` to deploy the  `InsuranceClaimProofVerifier` contract on BASE mainnet:
   - NOTE: The smart contract is verified via the `BlockScount` of Base Mainnet (https://base.blockscout.com)
 ```bash
@@ -245,6 +254,14 @@ sh ./scripts/base-mainnet/deployment/deploymentScript_InsuranceClaimProofVerifie
   - NOTE: The smart contract is verified via the `BaseScan` of Base Mainnet (https://basescan.org)
 ```bash
 sh ./scripts/base-mainnet/deployment/deploymentScript_InsuranceClaimProofVerifier_via_basescan.sh
+```
+
+<br>
+
+- Run the `DeploymentForInsuranceClaimManager_basescan.s.sol` to deploy the  `InsuranceClaimManager` contract on BASE mainnet:
+  - NOTE: The smart contract is verified via the `BaseScan` of Base Mainnet (https://basescan.org)
+```bash
+sh ./scripts/base-mainnet/deployment/deploymentScript_InsuranceClaimManager_via_basescan.sh
 ```
 
 <br>
@@ -269,7 +286,15 @@ sh ./scripts/celo-mainnet/deployment/deploymentScript_HonkVerifier_via_celoscan.
 - Run the `DeploymentForInsuranceClaimProofVerifier_celoscan.s.sol` to deploy the  `InsuranceClaimProofVerifier` contract on BASE mainnet:
   - NOTE: The smart contract is verified via the `CeloScan` of Celo Mainnet (https://celoscan.io)
 ```bash
-sh ./scripts/base-mainnet/deployment/deploymentScript_InsuranceClaimProofVerifier_via_celoscan.sh
+sh ./scripts/celo-mainnet/deployment/deploymentScript_InsuranceClaimProofVerifier_via_celoscan.sh
+```
+
+<br>
+
+- Run the `DeploymentForInsuranceClaimManager_celoscan.s.sol` to deploy the  `InsuranceClaimManager` contract on BASE mainnet:
+  - NOTE: The smart contract is verified via the `CeloScan` of Celo Mainnet (https://celoscan.io)
+```bash
+sh ./scripts/celo-mainnet/deployment/deploymentScript_InsuranceClaimManager_via_celoscan.sh
 ```
 
 <br>
@@ -291,6 +316,14 @@ sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimProofVer
 
 <br>
 
+- Run for verifying the  `InsuranceClaimManager` contract on BASE mainnet:
+  - NOTE: The smart contract is verified in `BaseScan` of Base Mainnet ()
+```bash
+sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimManager_via_basescan.sh
+```
+
+<br>
+
 ## Verification on Celo mainnet (`Each SC`)
 - Run for verifying the  `InsuranceClaimProofVerifier` contract on Celo mainnet:
   - NOTE: The smart contract is verified in `CeloScan` of Celo Mainnet ()
@@ -304,6 +337,14 @@ sh ./scripts/celo-mainnet/verification/verificationScript_InsuranceClaimProofVer
   - NOTE: The smart contract is verified in `BlockScout` of Celo Mainnet ()
 ```bash
 sh ./scripts/celo-mainnet/verification/verificationScript_InsuranceClaimProofVerifier_via_blockscout.sh
+```
+
+<br>
+
+- Run for verifying the  `InsuranceClaimManager` contract on Celo mainnet:
+  - NOTE: The smart contract is verified in `BlockScout` of Celo Mainnet ()
+```bash
+sh ./scripts/celo-mainnet/verification/verificationScript_InsuranceClaimManager_via_blockscout.sh
 ```
 
 <br>

@@ -3,18 +3,16 @@ pragma solidity ^0.8.17;
 import "forge-std/Script.sol";
 
 /// @dev - ZK (Ultraplonk) circuit, which is generated in Noir.
-import { UltraVerifier } from "../../../contracts/circuit/ultra-verifier/plonk_vk.sol"; /// @dev - Deployed-Verifier SC, which was generated based on the main.nr
 import { InsuranceClaimProofVerifier } from "../../../contracts/circuit/InsuranceClaimProofVerifier.sol";
-//import { InsuranceClaim } from "../../../contracts/InsuranceClaim.sol";
+import { InsuranceClaimManager } from "../../../contracts/InsuranceClaimManager.sol";
 
 
 /**
- * @notice - Deployment script to deploy the InsuranceClaimProofVerifier SC - on Celo Mainnet
+ * @notice - Deployment script to deploy the InsuranceClaimManager SC - on Celo Mainnet
  */
-contract DeploymentForInsuranceClaimProofVerifier_celoscan is Script {
-    UltraVerifier public verifier;
+contract DeploymentForInsuranceClaimManager_celoscan is Script {
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
-    //InsuranceClaim public insuranceClaim;
+    InsuranceClaimManager public insuranceClaimManager;
 
     function setUp() public {}
 
@@ -29,23 +27,18 @@ contract DeploymentForInsuranceClaimProofVerifier_celoscan is Script {
         //vm.startBroadcast();
 
         /// @dev - Deploy SCs
-        verifier = UltraVerifier(vm.envAddress("ULTRAVERIFIER_ON_CELO_MAINNET"));
-        //verifier = new UltraVerifier();
-        insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
-        //insuranceClaim = new InsuranceClaim(insuranceClaimProofVerifier);
+        insuranceClaimProofVerifier = InsuranceClaimProofVerifier(vm.envAddress("INSURANCE_CLAIM_PROOF_VERIFIER_ON_CELO_MAINNET"));
+        //insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
+        insuranceClaimManager = new InsuranceClaimManager(insuranceClaimProofVerifier);
 
         vm.stopBroadcast();
 
         /// @dev - Logs of the deployed-contracts on Celo Mainnet
         console.logString("Logs of the deployed-contracts on Celo Mainnet");
         console.logString("\n");
-        console.log("%s: %s", "UltraVerifier SC", address(verifier));
-        console.logString("\n");
         console.log("%s: %s", "InsuranceClaimProofVerifier SC", address(insuranceClaimProofVerifier));
-        //console.logString("\n");
-        //console.log("%s: %s", "InsuranceClaim SC", address(insuranceClaim));
-        //console.logString("\n");
-        //console.log("%s: %s", "InsuranceClaimRegistry SC", address(insuranceClaimRegistry));
+        console.logString("\n");
+        console.log("%s: %s", "InsuranceClaimManager SC", address(insuranceClaimManager));
     }
 }
 
