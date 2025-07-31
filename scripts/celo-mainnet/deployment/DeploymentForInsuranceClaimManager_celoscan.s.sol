@@ -12,7 +12,7 @@ import { InsuranceClaimManager } from "../../../contracts/InsuranceClaimManager.
  */
 contract DeploymentForInsuranceClaimManager_celoscan is Script {
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
-    InsuranceClaim public insuranceClaim;
+    InsuranceClaimManager public insuranceClaimManager;
 
     function setUp() public {}
 

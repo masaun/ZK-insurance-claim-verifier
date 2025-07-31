@@ -1,6 +1,6 @@
 pragma solidity ^0.8.17;
 
-import { InsuranceClaimProofVerifier } from "./InsuranceClaimProofVerifier.sol";
+import { InsuranceClaimProofVerifier } from "./circuit/InsuranceClaimProofVerifier.sol";
 //import "../circuits/target/contract.sol";
 
 contract InsuranceClaimManager {
