@@ -1,3 +1,6 @@
+echo "Compile the smart contract files..."
+sh buildContract.sh
+
 echo "Load the environment variables from the .env file..."
 . ./.env
 
