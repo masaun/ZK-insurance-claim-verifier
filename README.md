@@ -299,7 +299,7 @@ sh ./scripts/celo-mainnet/deployment/deploymentScript_InsuranceClaimManager_via_
 
 <br>
 
-## Verification on BASE mainnet (`Each SC`)
+## Verification on BASE mainnet (`Each SC`) - `BaseScan`
 - Run for verifying the  `InsuranceClaimProofVerifier` contract on BASE mainnet:
   - NOTE: The smart contract is verified in `BaseScan` of Base Mainnet ()
 ```bash
@@ -307,6 +307,16 @@ sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimProofVer
 ```
 
 <br>
+
+- Run for verifying the  `InsuranceClaimManager` contract on BASE mainnet:
+  - NOTE: The smart contract is verified in `BaseScan` of Base Mainnet ()
+```bash
+sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimManager_via_basescan.sh
+```
+
+<br>
+
+## Verification on BASE mainnet (`Each SC`) - `BlockScout`
 
 - Run for verifying the  `InsuranceClaimProofVerifier` contract on BASE mainnet:
   - NOTE: The smart contract is verified in `BlockScout` of Base Mainnet ()
@@ -317,10 +327,11 @@ sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimProofVer
 <br>
 
 - Run for verifying the  `InsuranceClaimManager` contract on BASE mainnet:
-  - NOTE: The smart contract is verified in `BaseScan` of Base Mainnet ()
+  - NOTE: The smart contract is verified in `BlockScout` of Base Mainnet ()
 ```bash
-sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimManager_via_basescan.sh
+sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimManager_via_blockscout.sh
 ```
+
 
 <br>
 

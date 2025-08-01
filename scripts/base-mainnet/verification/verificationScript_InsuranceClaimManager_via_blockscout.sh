@@ -3,11 +3,11 @@ echo "Load the environment variables from the .env file..."
 source .env
 #. ./.env
 
-# @notice - [Result]: Successfully "verified" the InsuranceClaimProofVerifier contract on Base Mainnet. 
-echo "Verifying the InsuranceClaimProofVerifier contract on Base Mainnet (via BlockScout)..."
+# @notice - [Result]: Successfully "verified" the InsuranceClaimManager contract on Base Mainnet. 
+echo "Verifying the InsuranceClaimManager contract on Base Mainnet (via BlockScout)..."
 forge verify-contract \
   --rpc-url ${BASE_MAINNET_RPC} \
   --verifier blockscout \
   --verifier-url 'https://base.blockscout.com/api/' \
-  ${INSURANCE_CLAIM_PROOF_VERIFIER_ON_BASE_MAINNET} \
-  ./contracts/circuit/InsuranceClaimProofVerifier.sol:InsuranceClaimProofVerifier
+  ${INSURANCE_CLAIM_MANAGER_ON_BASE_MAINNET} \
+  ./contracts/InsuranceClaimManager.sol:InsuranceClaimManager
