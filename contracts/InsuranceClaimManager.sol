@@ -14,6 +14,9 @@ contract InsuranceClaimManager {
     mapping(address => mapping(address => bool)) public claimRequests;
     mapping(address => mapping(address => bool)) public approvedClaims;
 
+    mapping(address => uint256) public checkpoints;
+    mapping(address => bool) public stakers;
+
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
         version = "0.1.3";
@@ -75,9 +78,28 @@ contract InsuranceClaimManager {
     }
 
     /**
-     * @notice - This function is a test function
+     * @notice - checkpoint function
      */
-    function poke() public returns (bool) {
+    function checkpoint() public returns (bool) {
+        checkpoints[msg.sender] = block.timestamp;
         return true;
     }
+
+    /**
+     * @notice - stake function
+     */
+    function stake() public returns (bool) {
+        stakers[msg.sender] = true;
+        return true;
+    }
+
+    /**
+     * @notice - unstake function
+     */
+    function unstake() public returns (bool) {
+        require(stakers[msg.sender], "You are not a staker");
+        stakers[msg.sender] = false;
+        return true;
+    }
+
 }
