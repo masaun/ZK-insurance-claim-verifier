@@ -20,7 +20,7 @@ contract InsuranceClaimManager {
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.1.3";
+        version = "0.1.4";
     }
 
     /**
@@ -90,6 +90,7 @@ contract InsuranceClaimManager {
      * @notice - stake a given amount of a native token
      */
     function stakeNativeToken() public payable returns (bool) {
+        checkpoint();
         require(msg.value > 0, "Amount must be greater than 0");
         require(msg.sender.balance >= msg.value, "Insufficient balance to stake");
         stakedAmounts[msg.sender] = msg.value;
@@ -103,6 +104,7 @@ contract InsuranceClaimManager {
      * @notice - unstake a given amount of a native token
      */
     function unstakeNativeToken() public returns (bool) {
+        checkpoint();
         require(stakers[msg.sender], "You are not a staker");
         require(stakedAmounts[msg.sender] > 0, "You have no staked amount to withdraw");
         uint256 amount = stakedAmounts[msg.sender];
