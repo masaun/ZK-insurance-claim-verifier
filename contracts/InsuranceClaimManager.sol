@@ -15,12 +15,13 @@ contract InsuranceClaimManager {
     mapping(address => mapping(address => bool)) public approvedClaims;
 
     mapping(address => uint256) public checkpoints;
+    mapping(address => uint256) public checkpointOfStakings;
     mapping(address => bool) public stakers;
     mapping(address => uint256) public stakedAmounts;
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.1.3";
+        version = "0.2.0";
     }
 
     /**
@@ -87,28 +88,53 @@ contract InsuranceClaimManager {
     }
 
     /**
-     * @notice - stake a given amount of a native token
+     * @notice - checkpoint function
      */
-    function stakeNativeToken() public payable returns (bool) {
+    function _checkpointOfStaking() internal returns (bool) {
+        checkpointOfStakings[msg.sender] = block.timestamp;
+        return true;
+    }
+
+    /**
+     * @notice - Register/Deregister as a staker (of the insurance pool)
+     */
+    function registerAsStaker() public returns (bool) {
+        require(!stakers[msg.sender], "You are already registered as a staker");
+        stakers[msg.sender] = true;
+        return true;
+    }
+
+    function deregisterAsStaker() public returns (bool) {
+        require(stakers[msg.sender], "You are not registered as a staker");
+        require(stakedAmounts[msg.sender] == 0, "You have staked amount, please unstake first");
+        stakers[msg.sender] = false;
+        return true;
+    }
+
+    /**
+     * @notice - stake a given amount of a native token into the insurance pool
+     */
+    function stakeNativeTokenIntoInsurancePool() public payable returns (bool) {
+        _checkpointOfStaking();
+        require(stakers[msg.sender], "You are not registered as a staker");
         require(msg.value > 0, "Amount must be greater than 0");
         require(msg.sender.balance >= msg.value, "Insufficient balance to stake");
         stakedAmounts[msg.sender] = msg.value;
         (bool success, ) = address(this).call{value: msg.value}("");
         require(success, "Stake failed");
-        stakers[msg.sender] = true;
         return true;
     }
 
     /**
-     * @notice - unstake a given amount of a native token
+     * @notice - unstake a given amount of a native token from the insurance pool
      */
-    function unstakeNativeToken() public returns (bool) {
+    function unstakeNativeTokenFromInsurancePool() public returns (bool) {
+        _checkpointOfStaking();
         require(stakers[msg.sender], "You are not a staker");
         require(stakedAmounts[msg.sender] > 0, "You have no staked amount to withdraw");
         uint256 amount = stakedAmounts[msg.sender];
         address payable staker = payable(msg.sender);
         stakedAmounts[msg.sender] = 0;
-        stakers[msg.sender] = false;
         (bool success, ) = staker.call{value: amount}("");
         require(success, "Unstake failed");
         return true;

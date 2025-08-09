@@ -266,6 +266,14 @@ sh ./scripts/base-mainnet/deployment/deploymentScript_InsuranceClaimManager_via_
 
 <br>
 
+- Run the `DeploymentForReInsurancePool_basescan.s.sol` to deploy the  `ReInsurancePool` contract on BASE mainnet:
+  - NOTE: The smart contract is verified via the `BaseScan` of Base Mainnet (https://basescan.org)
+```bash
+sh ./scripts/base-mainnet/deployment/deploymentScript_ReInsurancePool_via_basescan.sh
+```
+
+<br>
+
 ## Deployment on Celo mainnet (`Each SC`)
 - Run the `DeploymentForInsuranceClaimProofVerifier_blockscout.s.sol` to deploy the  `InsuranceClaimProofVerifier` contract on Celo mainnet:
   - NOTE: The smart contract is verified via the `BlockScount` of Celo Mainnet (https://celo.blockscout.com)
@@ -332,6 +340,13 @@ sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimProofVer
 sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimManager_via_blockscout.sh
 ```
 
+<br>
+
+- Run for verifying the  `ReInsurancePool` contract on BASE mainnet:
+  - NOTE: The smart contract is verified in `BlockScout` of Base Mainnet ()
+```bash
+sh ./scripts/base-mainnet/verification/verificationScript_ReInsurancePool_via_blockscout.sh
+```
 
 <br>
 

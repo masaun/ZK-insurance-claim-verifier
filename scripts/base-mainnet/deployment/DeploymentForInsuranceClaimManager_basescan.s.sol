@@ -27,7 +27,7 @@ contract DeploymentForInsuranceClaimManager_basescan is Script {
         //vm.startBroadcast();
 
         /// @dev - Deploy SCs
-        insuranceClaimProofVerifier = InsuranceClaimProofVerifier(vm.envAddress("INSURANCE_CLAIM_PROOF_VERIFIER_ON_CELO_MAINNET"));
+        insuranceClaimProofVerifier = InsuranceClaimProofVerifier(vm.envAddress("INSURANCE_CLAIM_PROOF_VERIFIER_ON_BASE_MAINNET"));
         //insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
         insuranceClaimManager = new InsuranceClaimManager(insuranceClaimProofVerifier);
 
