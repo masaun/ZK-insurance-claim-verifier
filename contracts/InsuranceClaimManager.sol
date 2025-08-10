@@ -21,7 +21,7 @@ contract InsuranceClaimManager {
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.0";
+        version = "0.2.1";
     }
 
     /**
@@ -145,6 +145,13 @@ contract InsuranceClaimManager {
      */
     function getContractBalance() public view returns (uint256) {
         return address(this).balance;
+    }
+
+    /**
+     * @notice - Get the checkpoint of the caller
+     */
+    function getCheckpoint() public view returns (uint256) {
+        return checkpoints[msg.sender];
     }
 
     /**
