@@ -81,11 +81,19 @@ contract ReInsurancePool {
 
     /**
      * @notice - Receive function to accept Ether transfers
+     * @dev - Basically, a funds, which directly sent to this contract, is,sending back to a sender.
      */
-    receive() external payable {}
+    receive() external payable {
+        (bool success, ) = msg.sender.call{value: msg.value}("");
+        require(success, "Transfering back failed");
+    }
 
     /**
      * @notice - Fallback function
+     * @dev - Basically, a funds, which directly sent to this contract, is,sending back to a sender.
      */
-    fallback() external payable {}
+    fallback() external payable {
+        (bool success, ) = msg.sender.call{value: msg.value}("");
+        require(success, "Transfering back failed");
+    }
 }
