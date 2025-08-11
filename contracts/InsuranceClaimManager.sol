@@ -21,7 +21,7 @@ contract InsuranceClaimManager {
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.1";
+        version = "0.2.2";
     }
 
     /**
@@ -156,12 +156,20 @@ contract InsuranceClaimManager {
 
     /**
      * @notice - Receive function to accept Ether transfers
+     * @dev - Basically, a funds, which directly sent to this contract, is,sending back to a sender.
      */
-    receive() external payable {}
+    receive() external payable {
+        (bool success, ) = msg.sender.call{value: msg.value}("");
+        require(success, "Transfering back failed");
+    }
 
     /**
      * @notice - Fallback function
+     * @dev - Basically, a funds, which directly sent to this contract, is,sending back to a sender.
      */
-    fallback() external payable {}
+    fallback() external payable {
+        (bool success, ) = msg.sender.call{value: msg.value}("");
+        require(success, "Transfering back failed");
+    }
 
 }
