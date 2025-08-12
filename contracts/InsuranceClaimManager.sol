@@ -21,7 +21,7 @@ contract InsuranceClaimManager {
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.1";
+        version = "0.2.2";
     }
 
     /**
@@ -157,11 +157,23 @@ contract InsuranceClaimManager {
     /**
      * @notice - Receive function to accept Ether transfers
      */
-    receive() external payable {}
+    receive() external payable {
+        require(msg.value > 0, "Must send some Ether");
+        stakedAmounts[msg.sender] += msg.value;
+        // (bool success, ) = msg.sender.call{value: msg.value}("");
+        // require(success, "Transfering back failed");
+        checkpoint();
+    }
 
     /**
      * @notice - Fallback function
      */
-    fallback() external payable {}
+    fallback() external payable {
+        require(msg.value > 0, "Must send some Ether");
+        stakedAmounts[msg.sender] += msg.value;
+        // (bool success, ) = msg.sender.call{value: msg.value}("");
+        // require(success, "Transfering back failed");
+        checkpoint();
+    }
 
 }

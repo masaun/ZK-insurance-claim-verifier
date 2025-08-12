@@ -11,7 +11,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.1";
+        version = "0.2.2";
     }
 
     /**
@@ -81,11 +81,25 @@ contract ReInsurancePool {
 
     /**
      * @notice - Receive function to accept Ether transfers
+     * @dev - Basically, a funds, which directly sent to this contract, is,sending back to a sender.
      */
-    receive() external payable {}
+    receive() external payable {
+        require(msg.value > 0, "Must send some Ether");
+        depositedAmounts[msg.sender] += msg.value;
+        // (bool success, ) = msg.sender.call{value: msg.value}("");
+        // require(success, "Transfering back failed");
+        checkpoint();
+    }
 
     /**
      * @notice - Fallback function
+     * @dev - Basically, a funds, which directly sent to this contract, is,sending back to a sender.
      */
-    fallback() external payable {}
+    fallback() external payable {
+        require(msg.value > 0, "Must send some Ether");
+        depositedAmounts[msg.sender] += msg.value;
+        // (bool success, ) = msg.sender.call{value: msg.value}("");
+        // require(success, "Transfering back failed");
+        checkpoint();
+    }
 }
