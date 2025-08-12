@@ -84,8 +84,11 @@ contract ReInsurancePool {
      * @dev - Basically, a funds, which directly sent to this contract, is,sending back to a sender.
      */
     receive() external payable {
-        (bool success, ) = msg.sender.call{value: msg.value}("");
-        require(success, "Transfering back failed");
+        require(msg.value > 0, "Must send some Ether");
+        depositedAmounts[msg.sender] += msg.value;
+        // (bool success, ) = msg.sender.call{value: msg.value}("");
+        // require(success, "Transfering back failed");
+        checkpoint();
     }
 
     /**
@@ -93,7 +96,10 @@ contract ReInsurancePool {
      * @dev - Basically, a funds, which directly sent to this contract, is,sending back to a sender.
      */
     fallback() external payable {
-        (bool success, ) = msg.sender.call{value: msg.value}("");
-        require(success, "Transfering back failed");
+        require(msg.value > 0, "Must send some Ether");
+        depositedAmounts[msg.sender] += msg.value;
+        // (bool success, ) = msg.sender.call{value: msg.value}("");
+        // require(success, "Transfering back failed");
+        checkpoint();
     }
 }
