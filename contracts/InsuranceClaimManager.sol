@@ -25,7 +25,7 @@ contract InsuranceClaimManager {
     }
 
     /**
-     * @notice - Escrow the insurance claim payment
+     * @notice - Escrow the insurance claim payment - without any approval function - thanks to the zk-proof on-chain verification
      * @dev - [IN PROGRESS]:
      */
     function escrowInsuranceClaimPayment(bytes calldata proof, bytes32[] calldata publicInputs, address insurer) public returns (uint256) {
