@@ -21,7 +21,18 @@ contract InsuranceClaimManager {
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.2";
+        version = "0.2.3";
+    }
+
+    /**
+     * @notice - Escrow the insurance claim payment
+     * @dev - [IN PROGRESS]:
+     */
+    function escrowInsuranceClaimPayment(bytes calldata proof, bytes32[] calldata publicInputs, address insurer) public returns (uint256) {
+        bool result = submitInsuranceClaim(proof, publicInputs, insurer);
+        require(result, "Failed to submit insurance claim");
+
+        // [TODO]: Add the payment logic here
     }
 
     /**
