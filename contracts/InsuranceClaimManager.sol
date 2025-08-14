@@ -93,19 +93,6 @@ contract InsuranceClaimManager {
     /**
      * @notice - checkpoint function
      */
-    function checkpoint(string memory methodName) public returns (bool) {
-        checkpoints[msg.sender][block.timestamp] = methodName;
-        return true;
-    }
-
-    function testFunction() public returns (bool) {
-        checkpoints[msg.sender][block.timestamp] = "testFunction";
-        return true;
-    }
-
-    /**
-     * @notice - checkpoint function
-     */
     function _checkpointOfStaking() internal returns (bool) {
         checkpointOfStakings[msg.sender] = block.timestamp;
         return true;
