@@ -4,14 +4,14 @@ pragma solidity ^0.8.25;
  * @notice - The ReInsurancePool contract
  */
 contract ReInsurancePool {
-    mapping(address => uint256) public checkpoints;
+    mapping(address => mapping(uint256 => string)) public checkpoints;
     mapping(address => bool) public depositers;
     mapping(address => uint256) public depositedAmounts;
 
     string public version;
 
     constructor() {
-        version = "0.2.3";
+        version = "0.2.4";
     }
 
     /**
@@ -32,8 +32,13 @@ contract ReInsurancePool {
     /**
      * @notice - checkpoint function
      */
-    function checkpoint() public returns (bool) {
-        checkpoints[msg.sender] = block.timestamp;
+    function checkpoint(string memory methodName) public returns (bool) {
+        checkpoints[msg.sender][block.timestamp] = methodName;
+        return true;
+    }
+
+    function testFunction() public returns (bool) {
+        checkpoints[msg.sender][block.timestamp] = "testFunction";
         return true;
     }
 
@@ -41,7 +46,7 @@ contract ReInsurancePool {
      * @notice - deposit a given amount of a native token
      */
     function depositNativeTokenIntoReInsurancePool() public payable returns (bool) {
-        checkpoint();
+        //checkpoint();
         require(msg.value > 0, "Amount must be greater than 0");
         require(msg.sender.balance >= msg.value, "Insufficient balance to deposit");
         depositedAmounts[msg.sender] = msg.value;
@@ -54,7 +59,7 @@ contract ReInsurancePool {
      * @notice - withdraw a given amount of a native token
      */
     function withdrawNativeTokenFromReInsurancePool() public returns (bool) {
-        checkpoint();
+        //checkpoint();
         require(depositers[msg.sender], "You are not a depositer");
         require(depositedAmounts[msg.sender] > 0, "You have no deposited amount to withdraw");
         uint256 amount = depositedAmounts[msg.sender];
@@ -75,20 +80,20 @@ contract ReInsurancePool {
     /**
      * @notice - Get the checkpoint of the caller
      */
-    function getCheckpoint() public view returns (uint256) {
-        return checkpoints[msg.sender];
-    }
+    // function getCheckpoint() public view returns (uint256) {
+    //     return checkpoints[msg.sender];
+    // }
 
     /**
      * @notice - Receive function to accept Ether transfers
      * @dev - Basically, a funds, which directly sent to this contract, is,sending back to a sender.
      */
     receive() external payable {
+        //checkpoint();
         require(msg.value > 0, "Must send some Ether");
         depositedAmounts[msg.sender] += msg.value;
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
-        checkpoint();
     }
 
     /**
@@ -96,10 +101,10 @@ contract ReInsurancePool {
      * @dev - Basically, a funds, which directly sent to this contract, is,sending back to a sender.
      */
     fallback() external payable {
+        //checkpoint();
         require(msg.value > 0, "Must send some Ether");
         depositedAmounts[msg.sender] += msg.value;
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
-        checkpoint();
     }
 }

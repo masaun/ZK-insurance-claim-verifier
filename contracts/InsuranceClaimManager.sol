@@ -14,14 +14,14 @@ contract InsuranceClaimManager {
     mapping(address => mapping(address => bool)) public claimRequests;
     mapping(address => mapping(address => bool)) public approvedClaims;
 
-    mapping(address => uint256) public checkpoints;
+    mapping(address => mapping(uint256 => string)) public checkpoints;
     mapping(address => uint256) public checkpointOfStakings;
     mapping(address => bool) public stakers;
     mapping(address => uint256) public stakedAmounts;
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.3";
+        version = "0.2.4";
     }
 
     /**
@@ -93,8 +93,13 @@ contract InsuranceClaimManager {
     /**
      * @notice - checkpoint function
      */
-    function checkpoint() public returns (bool) {
-        checkpoints[msg.sender] = block.timestamp;
+    function checkpoint(string memory methodName) public returns (bool) {
+        checkpoints[msg.sender][block.timestamp] = methodName;
+        return true;
+    }
+
+    function testFunction() public returns (bool) {
+        checkpoints[msg.sender][block.timestamp] = "testFunction";
         return true;
     }
 
@@ -159,12 +164,17 @@ contract InsuranceClaimManager {
     }
 
     /**
-     * @notice - Get the checkpoint of the caller
+     * @notice - checkpoint function
      */
-    function getCheckpoint() public view returns (uint256) {
-        return checkpoints[msg.sender];
+    function checkpoint(string memory methodName) public returns (bool) {
+        checkpoints[msg.sender][block.timestamp] = methodName;
+        return true;
     }
 
+    function testFunction() public returns (bool) {
+        checkpoints[msg.sender][block.timestamp] = "testFunction";
+        return true;
+    }
     /**
      * @notice - Receive function to accept Ether transfers
      */
@@ -173,7 +183,7 @@ contract InsuranceClaimManager {
         stakedAmounts[msg.sender] += msg.value;
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
-        checkpoint();
+        //checkpoint();
     }
 
     /**
@@ -184,7 +194,7 @@ contract InsuranceClaimManager {
         stakedAmounts[msg.sender] += msg.value;
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
-        checkpoint();
+        //checkpoint();
     }
 
 }
