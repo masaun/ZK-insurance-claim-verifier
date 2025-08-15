@@ -32,6 +32,8 @@ contract InsuranceClaimManager {
         bool result = submitInsuranceClaim(proof, publicInputs, insurer);
         require(result, "Failed to submit insurance claim");
 
+        checkpoints[msg.sender][block.timestamp] = "escrowInsuranceClaimPayment";
+
         // [TODO]: Add the payment logic here
     }
 
@@ -46,6 +48,7 @@ contract InsuranceClaimManager {
         require(proofResult, "A given InsuranceClaimProof is not valid");
 
         claimRequests[insurer][msg.sender] = true;
+        checkpoints[msg.sender][block.timestamp] = "submitInsuranceClaim";
     }
 
     /**
@@ -56,6 +59,7 @@ contract InsuranceClaimManager {
         require(claimants[claimant], "No claim request found for this address");
 
         approvedClaims[msg.sender][claimant] = true;
+        checkpoints[msg.sender][block.timestamp] = "approveInsuranceClaim";
 
         return true;
     }
@@ -66,12 +70,14 @@ contract InsuranceClaimManager {
     function registerAsClaimant() public returns (bool) {
         require(!claimants[msg.sender], "You have already registered as a claimant");
         claimants[msg.sender] = true;
+        checkpoints[msg.sender][block.timestamp] = "registerAsClaimant";
         return true;
     }
 
     function registerAsInsurer() public returns (bool) {
         require(!insurers[msg.sender], "You have already registered as an insurer");
         insurers[msg.sender] = true;
+        checkpoints[msg.sender][block.timestamp] = "registerAsInsurer";
         return true;
     }
 
@@ -81,12 +87,14 @@ contract InsuranceClaimManager {
     function deregisterAsClaimant() public returns (bool) {
         require(claimants[msg.sender], "You are not registered as a claimant");
         claimants[msg.sender] = false;
+        checkpoints[msg.sender][block.timestamp] = "deregisterAsClaimant";
         return true;
     }
 
     function deregisterAsInsurer() public returns (bool) {
         require(insurers[msg.sender], "You are not registered as an insurer");
         insurers[msg.sender] = false;
+        checkpoints[msg.sender][block.timestamp] = "deregisterAsInsurer";
         return true;
     }
 
@@ -104,6 +112,7 @@ contract InsuranceClaimManager {
     function registerAsStaker() public returns (bool) {
         require(!stakers[msg.sender], "You are already registered as a staker");
         stakers[msg.sender] = true;
+        checkpoints[msg.sender][block.timestamp] = "registerAsStaker";
         return true;
     }
 
@@ -111,6 +120,7 @@ contract InsuranceClaimManager {
         require(stakers[msg.sender], "You are not registered as a staker");
         require(stakedAmounts[msg.sender] == 0, "You have staked amount, please unstake first");
         stakers[msg.sender] = false;
+        checkpoints[msg.sender][block.timestamp] = "deregisterAsStaker";
         return true;
     }
 
@@ -170,7 +180,7 @@ contract InsuranceClaimManager {
         stakedAmounts[msg.sender] += msg.value;
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
-        //checkpoint();
+        checkpoints[msg.sender][block.timestamp] = "receive";
     }
 
     /**
@@ -181,7 +191,7 @@ contract InsuranceClaimManager {
         stakedAmounts[msg.sender] += msg.value;
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
-        //checkpoint();
+        checkpoints[msg.sender][block.timestamp] = "fallback";
     }
 
 }

@@ -20,12 +20,14 @@ contract ReInsurancePool {
     function registerAsDepositer() public returns (bool) {
         require(!depositers[msg.sender], "You have already registered as a depositer");
         depositers[msg.sender] = true;
+        checkpoints[msg.sender][block.timestamp] = "registerAsDepositer";
         return true;
     }
 
     function deregisterAsDepositer() public returns (bool) {
         require(depositers[msg.sender], "You are not registered as a depositer");
         depositers[msg.sender] = false;
+        checkpoints[msg.sender][block.timestamp] = "deregisterAsDepositer";
         return true;
     }
 
@@ -52,6 +54,8 @@ contract ReInsurancePool {
         depositedAmounts[msg.sender] = msg.value;
         (bool success, ) = address(this).call{value: msg.value}("");
         require(success, "Deposit failed");
+
+        checkpoints[msg.sender][block.timestamp] = "depositNativeTokenIntoReInsurancePool";
         return true;
     }
 
@@ -67,6 +71,8 @@ contract ReInsurancePool {
         depositedAmounts[msg.sender] = 0;
         (bool success, ) = depositer.call{value: amount}("");
         require(success, "Withdraw failed");
+
+        checkpoints[msg.sender][block.timestamp] = "withdrawNativeTokenFromReInsurancePool";
         return true;
     }
 
@@ -94,6 +100,7 @@ contract ReInsurancePool {
         depositedAmounts[msg.sender] += msg.value;
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
+        checkpoints[msg.sender][block.timestamp] = "receive";
     }
 
     /**
@@ -106,5 +113,6 @@ contract ReInsurancePool {
         depositedAmounts[msg.sender] += msg.value;
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
+        checkpoints[msg.sender][block.timestamp] = "fallback";
     }
 }
