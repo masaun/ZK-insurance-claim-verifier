@@ -21,20 +21,7 @@ contract InsuranceClaimManager {
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.4";
-    }
-
-    /**
-     * @notice - Escrow the insurance claim payment - without any approval function - thanks to the zk-proof on-chain verification
-     * @dev - [IN PROGRESS]:
-     */
-    function escrowInsuranceClaimPayment(bytes calldata proof, bytes32[] calldata publicInputs, address insurer) public returns (uint256) {
-        bool result = submitInsuranceClaim(proof, publicInputs, insurer);
-        require(result, "Failed to submit insurance claim");
-
-        checkpoints[msg.sender][block.timestamp] = "escrowInsuranceClaimPayment";
-
-        // [TODO]: Add the payment logic here
+        version = "0.2.5";
     }
 
     /**
@@ -54,12 +41,14 @@ contract InsuranceClaimManager {
     /**
      * @notice - Approve the insurance claim by an insurer
      */
-    function approveInsuranceClaim(address claimant) public returns (bool) {
+    function approveInsuranceClaimAndEscrowPayment(address claimant) public returns (bool) {
         require(insurers[msg.sender], "You are not registered as an insurer");
         require(claimants[claimant], "No claim request found for this address");
 
         approvedClaims[msg.sender][claimant] = true;
-        checkpoints[msg.sender][block.timestamp] = "approveInsuranceClaim";
+        checkpoints[msg.sender][block.timestamp] = "approveInsuranceClaimAndEscrowPayment";
+
+        // [TODO]: Add the payment logic here
 
         return true;
     }
