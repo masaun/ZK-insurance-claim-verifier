@@ -86,9 +86,9 @@ contract ReInsurancePool {
     /**
      * @notice - Get the checkpoint of the caller
      */
-    // function getCheckpoint() public view returns (uint256) {
-    //     return checkpoints[msg.sender];
-    // }
+    function getCheckpoint(uint256 timestamp) public view returns (string memory _methodName) {
+        return checkpoints[msg.sender][timestamp];
+    }
 
     /**
      * @notice - Receive function to accept Ether transfers
