@@ -21,7 +21,7 @@ contract InsuranceClaimManager {
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.5";
+        version = "0.2.6";
     }
 
     /**
@@ -41,7 +41,7 @@ contract InsuranceClaimManager {
     /**
      * @notice - Approve the insurance claim by an insurer
      */
-    function approveInsuranceClaimAndEscrowPayment(address claimant) public returns (bool) {
+    function approveInsuranceClaimAndEscrowPayment(address claimant, bool isUseFundFromReInsurancePool) public returns (bool) {
         require(insurers[msg.sender], "You are not registered as an insurer");
         require(claimants[claimant], "No claim request found for this address");
 
@@ -49,6 +49,11 @@ contract InsuranceClaimManager {
         checkpoints[msg.sender][block.timestamp] = "approveInsuranceClaimAndEscrowPayment";
 
         // [TODO]: Add the payment logic here
+        if (isUseFundFromReInsurancePool) {
+            // [TODO]: Add the payment logic here - when using the funds from the reinsurance pool
+        } else {
+            // [TODO]: Add the payment logic here - when using the funds from the insurance pool
+        }
 
         return true;
     }
