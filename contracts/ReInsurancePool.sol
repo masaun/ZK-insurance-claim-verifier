@@ -11,7 +11,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.6";
+        version = "0.2.7";
     }
 
     /**
@@ -39,8 +39,8 @@ contract ReInsurancePool {
         return true;
     }
 
-    function testFunction() public returns (bool) {
-        checkpoints[msg.sender][block.timestamp] = "testFunction";
+    function testFunctionForCheckPoint() public returns (bool) {
+        checkpoints[msg.sender][block.timestamp] = "testFunctionForCheckPoint";
         return true;
     }
 
