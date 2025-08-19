@@ -21,7 +21,7 @@ contract InsuranceClaimManager {
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.7";
+        version = "0.2.8";
     }
 
     /**
@@ -52,7 +52,10 @@ contract InsuranceClaimManager {
         if (isUseFundFromReInsurancePool) {
             // [TODO]: Add the payment logic here - when using the funds from the reinsurance pool
         } else {
-            // [TODO]: Add the payment logic here - when using the funds from the insurance pool
+            require(address(this).balance > 0, "This InsuranceClaimManager contract, which is the primal insurance pool, has no funds to use for payment");
+            uint256 insurancePaymentAmount = 1;  // 1 wei
+            (bool success, ) = payable(claimant).call{value: insurancePaymentAmount}("");
+            require(success, "Payment failed");
         }
 
         return true;
@@ -166,6 +169,7 @@ contract InsuranceClaimManager {
         checkpoints[msg.sender][block.timestamp] = "testFunctionForCheckPoint";
         return true;
     }
+    
     /**
      * @notice - Receive function to accept Ether transfers
      */
