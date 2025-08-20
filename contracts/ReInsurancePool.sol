@@ -11,7 +11,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.7";
+        version = "0.2.9";
     }
 
     /**
@@ -36,6 +36,7 @@ contract ReInsurancePool {
      */
     function checkpoint(string memory methodName) public returns (bool) {
         checkpoints[msg.sender][block.timestamp] = methodName;
+        checkpoints[msg.sender][block.timestamp] = "checkpoints";
         return true;
     }
 
@@ -48,7 +49,6 @@ contract ReInsurancePool {
      * @notice - deposit a given amount of a native token
      */
     function depositNativeTokenIntoReInsurancePool() public payable returns (bool) {
-        //checkpoint();
         require(msg.value > 0, "Amount must be greater than 0");
         require(msg.sender.balance >= msg.value, "Insufficient balance to deposit");
         depositedAmounts[msg.sender] = msg.value;
@@ -63,7 +63,6 @@ contract ReInsurancePool {
      * @notice - withdraw a given amount of a native token
      */
     function withdrawNativeTokenFromReInsurancePool() public returns (bool) {
-        //checkpoint();
         require(depositers[msg.sender], "You are not a depositer");
         require(depositedAmounts[msg.sender] > 0, "You have no deposited amount to withdraw");
         uint256 amount = depositedAmounts[msg.sender];
