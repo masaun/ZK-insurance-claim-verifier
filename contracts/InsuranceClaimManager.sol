@@ -21,7 +21,7 @@ contract InsuranceClaimManager {
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.8";
+        version = "0.2.9";
     }
 
     /**
@@ -53,7 +53,7 @@ contract InsuranceClaimManager {
             // [TODO]: Add the payment logic here - when using the funds from the reinsurance pool
         } else {
             require(address(this).balance > 0, "This InsuranceClaimManager contract, which is the primal insurance pool, has no funds to use for payment");
-            uint256 insurancePaymentAmount = 1;  // 1 wei
+            uint256 insurancePaymentAmount = 1;  // 1 wei - [TODO]: Replace a
             (bool success, ) = payable(claimant).call{value: insurancePaymentAmount}("");
             require(success, "Payment failed");
         }
