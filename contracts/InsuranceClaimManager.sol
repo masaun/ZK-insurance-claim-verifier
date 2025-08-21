@@ -21,7 +21,7 @@ contract InsuranceClaimManager {
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.9";
+        version = "0.2.10";
     }
 
     /**
@@ -29,6 +29,7 @@ contract InsuranceClaimManager {
      */
     function submitInsuranceClaim(bytes calldata proof, bytes32[] calldata publicInputs, address insurer) public returns (bool) {
         require(claimants[msg.sender], "You are not registered as a claimant");
+        require(msg.sender != insurer, "You, who is a claimant, cannot submit a claim to yourself, which is a issuer");
 
         bool proofResult = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, publicInputs);
         //bool proofResult = insuranceClaimProofVerifier.verifyInsuranceClaimProof(proof, publicInputs);
@@ -44,6 +45,7 @@ contract InsuranceClaimManager {
     function approveInsuranceClaimAndEscrowPayment(address claimant, bool isUseFundFromReInsurancePool) public returns (bool) {
         require(insurers[msg.sender], "You are not registered as an insurer");
         require(claimants[claimant], "No claim request found for this address");
+        require(msg.sender != claimant, "You, who is an insurer, cannot submit a claim to yourself, which is a claimant");
 
         approvedClaims[msg.sender][claimant] = true;
         checkpoints[msg.sender][block.timestamp] = "approveInsuranceClaimAndEscrowPayment";
