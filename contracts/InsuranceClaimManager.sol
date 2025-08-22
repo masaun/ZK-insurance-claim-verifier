@@ -21,7 +21,7 @@ contract InsuranceClaimManager {
 
     constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.10";
+        version = "0.2.12";
     }
 
     /**
@@ -164,6 +164,7 @@ contract InsuranceClaimManager {
      */
     function checkpoint(string memory methodName) public returns (bool) {
         checkpoints[msg.sender][block.timestamp] = methodName;
+        checkpoints[msg.sender][block.timestamp] = "checkpoint";
         return true;
     }
 
