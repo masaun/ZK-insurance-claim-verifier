@@ -5,7 +5,7 @@ import "forge-std/Script.sol";
 /// @dev - ZK (Ultraplonk) circuit, which is generated in Noir.
 import { InsuranceClaimProofVerifier } from "../../../contracts/circuit/InsuranceClaimProofVerifier.sol";
 import { InsuranceClaimManager } from "../../../contracts/InsuranceClaimManager.sol";
-import { ReInsurancePool } from "./ReInsurancePool.sol";
+import { ReInsurancePool } from "../../../contracts/ReInsurancePool.sol";
 
 
 /**
@@ -31,7 +31,7 @@ contract DeploymentForInsuranceClaimManager_basescan is Script {
         /// @dev - Deploy SCs
         insuranceClaimProofVerifier = InsuranceClaimProofVerifier(vm.envAddress("INSURANCE_CLAIM_PROOF_VERIFIER_ON_BASE_MAINNET"));
         //insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
-        reInsurancePool = ReInsurancePool(vm.envAddress("REINSURANCE_POOL_ON_BASE_MAINNET"));
+        reInsurancePool = ReInsurancePool(payable(vm.envAddress("REINSURANCE_POOL_ON_BASE_MAINNET")));
         insuranceClaimManager = new InsuranceClaimManager(insuranceClaimProofVerifier, reInsurancePool);
 
         vm.stopBroadcast();
@@ -41,7 +41,10 @@ contract DeploymentForInsuranceClaimManager_basescan is Script {
         console.logString("\n");
         console.log("%s: %s", "InsuranceClaimProofVerifier SC", address(insuranceClaimProofVerifier));
         console.logString("\n");
+        console.log("%s: %s", "ReInsurancePool SC", address(reInsurancePool));
+        console.logString("\n");
         console.log("%s: %s", "InsuranceClaimManager SC", address(insuranceClaimManager));
+        console.logString("\n");
     }
 }
 
