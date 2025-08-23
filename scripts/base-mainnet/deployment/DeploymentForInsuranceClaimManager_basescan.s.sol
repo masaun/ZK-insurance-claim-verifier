@@ -5,6 +5,7 @@ import "forge-std/Script.sol";
 /// @dev - ZK (Ultraplonk) circuit, which is generated in Noir.
 import { InsuranceClaimProofVerifier } from "../../../contracts/circuit/InsuranceClaimProofVerifier.sol";
 import { InsuranceClaimManager } from "../../../contracts/InsuranceClaimManager.sol";
+import { ReInsurancePool } from "./ReInsurancePool.sol";
 
 
 /**
@@ -13,6 +14,7 @@ import { InsuranceClaimManager } from "../../../contracts/InsuranceClaimManager.
 contract DeploymentForInsuranceClaimManager_basescan is Script {
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     InsuranceClaimManager public insuranceClaimManager;
+    ReInsurancePool public reInsurancePool;
 
     function setUp() public {}
 
@@ -29,7 +31,8 @@ contract DeploymentForInsuranceClaimManager_basescan is Script {
         /// @dev - Deploy SCs
         insuranceClaimProofVerifier = InsuranceClaimProofVerifier(vm.envAddress("INSURANCE_CLAIM_PROOF_VERIFIER_ON_BASE_MAINNET"));
         //insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
-        insuranceClaimManager = new InsuranceClaimManager(insuranceClaimProofVerifier);
+        reInsurancePool = ReInsurancePool(vm.envAddress("REINSURANCE_POOL_ON_BASE_MAINNET"));
+        insuranceClaimManager = new InsuranceClaimManager(insuranceClaimProofVerifier, reInsurancePool);
 
         vm.stopBroadcast();
 
