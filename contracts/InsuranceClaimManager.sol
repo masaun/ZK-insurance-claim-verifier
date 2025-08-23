@@ -2,12 +2,14 @@ pragma solidity ^0.8.17;
 
 import { InsuranceClaimProofVerifier } from "./circuit/InsuranceClaimProofVerifier.sol";
 //import "../circuits/target/contract.sol";
+import { ReInsurancePool } from "./ReInsurancePool.sol";
 
 contract InsuranceClaimManager {
 
     string public version;
 
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
+    ReInsurancePool public reInsurancePool;
 
     mapping(address => bool) public insurers;
     mapping(address => bool) public claimants;
@@ -19,9 +21,13 @@ contract InsuranceClaimManager {
     mapping(address => bool) public stakers;
     mapping(address => uint256) public stakedAmounts;
 
-    constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
+    constructor(
+        InsuranceClaimProofVerifier _insuranceClaimProofVerifier, 
+        ReInsurancePool _reInsurancePool
+    ) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.12";
+        reInsurancePool = _reInsurancePool;
+        version = "0.2.14";
     }
 
     /**

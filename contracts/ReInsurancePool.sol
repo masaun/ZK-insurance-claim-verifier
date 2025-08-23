@@ -11,7 +11,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.12";
+        version = "0.2.14";
     }
 
     /**
