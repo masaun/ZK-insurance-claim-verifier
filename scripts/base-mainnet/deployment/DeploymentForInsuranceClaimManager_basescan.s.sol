@@ -7,7 +7,6 @@ import { InsuranceClaimProofVerifier } from "../../../contracts/circuit/Insuranc
 import { InsuranceClaimManager } from "../../../contracts/InsuranceClaimManager.sol";
 import { ReInsurancePool } from "../../../contracts/ReInsurancePool.sol";
 
-
 /**
  * @notice - Deployment script to deploy the InsuranceClaimManager SC - on BASE Mainnet
  */
@@ -19,7 +18,6 @@ contract DeploymentForInsuranceClaimManager_basescan is Script {
     function setUp() public {}
 
     function run() public {
-
         vm.createSelectFork("https://mainnet.base.org"); // @dev - [NOTE]: Hardcoded the Base Mainnet RPC URL - Instead of using the environment variable via the foundry.toml
         //vm.createSelectFork('base-mainnet');
 
