@@ -11,7 +11,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.16";
+        version = "0.2.18";
     }
 
     /**
@@ -42,6 +42,19 @@ contract ReInsurancePool {
 
     function testFunctionForCheckPoint() public returns (bool) {
         checkpoints[msg.sender][block.timestamp] = "testFunctionForCheckPoint";
+        return true;
+    }
+
+    /**
+     * @notice - distribute a given amount of a native token into the insurance pool
+     */
+    function distributeNativeTokenIntoInsurancePool(address insurancePool, uint256 amount) public payable returns (bool) {
+        require(amount > 0, "Amount must be greater than 0");
+        require(address(this).balance >= amount, "Insufficient balance to deposit");
+        (bool success, ) = insurancePool.call{value: amount}("");
+        require(success, "Distribution to the insurance pool failed");
+
+        checkpoints[msg.sender][block.timestamp] = "distributeNativeTokenIntoInsurancePool";
         return true;
     }
 
