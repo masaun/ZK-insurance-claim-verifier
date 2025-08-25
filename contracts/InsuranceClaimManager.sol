@@ -2,12 +2,14 @@ pragma solidity ^0.8.17;
 
 import { InsuranceClaimProofVerifier } from "./circuit/InsuranceClaimProofVerifier.sol";
 //import "../circuits/target/contract.sol";
+import { ReInsurancePool } from "./ReInsurancePool.sol";
 
 contract InsuranceClaimManager {
 
     string public version;
 
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
+    ReInsurancePool public reInsurancePool;
 
     mapping(address => bool) public insurers;
     mapping(address => bool) public claimants;
@@ -19,9 +21,13 @@ contract InsuranceClaimManager {
     mapping(address => bool) public stakers;
     mapping(address => uint256) public stakedAmounts;
 
-    constructor(InsuranceClaimProofVerifier _insuranceClaimProofVerifier) {
+    constructor(
+        InsuranceClaimProofVerifier _insuranceClaimProofVerifier, 
+        ReInsurancePool _reInsurancePool
+    ) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
-        version = "0.2.12";
+        reInsurancePool = _reInsurancePool;
+        version = "0.2.18";
     }
 
     /**
@@ -53,9 +59,12 @@ contract InsuranceClaimManager {
         // [TODO]: Add the payment logic here
         if (isUseFundFromReInsurancePool) {
             // [TODO]: Add the payment logic here - when using the funds from the reinsurance pool
+            uint256 insurancePaymentAmount = 1;  // 1 wei - [TODO]: Replace with an actual value
+            require(address(reInsurancePool).balance > insurancePaymentAmount, "The ReInsurancePool contract has no funds to use for payment");
+            
         } else {
             require(address(this).balance > 0, "This InsuranceClaimManager contract, which is the primal insurance pool, has no funds to use for payment");
-            uint256 insurancePaymentAmount = 1;  // 1 wei - [TODO]: Replace a
+            uint256 insurancePaymentAmount = 1;  // 1 wei - [TODO]: Replace with an actual value
             (bool success, ) = payable(claimant).call{value: insurancePaymentAmount}("");
             require(success, "Payment failed");
         }

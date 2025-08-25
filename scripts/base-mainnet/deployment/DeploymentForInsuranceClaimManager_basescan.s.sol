@@ -5,7 +5,7 @@ import "forge-std/Script.sol";
 /// @dev - ZK (Ultraplonk) circuit, which is generated in Noir.
 import { InsuranceClaimProofVerifier } from "../../../contracts/circuit/InsuranceClaimProofVerifier.sol";
 import { InsuranceClaimManager } from "../../../contracts/InsuranceClaimManager.sol";
-
+import { ReInsurancePool } from "../../../contracts/ReInsurancePool.sol";
 
 /**
  * @notice - Deployment script to deploy the InsuranceClaimManager SC - on BASE Mainnet
@@ -13,11 +13,11 @@ import { InsuranceClaimManager } from "../../../contracts/InsuranceClaimManager.
 contract DeploymentForInsuranceClaimManager_basescan is Script {
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     InsuranceClaimManager public insuranceClaimManager;
+    ReInsurancePool public reInsurancePool;
 
     function setUp() public {}
 
     function run() public {
-
         vm.createSelectFork("https://mainnet.base.org"); // @dev - [NOTE]: Hardcoded the Base Mainnet RPC URL - Instead of using the environment variable via the foundry.toml
         //vm.createSelectFork('base-mainnet');
 
@@ -29,7 +29,8 @@ contract DeploymentForInsuranceClaimManager_basescan is Script {
         /// @dev - Deploy SCs
         insuranceClaimProofVerifier = InsuranceClaimProofVerifier(vm.envAddress("INSURANCE_CLAIM_PROOF_VERIFIER_ON_BASE_MAINNET"));
         //insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
-        insuranceClaimManager = new InsuranceClaimManager(insuranceClaimProofVerifier);
+        reInsurancePool = ReInsurancePool(payable(vm.envAddress("REINSURANCE_POOL_ON_BASE_MAINNET")));
+        insuranceClaimManager = new InsuranceClaimManager(insuranceClaimProofVerifier, reInsurancePool);
 
         vm.stopBroadcast();
 
@@ -38,7 +39,10 @@ contract DeploymentForInsuranceClaimManager_basescan is Script {
         console.logString("\n");
         console.log("%s: %s", "InsuranceClaimProofVerifier SC", address(insuranceClaimProofVerifier));
         console.logString("\n");
+        console.log("%s: %s", "ReInsurancePool SC", address(reInsurancePool));
+        console.logString("\n");
         console.log("%s: %s", "InsuranceClaimManager SC", address(insuranceClaimManager));
+        console.logString("\n");
     }
 }
 
