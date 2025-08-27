@@ -5,13 +5,15 @@ pragma solidity ^0.8.25;
  */
 contract ReInsurancePool {
     mapping(address => mapping(uint256 => string)) public checkpoints;
+    mapping(address user => uint256 checkpointCount) public checkpointCounts;
+
     mapping(address => bool) public depositers;
     mapping(address => uint256) public depositedAmounts;
 
     string public version;
 
     constructor() {
-        version = "0.2.18";
+        version = "0.2.20";
     }
 
     /**
@@ -37,6 +39,7 @@ contract ReInsurancePool {
     function checkpoint(string memory methodName) public returns (bool) {
         checkpoints[msg.sender][block.timestamp] = methodName;
         checkpoints[msg.sender][block.timestamp] = "checkpoints";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
