@@ -13,7 +13,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.20";
+        version = "0.2.22";
     }
 
     /**
@@ -73,6 +73,13 @@ contract ReInsurancePool {
 
         checkpoints[msg.sender][block.timestamp] = "depositNativeTokenIntoReInsurancePool";
         return true;
+    }
+
+    /**
+     * @notice - deposit a given amount of a ERC20 token
+     */
+    function depositERC20TokenIntoReInsurancePool() public returns (bool) {
+        // [TODO]:
     }
 
     /**
