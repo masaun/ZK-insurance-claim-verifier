@@ -13,7 +13,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.22";
+        version = "0.2.23";
     }
 
     /**
@@ -79,6 +79,13 @@ contract ReInsurancePool {
      * @notice - deposit a given amount of a ERC20 token
      */
     function depositERC20TokenIntoReInsurancePool() public returns (bool) {
+        // [TODO]:
+    }
+
+    /**
+     * @notice - withdraw a given amount of a ERC20 token
+     */
+    function withdrawERC20TokenFromReInsurancePool() public returns (bool) {
         // [TODO]:
     }
 
