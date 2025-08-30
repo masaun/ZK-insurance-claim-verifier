@@ -332,6 +332,14 @@ sh ./scripts/base-mainnet/verification/verificationScript_InsuranceClaimManager_
 
 <br>
 
+- Run for verifying the  `ReInsurancePool` contract on BASE mainnet:
+  - NOTE: The smart contract is verified in `BaseScan` of Base Mainnet ()
+```bash
+sh ./scripts/base-mainnet/verification/verificationScript_ReInsurancePool_via_basescan.sh
+```
+
+<br>
+
 ## Verification on BASE mainnet (`Each SC`) - `BlockScout`
 
 - Run for verifying the  `InsuranceClaimProofVerifier` contract on BASE mainnet:
