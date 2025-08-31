@@ -13,7 +13,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.23";
+        version = "0.2.24";
     }
 
     /**
@@ -80,6 +80,8 @@ contract ReInsurancePool {
      */
     function depositERC20TokenIntoReInsurancePool() public returns (bool) {
         // [TODO]:
+        checkpoints[msg.sender][block.timestamp] = "depositERC20TokenIntoReInsurancePool";
+        return true;
     }
 
     /**
@@ -87,6 +89,8 @@ contract ReInsurancePool {
      */
     function withdrawERC20TokenFromReInsurancePool() public returns (bool) {
         // [TODO]:
+        checkpoints[msg.sender][block.timestamp] = "withdrawERC20TokenFromReInsurancePool";
+        return true;
     }
 
     /**
