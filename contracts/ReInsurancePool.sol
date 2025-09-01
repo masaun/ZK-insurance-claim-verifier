@@ -5,13 +5,15 @@ pragma solidity ^0.8.25;
  */
 contract ReInsurancePool {
     mapping(address => mapping(uint256 => string)) public checkpoints;
+    mapping(address user => uint256 checkpointCount) public checkpointCounts;
+
     mapping(address => bool) public depositers;
     mapping(address => uint256) public depositedAmounts;
 
     string public version;
 
     constructor() {
-        version = "0.2.18";
+        version = "0.2.25";
     }
 
     /**
@@ -32,11 +34,21 @@ contract ReInsurancePool {
     }
 
     /**
+     * @notice - Get the rewards based on the count of a caller's checkpoints
+     */
+    function getRewards() public view returns (bool) {
+        uint256 rewardAmount = checkpointCounts[msg.sender] * 1 ether;  // 1 ether reward per checkpoint
+        require(rewardAmount > 0, "No rewards available");
+        return true;
+    }
+
+    /**
      * @notice - checkpoint function
      */
     function checkpoint(string memory methodName) public returns (bool) {
         checkpoints[msg.sender][block.timestamp] = methodName;
         checkpoints[msg.sender][block.timestamp] = "checkpoints";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -69,6 +81,24 @@ contract ReInsurancePool {
         require(success, "Deposit failed");
 
         checkpoints[msg.sender][block.timestamp] = "depositNativeTokenIntoReInsurancePool";
+        return true;
+    }
+
+    /**
+     * @notice - deposit a given amount of a ERC20 token
+     */
+    function depositERC20TokenIntoReInsurancePool() public returns (bool) {
+        // [TODO]:
+        checkpoints[msg.sender][block.timestamp] = "depositERC20TokenIntoReInsurancePool";
+        return true;
+    }
+
+    /**
+     * @notice - withdraw a given amount of a ERC20 token
+     */
+    function withdrawERC20TokenFromReInsurancePool() public returns (bool) {
+        // [TODO]:
+        checkpoints[msg.sender][block.timestamp] = "withdrawERC20TokenFromReInsurancePool";
         return true;
     }
 

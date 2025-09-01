@@ -27,7 +27,7 @@ contract InsuranceClaimManager {
     ) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
         reInsurancePool = _reInsurancePool;
-        version = "0.2.18";
+        version = "0.2.25";
     }
 
     /**
@@ -56,12 +56,12 @@ contract InsuranceClaimManager {
         approvedClaims[msg.sender][claimant] = true;
         checkpoints[msg.sender][block.timestamp] = "approveInsuranceClaimAndEscrowPayment";
 
-        // [TODO]: Add the payment logic here
+        // Switch a payment logic depending on the source of funds
         if (isUseFundFromReInsurancePool) {
-            // [TODO]: Add the payment logic here - when using the funds from the reinsurance pool
             uint256 insurancePaymentAmount = 1;  // 1 wei - [TODO]: Replace with an actual value
             require(address(reInsurancePool).balance > insurancePaymentAmount, "The ReInsurancePool contract has no funds to use for payment");
-            
+            bool result = reInsurancePool.distributeNativeTokenIntoInsurancePool(address(reInsurancePool), insurancePaymentAmount);
+            require(result, "Failed to distribute funds from the ReInsurancePool");
         } else {
             require(address(this).balance > 0, "This InsuranceClaimManager contract, which is the primal insurance pool, has no funds to use for payment");
             uint256 insurancePaymentAmount = 1;  // 1 wei - [TODO]: Replace with an actual value
