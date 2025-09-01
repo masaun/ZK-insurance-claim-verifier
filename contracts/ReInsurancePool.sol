@@ -13,7 +13,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.24";
+        version = "0.2.25";
     }
 
     /**
@@ -30,6 +30,15 @@ contract ReInsurancePool {
         require(depositers[msg.sender], "You are not registered as a depositer");
         depositers[msg.sender] = false;
         checkpoints[msg.sender][block.timestamp] = "deregisterAsDepositer";
+        return true;
+    }
+
+    /**
+     * @notice - Get the rewards based on the count of a caller's checkpoints
+     */
+    function getRewards() public view returns (bool) {
+        uint256 rewardAmount = checkpointCounts[msg.sender] * 1 ether;  // 1 ether reward per checkpoint
+        require(rewardAmount > 0, "No rewards available");
         return true;
     }
 
