@@ -13,7 +13,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.25";
+        version = "0.2.26";
     }
 
     /**
@@ -23,6 +23,7 @@ contract ReInsurancePool {
         require(!depositers[msg.sender], "You have already registered as a depositer");
         depositers[msg.sender] = true;
         checkpoints[msg.sender][block.timestamp] = "registerAsDepositer";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -30,6 +31,7 @@ contract ReInsurancePool {
         require(depositers[msg.sender], "You are not registered as a depositer");
         depositers[msg.sender] = false;
         checkpoints[msg.sender][block.timestamp] = "deregisterAsDepositer";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -54,6 +56,7 @@ contract ReInsurancePool {
 
     function testFunctionForCheckPoint() public returns (bool) {
         checkpoints[msg.sender][block.timestamp] = "testFunctionForCheckPoint";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -67,6 +70,7 @@ contract ReInsurancePool {
         require(success, "Distribution to the insurance pool failed");
 
         checkpoints[msg.sender][block.timestamp] = "distributeNativeTokenIntoInsurancePool";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -81,6 +85,7 @@ contract ReInsurancePool {
         require(success, "Deposit failed");
 
         checkpoints[msg.sender][block.timestamp] = "depositNativeTokenIntoReInsurancePool";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -90,6 +95,7 @@ contract ReInsurancePool {
     function depositERC20TokenIntoReInsurancePool() public returns (bool) {
         // [TODO]:
         checkpoints[msg.sender][block.timestamp] = "depositERC20TokenIntoReInsurancePool";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -99,6 +105,7 @@ contract ReInsurancePool {
     function withdrawERC20TokenFromReInsurancePool() public returns (bool) {
         // [TODO]:
         checkpoints[msg.sender][block.timestamp] = "withdrawERC20TokenFromReInsurancePool";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -115,6 +122,7 @@ contract ReInsurancePool {
         require(success, "Withdraw failed");
 
         checkpoints[msg.sender][block.timestamp] = "withdrawNativeTokenFromReInsurancePool";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -143,6 +151,7 @@ contract ReInsurancePool {
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
         checkpoints[msg.sender][block.timestamp] = "receive";
+        checkpointCounts[msg.sender]++;
     }
 
     /**
@@ -156,5 +165,6 @@ contract ReInsurancePool {
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
         checkpoints[msg.sender][block.timestamp] = "fallback";
+        checkpointCounts[msg.sender]++;
     }
 }
