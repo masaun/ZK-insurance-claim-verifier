@@ -1,0 +1,18 @@
+[package]
+name = "reinsurance_pool"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+eyre = "0.6"
+dotenv = "0.15"
+anyhow = "1.0"
+alloy = { version = "1.0.27", features = ["full"] }
+alloy-contract = "1.0.27"
+alloy-provider = "1.0.27"
+alloy-signer = "1.0.27"
+alloy-signer-local = "1.0.27"
+alloy-primitives = "1.0.27"
+alloy-rpc-client = "1.0.27"
+reqwest = "0.11"
