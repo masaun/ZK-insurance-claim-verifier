@@ -64,7 +64,7 @@ async fn main() -> eyre::Result<()> {
     println!("✅ ReInsurancePool deployed at: {:?}", contract_address);
 
     // 7. Call the ReInsurancePool contract (expecting it to fail gracefully)
-    println!("🔄 Calling the ReInsurancePool#checkpoint() with a proof and publicInputs...");
+    println!("🔄 Calling the ReInsurancePool#checkpoint() ...");
     let method_name: String = "checkpoint".to_string();
     let result = reinsurance_pool.checkpoint(method_name);
     println!("🔄 Result: {:?}", result);

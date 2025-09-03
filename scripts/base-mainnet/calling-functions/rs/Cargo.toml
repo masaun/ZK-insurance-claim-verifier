@@ -1,7 +1,11 @@
 [package]
-name = "reinsurance_pool"
+name = "zk_insurance_claim_verifier"
 version = "0.1.0"
 edition = "2021"
+
+[[bin]] # For the SC scripts
+name = "reinsurance_pool"
+path = "local-anvil/reinsurance_pool.rs"
 
 [dependencies]
 tokio = { version = "1.0", features = ["full"] }
