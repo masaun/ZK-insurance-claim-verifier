@@ -17,6 +17,7 @@ contract InsuranceClaimManager {
     mapping(address => mapping(address => bool)) public approvedClaims;
 
     mapping(address => mapping(uint256 => string)) public checkpoints;
+    mapping(address user => uint256 checkpointCount) public checkpointCounts;
     mapping(address => uint256) public checkpointOfStakings;
     mapping(address => bool) public stakers;
     mapping(address => uint256) public stakedAmounts;
@@ -27,7 +28,7 @@ contract InsuranceClaimManager {
     ) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
         reInsurancePool = _reInsurancePool;
-        version = "0.2.26";
+        version = "0.2.27";
     }
 
     /**
@@ -174,6 +175,7 @@ contract InsuranceClaimManager {
     function checkpoint(string memory methodName) public returns (bool) {
         checkpoints[msg.sender][block.timestamp] = methodName;
         checkpoints[msg.sender][block.timestamp] = "checkpoint";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
