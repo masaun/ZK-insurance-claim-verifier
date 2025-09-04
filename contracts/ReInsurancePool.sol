@@ -1,9 +1,13 @@
 pragma solidity ^0.8.25;
 
+import { IERC20 } from "./interfaces/IERC20.sol";
+
 /**
  * @notice - The ReInsurancePool contract
  */
 contract ReInsurancePool {
+    IERC20 public usdc; // USDC token contract instance
+
     mapping(address => mapping(uint256 => string)) public checkpoints;
     mapping(address user => uint256 checkpointCount) public checkpointCounts;
 
@@ -13,7 +17,8 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.27";
+        version = "0.2.28";
+        usdc = IERC20(0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913); // USDC token on BASE Mainnet
     }
 
     /**
