@@ -4,7 +4,7 @@ use alloy::{
     providers::{Provider, ProviderBuilder},
     signers::local::PrivateKeySigner,
     sol,
-    primitives::{Bytes, FixedBytes, Address, U256, Url},
+    primitives::{address, Bytes, FixedBytes, Address, U256},
     hex::FromHex,
     rpc::types::TransactionRequest,
     network::TransactionBuilder,
@@ -32,9 +32,10 @@ use std::env;
 async fn main() -> eyre::Result<()> {
     // 1. Fetch values from env
     dotenv().ok();  // Loads .env file
-    let rpc_url = env::var("BASE_MAINNET_RPC")?;
+    //let rpc_url = "https://mainnet.base.org".parse()?;
+    let rpc_url = env::var("BASE_MAINNET_RPC").expect("").parse()?;
     let private_key = env::var("PRIVATE_KEY")?;
-    let contract_address: Address = env::var("REINSURANCE_POOL_ON_BASE_MAINNET").parse()?;;
+    let contract_address: Address = env::var("REINSURANCE_POOL_ON_BASE_MAINNET").expect("").parse()?;
     println!("✅ rpc_url: {:?}", rpc_url);
     println!("✅ private_key: {:?}", private_key);
     println!("✅ contract_address: {:?}", contract_address);
