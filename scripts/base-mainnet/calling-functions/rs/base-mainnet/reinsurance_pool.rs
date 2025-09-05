@@ -82,8 +82,13 @@ async fn main() -> eyre::Result<()> {
     // 7. Call the ReInsurancePool contract (expecting it to fail gracefully)
     println!("🔄 Calling the ReInsurancePool#checkpoint() ...");
     let method_name: String = "checkpoint".to_string();
-    let result = reinsurance_pool.checkpoint(method_name);
-    println!("🔄 Result: {:?}", result);
+    let tx = reinsurance_pool.checkpoint(method_name);
+    println!("🔄 Result: {:?}", tx);
+
+    // 8. Send the transaction and await receipt
+    let tx_sent = tx.send().await?;
+    let tx_receipt = tx_sent.get_receipt().await?;
+    println!("✅ Transaction receipt: {:?}", tx_receipt);
 
     Ok(())
 }
