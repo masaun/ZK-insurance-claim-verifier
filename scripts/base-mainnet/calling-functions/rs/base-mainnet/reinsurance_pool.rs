@@ -32,9 +32,29 @@ use std::env;
  */
 #[tokio::main]
 async fn main() {
-    let result = checkpoint().await;
+    batch_call().await;
 }
 
+/**
+ * @dev - Batch call the ReInsurancePool#checkpoint() function on Base Mainnet
+ * @dev - [TODO 1]: for-loop of the 5 private keys + Call the checkpoint() function inside it.
+ * @dev - [TODO 2]: for-loop of the 12 SC address of ReInsurancePool
+ */
+pub async fn batch_call() {
+    let result = checkpoint().await;
+
+    // [TODO 1]: for-loop of the 5 private keys + Call the checkpoint() function inside it.
+    // for i in 1..=5 {
+    //     let private_key = env::var(format!("PRIVATE_KEY_{}", i)).expect("Missing private key");
+    //     let result = checkpoint(private_key).await;
+    // }
+
+    // [TODO 2]: for-loop of the 12 SC address of ReInsurancePool
+}
+
+/**
+ * @dev - Call the ReInsurancePool#checkpoint() function on Base Mainnet
+ */
 pub async fn checkpoint() -> eyre::Result<()> {
     // 1. Fetch values from env
     dotenv().ok();  // Loads .env file
