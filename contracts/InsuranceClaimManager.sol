@@ -28,7 +28,7 @@ contract InsuranceClaimManager {
     ) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
         reInsurancePool = _reInsurancePool;
-        version = "0.2.28";
+        version = "0.2.29";
     }
 
     /**
@@ -159,6 +159,26 @@ contract InsuranceClaimManager {
         stakedAmounts[msg.sender] = 0;
         (bool success, ) = staker.call{value: amount}("");
         require(success, "Unstake failed");
+        return true;
+    }
+
+    /**
+     * @notice - stake a given amount of a ERC20 token
+     */
+    function stakeERC20TokenIntoReInsurancePool() public returns (bool) {
+        // [TODO]:
+        checkpoints[msg.sender][block.timestamp] = "stakeERC20TokenIntoReInsurancePool";
+        checkpointCounts[msg.sender]++;
+        return true;
+    }
+
+    /**
+     * @notice - unstakea given amount of a ERC20 token
+     */
+    function unstakeERC20TokenFromReInsurancePool() public returns (bool) {
+        // [TODO]:
+        checkpoints[msg.sender][block.timestamp] = "unstakeERC20TokenFromReInsurancePool";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
