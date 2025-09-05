@@ -24,12 +24,18 @@ use std::env;
 
 
 /**
+ * @dev - Call the ReInsurancePool#checkpoint() on Base Mainnet
+ * @dev - Run this script with the "sh ./base-mainnet/runningScript_ReInsurancePool.sh" command at the root directory (= /rs)
  * @dev - Example: `any_network` 🔴
  *    (Run: `cargo run --example any_network` 🟣)
  *    https://alloy.rs/examples/advanced/any_network#example-any_network
  */
 #[tokio::main]
-async fn main() -> eyre::Result<()> {
+async fn main() {
+    let result = checkpoint().await;
+}
+
+pub async fn checkpoint() -> eyre::Result<()> {
     // 1. Fetch values from env
     dotenv().ok();  // Loads .env file
     //let rpc_url = "https://mainnet.base.org".parse()?;
@@ -91,4 +97,4 @@ async fn main() -> eyre::Result<()> {
     println!("✅ Transaction receipt: {:?}", tx_receipt);
 
     Ok(())
-}
+} 
