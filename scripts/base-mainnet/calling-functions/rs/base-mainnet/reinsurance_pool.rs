@@ -41,13 +41,28 @@ async fn main() {
  * @dev - [TODO 2]: for-loop of the 12 SC address of ReInsurancePool
  */
 pub async fn batch_call() {
-    let result = checkpoint().await;
+    let private_key_1 = env::var("PRIVATE_KEY_1").expect("").parse()?;
+    let private_key_2 = env::var("PRIVATE_KEY_2").expect("").parse()?;
+    let private_key_3 = env::var("PRIVATE_KEY_3").expect("").parse()?;
+    let private_key_4 = env::var("PRIVATE_KEY_4").expect("").parse()?;
+    let private_key_5 = env::var("PRIVATE_KEY_5").expect("").parse()?;
+
+    let list_of_private_keys = vec![
+        private_key_1,
+        private_key_2,
+        private_key_3,
+        private_key_4,
+        private_key_5,
+    ];
+
+    // @dev - Single call for testing -> [Result]: Successful
+    //let result = checkpoint().await;
 
     // [TODO 1]: for-loop of the 5 private keys + Call the checkpoint() function inside it.
-    // for i in 1..=5 {
-    //     let private_key = env::var(format!("PRIVATE_KEY_{}", i)).expect("Missing private key");
-    //     let result = checkpoint(private_key).await;
-    // }
+    for i in 1..=5 {
+        let private_key = list_of_private_keys[i - 1];
+        let result = checkpoint(private_key).await;
+    }
 
     // [TODO 2]: for-loop of the 12 SC address of ReInsurancePool
 }
@@ -55,12 +70,14 @@ pub async fn batch_call() {
 /**
  * @dev - Call the ReInsurancePool#checkpoint() function on Base Mainnet
  */
-pub async fn checkpoint() -> eyre::Result<()> {
+pub async fn checkpoint(_private_key: any) -> eyre::Result<()> {
+//pub async fn checkpoint() -> eyre::Result<()> {
     // 1. Fetch values from env
     dotenv().ok();  // Loads .env file
     //let rpc_url = "https://mainnet.base.org".parse()?;
     let rpc_url = env::var("BASE_MAINNET_RPC").expect("").parse()?;
-    let private_key = env::var("PRIVATE_KEY")?;
+    let private_key = _private_key;
+    //let private_key = env::var("PRIVATE_KEY")?;
     let contract_address: Address = env::var("REINSURANCE_POOL_ON_BASE_MAINNET").expect("").parse()?;
     println!("✅ rpc_url: {:?}", rpc_url);
     println!("✅ private_key: {:?}", private_key);

@@ -17,7 +17,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.29";
+        version = "0.2.30";
         usdc = IERC20(0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913); // USDC token on BASE Mainnet
     }
 
