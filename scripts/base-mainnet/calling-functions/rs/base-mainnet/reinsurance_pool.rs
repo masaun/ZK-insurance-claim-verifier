@@ -41,18 +41,27 @@ async fn main() {
  * @dev - [TODO 2]: for-loop of the 12 SC address of ReInsurancePool
  */
 pub async fn batch_call() {
-    let private_key_1 = env::var("PRIVATE_KEY_1").expect("").parse()?;
-    let private_key_2 = env::var("PRIVATE_KEY_2").expect("").parse()?;
-    let private_key_3 = env::var("PRIVATE_KEY_3").expect("").parse()?;
-    let private_key_4 = env::var("PRIVATE_KEY_4").expect("").parse()?;
-    let private_key_5 = env::var("PRIVATE_KEY_5").expect("").parse()?;
+    // 1. Loads .env file
+    dotenv().ok();
 
-    let list_of_private_keys = vec![
+    // 2. Fetch values from .env file
+    let private_key_1 = env::var("PRIVATE_KEY_1").unwrap_or_else(|_| String::new());
+    let private_key_2 = env::var("PRIVATE_KEY_2").unwrap_or_else(|_| String::new());
+    let private_key_3 = env::var("PRIVATE_KEY_3").unwrap_or_else(|_| String::new());
+    let private_key_4 = env::var("PRIVATE_KEY_4").unwrap_or_else(|_| String::new());
+    let private_key_5 = env::var("PRIVATE_KEY_5").unwrap_or_else(|_| String::new());
+    // let private_key_1 = env::var("PRIVATE_KEY_1").expect("");
+    // let private_key_2 = env::var("PRIVATE_KEY_2").expect("");
+    // let private_key_3 = env::var("PRIVATE_KEY_3").expect("");
+    // let private_key_4 = env::var("PRIVATE_KEY_4").expect("");
+    // let private_key_5 = env::var("PRIVATE_KEY_5").expect("");
+
+    let list_of_private_keys = [
         private_key_1,
         private_key_2,
         private_key_3,
         private_key_4,
-        private_key_5,
+        private_key_5
     ];
 
     // @dev - Single call for testing -> [Result]: Successful
@@ -60,8 +69,10 @@ pub async fn batch_call() {
 
     // [TODO 1]: for-loop of the 5 private keys + Call the checkpoint() function inside it.
     for i in 1..=5 {
-        let private_key = list_of_private_keys[i - 1];
+        let private_key = &list_of_private_keys[i - 1];
         let result = checkpoint(private_key).await;
+        //let result = checkpoint(private_key.clone()).await;
+        //let result = checkpoint(private_key.expect("")).await;
     }
 
     // [TODO 2]: for-loop of the 12 SC address of ReInsurancePool
@@ -70,8 +81,7 @@ pub async fn batch_call() {
 /**
  * @dev - Call the ReInsurancePool#checkpoint() function on Base Mainnet
  */
-pub async fn checkpoint(_private_key: any) -> eyre::Result<()> {
-//pub async fn checkpoint() -> eyre::Result<()> {
+pub async fn checkpoint(_private_key: &String) -> eyre::Result<()> {
     // 1. Fetch values from env
     dotenv().ok();  // Loads .env file
     //let rpc_url = "https://mainnet.base.org".parse()?;
