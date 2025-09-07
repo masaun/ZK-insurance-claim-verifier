@@ -4,12 +4,18 @@ import { InsuranceClaimProofVerifier } from "./circuit/InsuranceClaimProofVerifi
 //import "../circuits/target/contract.sol";
 import { ReInsurancePool } from "./ReInsurancePool.sol";
 
+// [TODO]: Integrate a ReClaim Protocol's verifier contract.
+import { ReclaimProtocolVerifier } from "./reclaim-protocol/ReclaimProtocolVerifier.sol";
+
 contract InsuranceClaimManager {
 
     string public version;
 
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     ReInsurancePool public reInsurancePool;
+
+    // [TODO]: Integrate a ReClaim Protocol's verifier contract.
+    ReclaimProtocolVerifier public reclaimProtocolVerifier;
 
     mapping(address => bool) public insurers;
     mapping(address => bool) public claimants;
@@ -28,7 +34,7 @@ contract InsuranceClaimManager {
     ) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
         reInsurancePool = _reInsurancePool;
-        version = "0.2.30";
+        version = "0.2.31";
     }
 
     /**
