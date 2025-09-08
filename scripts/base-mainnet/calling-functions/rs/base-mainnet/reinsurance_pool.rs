@@ -94,7 +94,7 @@ pub async fn checkpoint(_private_key: &String, _contract_address: &Address) -> e
     let rpc_url = env::var("BASE_MAINNET_RPC").expect("").parse()?;
     let private_key = _private_key;
     //let private_key = env::var("PRIVATE_KEY")?;
-    let contract_address: Address = _contract_address;
+    let contract_address: Address = *_contract_address;
     //let contract_address: Address = env::var("REINSURANCE_POOL_ON_BASE_MAINNET").expect("").parse()?;
     println!("✅ rpc_url: {:?}", rpc_url);
     println!("✅ private_key: {:?}", private_key);
