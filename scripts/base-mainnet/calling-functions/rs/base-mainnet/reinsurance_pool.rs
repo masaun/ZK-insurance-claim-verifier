@@ -80,17 +80,16 @@ pub async fn batch_call() {
     println!("{:?}", contract_addresses_array);
 
     // [TODO 1]: for-loop of the 5 private keys + Call the checkpoint() function inside it.
-    // for i in 1..=5 {
-    //     let private_key = &list_of_private_keys[i - 1];
+    for i in 1..=5 {
+        let private_key = &list_of_private_keys[i - 1];
 
-    //     // [TODO 2]: for-loop of the 12 SC address of ReInsurancePool
-    //     for contract_address_str in contract_addresses_array.split(',') {
-    //         let contract_address: Address = contract_address_str.expect("Invalid address format").parse();
-    //         let result = checkpoint(private_key, contract_address).await;
-    //         //let result = checkpoint(private_key.clone()).await;
-    //         //let result = checkpoint(private_key.expect("")).await;
-    //     }
-    // }
+        // [TODO 2]: for-loop of the 12 SC address of ReInsurancePool
+        for contract_address in contract_addresses_array.iter() {
+            let result = checkpoint(private_key, *contract_address).await;
+            //let result = checkpoint(private_key.clone()).await;
+            //let result = checkpoint(private_key.expect("")).await;
+        }
+    }
 
     // @dev - Single call for testing -> [Result]: Successful
     //let result = checkpoint().await;
