@@ -65,16 +65,16 @@ pub async fn batch_call() {
         private_key_5
     ];
 
-    // 3. Fetch the ReInsurancePool contract address from .env file
-    let _contract_addresses_array = env::var("REINSURANCE_POOL_ON_BASE_MAINNET_LIST").unwrap_or_else(|_| "".to_string());
+    // 3. Fetch an array of ReInsurancePool contract addresses from .env file
+    let _contract_addresses_array = env::var("REINSURANCE_POOL_ON_BASE_MAINNET_LIST").unwrap_or_default();
     println!("✅ contract_addresses_array: {:?}", _contract_addresses_array);
 
-    let raw = env::var("REINSURANCE_POOL_ON_BASE_MAINNET_LIST").unwrap_or_else(|_| "".to_string());
-    println!("{:?}", raw);
-
-    let contract_addresses_array: Vec<Address> = raw
+    let contract_addresses_array: Vec<Address> = _contract_addresses_array
+        .trim_matches(|c| c == '[' || c == ']' || c == ' ')
         .split(',')
-        .map(|s| s.trim().parse::<Address>().expect("Invalid Ethereum address"))
+        .map(|s| s.trim_matches(|c| c == '"' || c == ' '))
+        .filter(|s| !s.is_empty())
+        .map(|s| s.parse().expect("Invalid address format"))
         .collect();
 
     println!("{:?}", contract_addresses_array);
