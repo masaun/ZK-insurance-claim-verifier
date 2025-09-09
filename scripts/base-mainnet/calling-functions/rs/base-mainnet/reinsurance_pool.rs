@@ -10,6 +10,7 @@ use alloy::{
     network::TransactionBuilder,
 };
 use alloy_node_bindings::Anvil;
+use serde_json;
 
 // Generate the contract bindings for the ReInsurancePool interface.
 sol! { 
@@ -65,20 +66,31 @@ pub async fn batch_call() {
     ];
 
     // 3. Fetch the ReInsurancePool contract address from .env file
-    let contract_addresses_array = env::var("REINSURANCE_POOL_ON_BASE_MAINNET_LIST").unwrap_or_else(|_| String::new());
-    
-    // [TODO 1]: for-loop of the 5 private keys + Call the checkpoint() function inside it.
-    for i in 1..=5 {
-        let private_key = &list_of_private_keys[i - 1];
+    let _contract_addresses_array = env::var("REINSURANCE_POOL_ON_BASE_MAINNET_LIST").unwrap_or_else(|_| "".to_string());
+    println!("✅ contract_addresses_array: {:?}", _contract_addresses_array);
 
-        // [TODO 2]: for-loop of the 12 SC address of ReInsurancePool
-        for contract_address_str in contract_addresses_array.split(',') {
-            let contract_address: Address = contract_address_str.trim().parse().expect("Invalid address format");
-            let result = checkpoint(private_key, &contract_address).await;
-            //let result = checkpoint(private_key.clone()).await;
-            //let result = checkpoint(private_key.expect("")).await;
-        }
-    }
+    let raw = env::var("REINSURANCE_POOL_ON_BASE_MAINNET_LIST").unwrap_or_else(|_| "".to_string());
+    println!("{:?}", raw);
+
+    let contract_addresses_array: Vec<Address> = raw
+        .split(',')
+        .map(|s| s.trim().parse::<Address>().expect("Invalid Ethereum address"))
+        .collect();
+
+    println!("{:?}", contract_addresses_array);
+
+    // [TODO 1]: for-loop of the 5 private keys + Call the checkpoint() function inside it.
+    // for i in 1..=5 {
+    //     let private_key = &list_of_private_keys[i - 1];
+
+    //     // [TODO 2]: for-loop of the 12 SC address of ReInsurancePool
+    //     for contract_address_str in contract_addresses_array.split(',') {
+    //         let contract_address: Address = contract_address_str.expect("Invalid address format").parse();
+    //         let result = checkpoint(private_key, contract_address).await;
+    //         //let result = checkpoint(private_key.clone()).await;
+    //         //let result = checkpoint(private_key.expect("")).await;
+    //     }
+    // }
 
     // @dev - Single call for testing -> [Result]: Successful
     //let result = checkpoint().await;
@@ -87,14 +99,14 @@ pub async fn batch_call() {
 /**
  * @dev - Call the ReInsurancePool#checkpoint() function on Base Mainnet
  */
-pub async fn checkpoint(_private_key: &String, _contract_address: &Address) -> eyre::Result<()> {
+pub async fn checkpoint(_private_key: &String, _contract_address: Address) -> eyre::Result<()> {
     // 1. Fetch values from env
     dotenv().ok();  // Loads .env file
     //let rpc_url = "https://mainnet.base.org".parse()?;
     let rpc_url = env::var("BASE_MAINNET_RPC").expect("").parse()?;
     let private_key = _private_key;
     //let private_key = env::var("PRIVATE_KEY")?;
-    let contract_address: Address = *_contract_address;
+    let contract_address: Address = _contract_address;
     //let contract_address: Address = env::var("REINSURANCE_POOL_ON_BASE_MAINNET").expect("").parse()?;
     println!("✅ rpc_url: {:?}", rpc_url);
     println!("✅ private_key: {:?}", private_key);

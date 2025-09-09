@@ -7,6 +7,7 @@ import { IERC20 } from "./interfaces/IERC20.sol";
  */
 contract ReInsurancePool {
     IERC20 public usdc; // USDC token contract instance
+    address public USDC_ADDRESS_ON_BASE_MAINNET;
 
     mapping(address => mapping(uint256 => string)) public checkpoints;
     mapping(address user => uint256 checkpointCount) public checkpointCounts;
@@ -17,8 +18,9 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.32";
-        usdc = IERC20(0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913); // USDC token on BASE Mainnet
+        version = "0.2.33";
+        USDC_ADDRESS_ON_BASE_MAINNET = 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; // USDC token on BASE Mainnet
+        usdc = IERC20(USDC_ADDRESS_ON_BASE_MAINNET); // USDC token on BASE Mainnet
     }
 
     /**
@@ -134,8 +136,15 @@ contract ReInsurancePool {
     /**
      * @notice - Get the contract's native token balance
      */
-    function getContractBalance() public view returns (uint256) {
+    function getNativeETHBalanceOfContract() public view returns (uint256) {
         return address(this).balance;
+    }
+
+    /**
+     * @notice - Get the contract's USDC (ERC20) token balance
+     */
+    function getUSDCBalanceOfContract() public view returns (uint256) {
+        return usdc.balanceOf(address(this));
     }
 
     /**
