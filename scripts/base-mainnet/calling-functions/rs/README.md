@@ -14,3 +14,10 @@ sh ./local-anvil/runningScript_ReInsurancePool.sh
 ```bash
 sh ./base-mainnet/runningScript_ReInsurancePool.sh
 ```
+
+<br>
+
+- Run the SC script of the `InsuranceClaimManager.sol` on BASE `Mainnet`
+```bash
+sh ./base-mainnet/runningScript_InsuranceClaimManager.sh
+```
