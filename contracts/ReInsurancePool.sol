@@ -18,7 +18,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.33";
+        version = "0.2.34";
         USDC_ADDRESS_ON_BASE_MAINNET = 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; // USDC token on BASE Mainnet
         usdc = IERC20(USDC_ADDRESS_ON_BASE_MAINNET); // USDC token on BASE Mainnet
     }
@@ -46,7 +46,7 @@ contract ReInsurancePool {
      * @notice - Get the rewards based on the count of a caller's checkpoints
      */
     function getRewards() public view returns (bool) {
-        uint256 rewardAmount = checkpointCounts[msg.sender] * 1 ether;  // 1 ether reward per checkpoint
+        uint256 rewardAmount = checkpointCounts[msg.sender] * 1;  // 1 wei reward per checkpoint
         require(rewardAmount > 0, "No rewards available");
         return true;
     }
