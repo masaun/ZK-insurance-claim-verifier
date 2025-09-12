@@ -1,9 +1,14 @@
 pragma solidity ^0.8.25;
 
+import { IERC20 } from "./interfaces/IERC20.sol";
+
 /**
  * @notice - The ReInsurancePool contract
  */
 contract ReInsurancePool {
+    IERC20 public usdc; // USDC token contract instance
+    address public USDC_ADDRESS_ON_BASE_MAINNET;
+
     mapping(address => mapping(uint256 => string)) public checkpoints;
     mapping(address user => uint256 checkpointCount) public checkpointCounts;
 
@@ -13,7 +18,9 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.25";
+        version = "0.2.34";
+        USDC_ADDRESS_ON_BASE_MAINNET = 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; // USDC token on BASE Mainnet
+        usdc = IERC20(USDC_ADDRESS_ON_BASE_MAINNET); // USDC token on BASE Mainnet
     }
 
     /**
@@ -23,6 +30,7 @@ contract ReInsurancePool {
         require(!depositers[msg.sender], "You have already registered as a depositer");
         depositers[msg.sender] = true;
         checkpoints[msg.sender][block.timestamp] = "registerAsDepositer";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -30,6 +38,7 @@ contract ReInsurancePool {
         require(depositers[msg.sender], "You are not registered as a depositer");
         depositers[msg.sender] = false;
         checkpoints[msg.sender][block.timestamp] = "deregisterAsDepositer";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -37,7 +46,7 @@ contract ReInsurancePool {
      * @notice - Get the rewards based on the count of a caller's checkpoints
      */
     function getRewards() public view returns (bool) {
-        uint256 rewardAmount = checkpointCounts[msg.sender] * 1 ether;  // 1 ether reward per checkpoint
+        uint256 rewardAmount = checkpointCounts[msg.sender] * 1;  // 1 wei reward per checkpoint
         require(rewardAmount > 0, "No rewards available");
         return true;
     }
@@ -54,6 +63,7 @@ contract ReInsurancePool {
 
     function testFunctionForCheckPoint() public returns (bool) {
         checkpoints[msg.sender][block.timestamp] = "testFunctionForCheckPoint";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -67,6 +77,7 @@ contract ReInsurancePool {
         require(success, "Distribution to the insurance pool failed");
 
         checkpoints[msg.sender][block.timestamp] = "distributeNativeTokenIntoInsurancePool";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -81,6 +92,7 @@ contract ReInsurancePool {
         require(success, "Deposit failed");
 
         checkpoints[msg.sender][block.timestamp] = "depositNativeTokenIntoReInsurancePool";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -90,6 +102,7 @@ contract ReInsurancePool {
     function depositERC20TokenIntoReInsurancePool() public returns (bool) {
         // [TODO]:
         checkpoints[msg.sender][block.timestamp] = "depositERC20TokenIntoReInsurancePool";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -99,6 +112,7 @@ contract ReInsurancePool {
     function withdrawERC20TokenFromReInsurancePool() public returns (bool) {
         // [TODO]:
         checkpoints[msg.sender][block.timestamp] = "withdrawERC20TokenFromReInsurancePool";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -115,14 +129,22 @@ contract ReInsurancePool {
         require(success, "Withdraw failed");
 
         checkpoints[msg.sender][block.timestamp] = "withdrawNativeTokenFromReInsurancePool";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
     /**
      * @notice - Get the contract's native token balance
      */
-    function getContractBalance() public view returns (uint256) {
+    function getNativeETHBalanceOfContract() public view returns (uint256) {
         return address(this).balance;
+    }
+
+    /**
+     * @notice - Get the contract's USDC (ERC20) token balance
+     */
+    function getUSDCBalanceOfContract() public view returns (uint256) {
+        return usdc.balanceOf(address(this));
     }
 
     /**
@@ -143,6 +165,7 @@ contract ReInsurancePool {
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
         checkpoints[msg.sender][block.timestamp] = "receive";
+        checkpointCounts[msg.sender]++;
     }
 
     /**
@@ -156,5 +179,6 @@ contract ReInsurancePool {
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
         checkpoints[msg.sender][block.timestamp] = "fallback";
+        checkpointCounts[msg.sender]++;
     }
 }

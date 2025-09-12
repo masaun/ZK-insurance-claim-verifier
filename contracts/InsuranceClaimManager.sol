@@ -4,6 +4,9 @@ import { InsuranceClaimProofVerifier } from "./circuit/InsuranceClaimProofVerifi
 //import "../circuits/target/contract.sol";
 import { ReInsurancePool } from "./ReInsurancePool.sol";
 
+// [TODO]: Integrate a ReClaim Protocol's verifier contract.
+import { ReclaimProtocolVerifier } from "./reclaim-protocol/ReclaimProtocolVerifier.sol";
+
 contract InsuranceClaimManager {
 
     string public version;
@@ -11,12 +14,16 @@ contract InsuranceClaimManager {
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
     ReInsurancePool public reInsurancePool;
 
+    // [TODO]: Integrate a ReClaim Protocol's verifier contract.
+    ReclaimProtocolVerifier public reclaimProtocolVerifier;
+
     mapping(address => bool) public insurers;
     mapping(address => bool) public claimants;
     mapping(address => mapping(address => bool)) public claimRequests;
     mapping(address => mapping(address => bool)) public approvedClaims;
 
     mapping(address => mapping(uint256 => string)) public checkpoints;
+    mapping(address user => uint256 checkpointCount) public checkpointCounts;
     mapping(address => uint256) public checkpointOfStakings;
     mapping(address => bool) public stakers;
     mapping(address => uint256) public stakedAmounts;
@@ -27,7 +34,7 @@ contract InsuranceClaimManager {
     ) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
         reInsurancePool = _reInsurancePool;
-        version = "0.2.25";
+        version = "0.2.34";
     }
 
     /**
@@ -43,6 +50,7 @@ contract InsuranceClaimManager {
 
         claimRequests[insurer][msg.sender] = true;
         checkpoints[msg.sender][block.timestamp] = "submitInsuranceClaim";
+        checkpointCounts[msg.sender]++;
     }
 
     /**
@@ -55,6 +63,7 @@ contract InsuranceClaimManager {
 
         approvedClaims[msg.sender][claimant] = true;
         checkpoints[msg.sender][block.timestamp] = "approveInsuranceClaimAndEscrowPayment";
+        checkpointCounts[msg.sender]++;
 
         // Switch a payment logic depending on the source of funds
         if (isUseFundFromReInsurancePool) {
@@ -79,6 +88,7 @@ contract InsuranceClaimManager {
         require(!claimants[msg.sender], "You have already registered as a claimant");
         claimants[msg.sender] = true;
         checkpoints[msg.sender][block.timestamp] = "registerAsClaimant";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -86,6 +96,7 @@ contract InsuranceClaimManager {
         require(!insurers[msg.sender], "You have already registered as an insurer");
         insurers[msg.sender] = true;
         checkpoints[msg.sender][block.timestamp] = "registerAsInsurer";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -96,6 +107,7 @@ contract InsuranceClaimManager {
         require(claimants[msg.sender], "You are not registered as a claimant");
         claimants[msg.sender] = false;
         checkpoints[msg.sender][block.timestamp] = "deregisterAsClaimant";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -103,6 +115,7 @@ contract InsuranceClaimManager {
         require(insurers[msg.sender], "You are not registered as an insurer");
         insurers[msg.sender] = false;
         checkpoints[msg.sender][block.timestamp] = "deregisterAsInsurer";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -121,6 +134,7 @@ contract InsuranceClaimManager {
         require(!stakers[msg.sender], "You are already registered as a staker");
         stakers[msg.sender] = true;
         checkpoints[msg.sender][block.timestamp] = "registerAsStaker";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -129,6 +143,7 @@ contract InsuranceClaimManager {
         require(stakedAmounts[msg.sender] == 0, "You have staked amount, please unstake first");
         stakers[msg.sender] = false;
         checkpoints[msg.sender][block.timestamp] = "deregisterAsStaker";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -143,6 +158,7 @@ contract InsuranceClaimManager {
         stakedAmounts[msg.sender] = msg.value;
         (bool success, ) = address(this).call{value: msg.value}("");
         require(success, "Stake failed");
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -158,6 +174,27 @@ contract InsuranceClaimManager {
         stakedAmounts[msg.sender] = 0;
         (bool success, ) = staker.call{value: amount}("");
         require(success, "Unstake failed");
+        checkpointCounts[msg.sender]++;
+        return true;
+    }
+
+    /**
+     * @notice - stake a given amount of a ERC20 token
+     */
+    function stakeERC20TokenIntoReInsurancePool() public returns (bool) {
+        // [TODO]:
+        checkpoints[msg.sender][block.timestamp] = "stakeERC20TokenIntoReInsurancePool";
+        checkpointCounts[msg.sender]++;
+        return true;
+    }
+
+    /**
+     * @notice - unstakea given amount of a ERC20 token
+     */
+    function unstakeERC20TokenFromReInsurancePool() public returns (bool) {
+        // [TODO]:
+        checkpoints[msg.sender][block.timestamp] = "unstakeERC20TokenFromReInsurancePool";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
@@ -174,11 +211,13 @@ contract InsuranceClaimManager {
     function checkpoint(string memory methodName) public returns (bool) {
         checkpoints[msg.sender][block.timestamp] = methodName;
         checkpoints[msg.sender][block.timestamp] = "checkpoint";
+        checkpointCounts[msg.sender]++;
         return true;
     }
 
     function testFunctionForCheckPoint() public returns (bool) {
         checkpoints[msg.sender][block.timestamp] = "testFunctionForCheckPoint";
+        checkpointCounts[msg.sender]++;
         return true;
     }
     
