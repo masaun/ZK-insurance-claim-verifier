@@ -9,15 +9,15 @@ sh ./local-anvil/runningScript_ReInsurancePool.sh
 
 <br>
 
-## Run the SC script on BASE `Mainnet`
+## Run the SC script on BASE `Mainnet` - Batch Call
 - Run the SC script of the `ReInsurancePool.sol` on BASE `Mainnet`
 ```bash
-sh ./base-mainnet/runningScript_ReInsurancePool.sh
+sh ./base-mainnet/batch-call/runningScript_ReInsurancePool.sh
 ```
 
 <br>
 
 - Run the SC script of the `InsuranceClaimManager.sol` on BASE `Mainnet`
 ```bash
-sh ./base-mainnet/runningScript_InsuranceClaimManager.sh
+sh ./base-mainnet/batch-call/runningScript_InsuranceClaimManager.sh
 ```

@@ -5,15 +5,15 @@ edition = "2021"
 
 [[bin]] # For the SC scripts of the ReInsurancePool contract on Anvil
 name = "reinsurance_pool_on_anvil"
-path = "local-anvil/reinsurance_pool.rs"
+path = "local-anvil/batch-call/reinsurance_pool.rs"
 
 [[bin]] # For the SC scripts of the ReInsurancePool contract on Base Mainnet
 name = "reinsurance_pool_on_base_mainnet"
-path = "base-mainnet/reinsurance_pool.rs"
+path = "base-mainnet/batch-call/reinsurance_pool.rs"
 
 [[bin]] # For the SC scripts of the InsuranceClaimManager contract on Base Mainnet
 name = "insurance_claim_manager_on_base_mainnet"
-path = "base-mainnet/insurance_claim_manager.rs"
+path = "base-mainnet/batch-call/insurance_claim_manager.rs"
 
 [dependencies]
 tokio = { version = "1.0", features = ["full"] }

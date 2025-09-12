@@ -34,7 +34,7 @@ contract InsuranceClaimManager {
     ) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
         reInsurancePool = _reInsurancePool;
-        version = "0.2.34";
+        version = "0.2.35";
     }
 
     /**
