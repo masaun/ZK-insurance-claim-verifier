@@ -18,7 +18,7 @@ contract ReInsurancePool {
     string public version;
 
     constructor() {
-        version = "0.2.34";
+        version = "0.3.40";
         USDC_ADDRESS_ON_BASE_MAINNET = 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; // USDC token on BASE Mainnet
         usdc = IERC20(USDC_ADDRESS_ON_BASE_MAINNET); // USDC token on BASE Mainnet
     }
@@ -181,4 +181,12 @@ contract ReInsurancePool {
         checkpoints[msg.sender][block.timestamp] = "fallback";
         checkpointCounts[msg.sender]++;
     }
+
+
+    function addSomething(string memory methodName) public returns (bool) {
+        checkpoints[msg.sender][block.timestamp] = "addSomething";
+        checkpointCounts[msg.sender]++;
+        return true;
+    }
+
 }
