@@ -34,7 +34,7 @@ contract InsuranceClaimManager {
     ) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
         reInsurancePool = _reInsurancePool;
-        version = "0.3.40";
+        version = "0.32.69";
     }
 
     /**
@@ -241,6 +241,12 @@ contract InsuranceClaimManager {
         // (bool success, ) = msg.sender.call{value: msg.value}("");
         // require(success, "Transfering back failed");
         checkpoints[msg.sender][block.timestamp] = "fallback";
+    }
+
+    function addToTwentyEight(string memory methodName) public returns (bool) {
+        checkpoints[msg.sender][block.timestamp] = "addToTwentyEight";
+        checkpointCounts[msg.sender]++;
+        return true;
     }
 
 }
