@@ -1,3 +1,56 @@
+# Confidential Payroll Management Platform
+
+## Techinical Stack
+
+- `aztec` module: `v1.2.0`
+- `Noir`: `v1.0.0-beta.11`
+
+<br>
+
+## Installation
+
+- Install the `aztec` module `v1.2.0` into the **local machine**:
+```bash
+aztec-up -v 1.2.0
+```
+
+<br>
+
+- Install the `Noir` lang `v1.0.0-beta.11` into the **local machine**:
+```bash
+noirup --version 1.0.0-beta.11
+```
+
+<br>
+
+## Deploy a SC on Aztec `Testnet`
+
+(NOTE: The following command should be executed - after the SC artifacts are generated via the `yarn codegen` command)
+
+- Deploy the `EasyPrivateVoting` on Aztec `Testnet`
+```bash
+yarn deploy
+```
+or
+```bash
+node --loader ts-node/esm scripts/deploy_contract.ts
+```
+
+<br>
+
+- Deploy the `Account` contract on Aztec `Testnet`
+```bash
+yarn deploy-account
+```
+or
+```bash
+node --loader ts-node/esm scripts/deploy_account.ts
+```
+
+<br>
+
+<hr>
+
 <div align="center">
   <a href="https://aztec.network">
     <img src="https://github.com/AztecProtocol/aztec-packages/blob/master/docs/static/img/aztec-logo.9cde8ae1.svg" alt="Aztec Protocol Logo" width="300">
@@ -9,6 +62,8 @@
 This repo is meant to be a starting point for writing Aztec contracts and tests, specifically on the Aztec testnet.
 
 You can find the **Easy Private Voting contract** in `./src/main.nr`. A simple integration test is in `./src/test/index.test.ts`.
+
+The corresponding tutorial can be found in the [Aztec docs here](https://docs.aztec.network/developers/tutorials/codealong/contract_tutorials/private_voting_contract).
 
 <div align="center">
 
