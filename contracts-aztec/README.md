@@ -1,0 +1,133 @@
+<div align="center">
+  <a href="https://aztec.network">
+    <img src="https://github.com/AztecProtocol/aztec-packages/blob/master/docs/static/img/aztec-logo.9cde8ae1.svg" alt="Aztec Protocol Logo" width="300">
+  </a>
+</div>
+
+# Aztec Starter
+
+This repo is meant to be a starting point for writing Aztec contracts and tests, specifically on the Aztec testnet.
+
+You can find the **Easy Private Voting contract** in `./src/main.nr`. A simple integration test is in `./src/test/index.test.ts`.
+
+<div align="center">
+
+[![GitHub Repo stars](https://img.shields.io/github/stars/AztecProtocol/aztec-starter?logo=github&color=yellow)](https://github.com/AztecProtocol/aztec-starter/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/AztecProtocol/aztec-starter?logo=github&color=blue)](https://github.com/AztecProtocol/aztec-starter/network/members)
+[![Build](https://github.com/AztecProtocol/aztec-starter/actions/workflows/update.yaml/badge.svg)](https://github.com/AztecProtocol/aztec-starter/actions)
+[![GitHub last commit](https://img.shields.io/github/last-commit/AztecProtocol/aztec-starter?logo=git)](https://github.com/AztecProtocol/aztec-starter/commits/main)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/license/mit)
+[![Discord](https://img.shields.io/badge/discord-join%20chat-5B5EA6)](https://discord.gg/aztec)
+[![Twitter Follow](https://img.shields.io/twitter/follow/aztecnetwork?style=flat&logo=twitter)](https://x.com/aztecnetwork)
+
+</div>
+
+---
+
+## 🚀 **Getting Started**
+
+Use **Node.js version 22.15.0**.
+
+[Start your codespace from the codespace dropdown](https://docs.github.com/en/codespaces/getting-started/quickstart).
+
+Get the **sandbox, aztec-cli, and other tooling** with this command:
+
+```bash
+bash -i <(curl -s https://install.aztec.network)
+```
+
+Install the correct version of the toolkit with:
+
+```bash
+aztec-up 1.1.3
+```
+
+---
+
+## 📦 **Install Packages**
+
+
+---
+
+## 🏗 **Compile**
+
+```bash
+aztec-nargo compile
+```
+
+or
+
+```bash
+yarn compile
+```
+
+---
+
+## 🔧 **Codegen**
+
+Generate the **contract artifact JSON** and TypeScript interface:
+
+```bash
+yarn codegen
+```
+
+---
+
+:warning: Tests and scripts set up and run the Private Execution Environment (PXE) and store PXE data in the `./store` directory. If you restart the sandbox, you will need to delete the `./store` directory to avoid errors.
+
+## 🧪 **Test**
+
+You don't want to run tests against testnet. This will take a long time. Run tests against the sandbox, as described on the [main branch](https://github.com/AztecProtocol/aztec-starter).
+
+---
+
+## Scripts
+
+You can find a handful of scripts in the `./scripts` folder.
+
+- `./scripts/deploy-account.ts` is an example of how to deploy a schnorr account.
+- `./scripts/deploy_contract.ts` is an example of how to deploy a contract.
+- `./scripts/fees.ts` is an example of how to pay for a contract deployment using various fee payment methods.
+- `./scripts/multiple_pxe.ts` is an example of how to deploy a contract from one PXE instance and interact with it from another.
+- `./scripts/interaction_existing.ts` is an example of how to interact with a contrac that is already deployed to the network.
+
+---
+
+## ❗ **Error Resolution**
+
+### 🔄 **Update Node.js and Noir Dependencies**
+
+```bash
+yarn update
+```
+
+### 🔄 **Update Contract**
+
+Get the **contract code from the monorepo**. The script will look at the versions defined in `./Nargo.toml` and fetch that version of the code from the monorepo.
+
+```bash
+yarn update
+```
+
+You may need to update permissions with:
+
+```bash
+chmod +x update_contract.sh
+```
+
+### 💬 Join the Community:
+
+<p align="left">
+  <a href="https://forum.aztec.network">
+    <img src="https://img.shields.io/badge/Aztec%20%20Forum-5C4C9F?style=for-the-badge&logo=startrek&logoColor=white" alt="Forum">
+  </a>  
+  <a href="https://t.me/AztecAnnouncements_Official">
+    <img src="https://img.shields.io/badge/Telegram-26A5E4?logo=telegram&logoColor=white&style=for-the-badge" alt="Telegram">
+  </a>
+  <a href="https://discord.gg/aztec">
+    <img src="https://img.shields.io/badge/Discord-5865F2?logo=discord&logoColor=white&style=for-the-badge" alt="Discord">
+  </a>
+  <a href="https://x.com/aztecnetwork">
+    <img src="https://img.shields.io/badge/Twitter-000000?logo=x&logoColor=white&style=for-the-badge" alt="Twitter (X)">
+  </a>
+</p>

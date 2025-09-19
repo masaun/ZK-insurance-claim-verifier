@@ -1,0 +1,8 @@
+node_modules
+target/
+src/artifacts/
+log/
+.vscode
+.DS_Store
+codegenCache.json
+store/*
