@@ -11,7 +11,7 @@ contract InsuranceClaimProofVerifier {
 
     constructor(UltraVerifier _verifier) {
         verifier = _verifier;
-        version = "0.37.74";
+        version = "0.38.75";
     }
 
     /**
