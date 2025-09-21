@@ -1,6 +1,7 @@
 pragma solidity ^0.8.17;
 
-import { UltraVerifier } from "../../../contracts/circuit/ultra-verifier/plonk_vk.sol";
+import { HonkVerifier } from "../../../contracts/circuit/ultra-verifier/plonk_vk.sol";
+//import { UltraVerifier } from "../../../contracts/circuit/ultra-verifier/plonk_vk.sol";
 import { InsuranceClaimProofVerifier } from "../../../contracts/circuit/InsuranceClaimProofVerifier.sol";
 //import "../circuits/target/contract.sol";
 import { DataTypeConverter } from "../../../contracts/libraries/DataTypeConverter.sol";
@@ -18,7 +19,8 @@ import { PubkeyAndSignedMessageExtractor } from "../../../scripts/utils/array-by
  */
 contract InsuranceClaimProofVerifierTest_OnSwellChainTestnet is Test, PubkeyAndSignedMessageExtractor {
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
-    UltraVerifier public verifier;
+    HonkVerifier public verifier;
+    //UltraVerifier public verifier;
     NoirHelper public noirHelper;
 
     function setUp() public {
@@ -29,7 +31,8 @@ contract InsuranceClaimProofVerifierTest_OnSwellChainTestnet is Test, PubkeyAndS
         address INSURANCE_CLAIM_PROOF_VERIFIER = vm.envAddress("INSURANCE_CLAIM_PROOF_VERIFIER_ON_SWELL_CHAIN_TESTNET");
 
         /// @dev - Create the SC instances /w deployed SC addresses
-        verifier = UltraVerifier(ULTRAVERIFER);
+        verifier = HonkVerifier(ULTRAVERIFER);
+        //verifier = UltraVerifier(ULTRAVERIFER);
         insuranceClaimProofVerifier = InsuranceClaimProofVerifier(INSURANCE_CLAIM_PROOF_VERIFIER);
         //verifier = new UltraVerifier();
         //insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
