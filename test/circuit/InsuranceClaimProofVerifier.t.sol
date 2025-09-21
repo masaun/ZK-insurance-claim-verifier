@@ -1,7 +1,7 @@
 pragma solidity ^0.8.25;
 
-import { HonkVerifier } from "../../contracts/circuit/ultra-verifier/plonk_vk.sol";
-//import { UltraVerifier } from "../../contracts/circuit/ultra-verifier/plonk_vk.sol";
+//import { HonkVerifier } from "../../contracts/circuit/ultra-verifier/plonk_vk.sol";
+import { UltraVerifier } from "../../contracts/circuit/ultra-verifier/plonk_vk.sol";
 import { InsuranceClaimProofVerifier } from "../../contracts/circuit/InsuranceClaimProofVerifier.sol";
 //import "../circuits/target/contract.sol";
 import { DataTypeConverter } from "../../contracts/libraries/DataTypeConverter.sol";
@@ -16,14 +16,14 @@ import { PubkeyAndSignedMessageExtractor } from "../../scripts/utils/array-bytes
 
 contract InsuranceClaimProofVerifierTest is Test, PubkeyAndSignedMessageExtractor {
     InsuranceClaimProofVerifier public insuranceClaimProofVerifier;
-    HonkVerifier public verifier;
-    //UltraVerifier public verifier;
+    //HonkVerifier public verifier;
+    UltraVerifier public verifier;
     NoirHelper public noirHelper;
 
     function setUp() public {
         noirHelper = new NoirHelper();
-        verifier = new HonkVerifier();
-        //verifier = new UltraVerifier();
+        //verifier = new HonkVerifier();
+        verifier = new UltraVerifier();
         insuranceClaimProofVerifier = new InsuranceClaimProofVerifier(verifier);
     }
 

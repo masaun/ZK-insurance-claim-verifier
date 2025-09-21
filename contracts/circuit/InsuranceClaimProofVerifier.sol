@@ -1,17 +1,17 @@
 pragma solidity ^0.8.25;
 
-import { HonkVerifier } from "./ultra-verifier/plonk_vk.sol";
-//import { UltraVerifier } from "./ultra-verifier/plonk_vk.sol";
+//import { HonkVerifier } from "./ultra-verifier/plonk_vk.sol";
+import { UltraVerifier } from "./ultra-verifier/plonk_vk.sol";
 //import "../circuits/target/contract.sol";
 
 contract InsuranceClaimProofVerifier {
 
     string public version;
 
-    HonkVerifier public verifier;
-    //UltraVerifier public verifier;
+    //HonkVerifier public verifier;
+    UltraVerifier public verifier;
 
-    constructor(HonkVerifier _verifier) {
+    constructor(UltraVerifier _verifier) {
         verifier = _verifier;
         version = "0.38.75";
     }
