@@ -1,4 +1,4 @@
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.25;
 
 import { HonkVerifier } from "./ultra-verifier/plonk_vk.sol";
 //import { UltraVerifier } from "./ultra-verifier/plonk_vk.sol";
