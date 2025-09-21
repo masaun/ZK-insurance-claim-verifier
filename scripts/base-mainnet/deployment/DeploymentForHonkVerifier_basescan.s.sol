@@ -3,13 +3,15 @@ pragma solidity ^0.8.17;
 import "forge-std/Script.sol";
 
 /// @dev - ZK (Ultraplonk) circuit, which is generated in Noir.
-import { UltraVerifier } from "../../../contracts/circuit/ultra-verifier/plonk_vk.sol"; /// @dev - Deployed-Verifier SC, which was generated based on the main.nr
+import { HonkVerifier } from "../../../contracts/circuit/ultra-verifier/plonk_vk.sol"; /// @dev - Deployed-Verifier SC, which was generated based on the main.nr
+//import { UltraVerifier } from "../../../contracts/circuit/ultra-verifier/plonk_vk.sol"; /// @dev - Deployed-Verifier SC, which was generated based on the main.nr
 
 /**
  * @notice - Deployment script to deploy all SCs at once - on BASE Mainnet
  */
 contract DeploymentForHonkVerifier_basescan is Script {
-    UltraVerifier public verifier;
+    HonkVerifier public verifier;
+    //UltraVerifier public verifier;
 
     function setUp() public {}
 
@@ -25,13 +27,15 @@ contract DeploymentForHonkVerifier_basescan is Script {
 
         /// @dev - Deploy SCs
         //verifier = UltraVerifier(vm.envAddress("ULTRA_VERIFIER_ON_BASE_MAINNET"));
-        verifier = new UltraVerifier();
+        //verifier = new UltraVerifier()
+        verifier = new HonkVerifier();
 
         vm.stopBroadcast();
 
         /// @dev - Logs of the deployed-contracts on Base Mainnet
         console.logString("Logs of the deployed-contracts on Base Mainnet");
         console.logString("\n");
-        console.log("%s: %s", "UltraVerifier SC", address(verifier));
+        console.log("%s: %s", "HonkVerifier SC", address(verifier));
+        //console.log("%s: %s", "UltraVerifier SC", address(verifier));
     }
 }
