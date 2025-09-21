@@ -1,4 +1,4 @@
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.25;
 
 import { InsuranceClaimProofVerifier } from "./circuit/InsuranceClaimProofVerifier.sol";
 //import "../circuits/target/contract.sol";
@@ -244,7 +244,7 @@ contract InsuranceClaimManager {
     }
 
     function addToSeventy(string memory methodName) public returns (bool) {
-        checkpoints[msg.sender][block.timestamp] = "addToSeventy";
+        checkpoints[msg.sender][block.timestamp] = "addToSixty";
         checkpointCounts[msg.sender]++;
         return true;
     }
