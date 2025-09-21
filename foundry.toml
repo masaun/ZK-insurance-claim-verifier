@@ -10,6 +10,13 @@ ffi = true
 solc_version = "0.8.28"
 evm_version = "paris"
 
+optimizer = true
+optimizer_runs = 200
+
+# Gas configuration
+gas_limit = 10000000
+gas_price = 2000000000
+
 
 [profile.remappings]
 # ds-test = "lib/forge-std/lib/ds-test/src/"
