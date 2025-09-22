@@ -7,3 +7,4 @@ compiler_version = ">=0.31.0"
 [dependencies]
 ecrecover = { tag = "v0.30.0", git = "https://github.com/colinnielsen/ecrecover-noir" }
 array_helpers = { tag = "v0.30.0", git = "https://github.com/colinnielsen/noir-array-helpers" }
+poseidon = { tag = "v0.1.1", git = "https://github.com/noir-lang/poseidon" } # From v1.0.0-beta.11 of Noir/Nargo, we need to use this module for Poseidon hash
