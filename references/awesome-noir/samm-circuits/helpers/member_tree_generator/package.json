@@ -1,0 +1,16 @@
+{
+  "name": "samm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@iarna/toml": "^2.2.5",
+    "circomlibjs": "^0.1.7",
+    "fixed-merkle-tree": "^0.7.3"
+  }
+}

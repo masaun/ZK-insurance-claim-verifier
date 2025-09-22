@@ -1,0 +1,12 @@
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.com; s=mail; t=1730212994; bh=7S8rs22kKpminHR00NMjbzOCbY5cbeOIG4QteRHQG8g=; h=Message-Id:Date:Subject:To:From; b=kAPtf2OeJNjQZsP3PCIfp6OFSDTxcFJ2EnW63QXmLHAxyQyt+wnGyrORDUZSusBsP
+	 iFijNMiBsaNOFDKRfphuaRda6CbKLAaEl/cxJBiLGQZ7bvfa5BJIZ+sG2WCZPxjVWi
+	 Rby+zWYhgKnwn9hrJ91oxfhFuyF8tYSWWXnyjbao=
+From: Dry 914 <dry.914@yandex.com>
+To: "ad@oxor.io" <ad@oxor.io>
+Subject: hHqTyYhaHOM1/52r43r+AeTIo6GQIvXGYZCY0VwjzVo=
+Date: Tue, 29 Oct 2024 15:43:13 +0100
+Message-Id: <1227201730212975@mail.yandex.ru>
+Content-Type: text/html
+MIME-Version: 1.0
+
+test test
