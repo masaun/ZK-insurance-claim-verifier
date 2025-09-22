@@ -1,0 +1,2 @@
+aztec-nargo fmt
+yarn lint-staged

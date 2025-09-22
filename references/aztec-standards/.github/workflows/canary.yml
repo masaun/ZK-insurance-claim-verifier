@@ -1,0 +1,112 @@
+name: Canary Release
+
+on: workflow_dispatch
+
+jobs:
+  export:
+    name: Generate Canary Release
+    environment: Development
+    runs-on: ubuntu-latest
+
+    env:
+      PROJECT_NAME: '@defi-wonderland/aztec-standards'
+      AZTEC_VERSION: 0.87.2
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          registry-url: "https://registry.npmjs.org"
+          cache: "yarn"
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Install Aztec CLI
+        run: |
+          curl -s https://install.aztec.network > tmp.sh
+          bash tmp.sh <<< yes "yes"
+      - name: Update path
+        run: echo "/home/runner/.aztec/bin" >> $GITHUB_PATH
+
+      - name: Set Aztec version
+        run: |
+          VERSION=${AZTEC_VERSION} aztec-up
+      
+      # Install dependencies AND the current canary version of the package we're releasing now.
+      - name: Install dependencies
+        run: |
+          yarn
+          yarn add @defi-wonderland/aztec-standards@canary
+
+      - name: Compile
+        run: yarn compile
+
+      - name: Codegen
+        run: aztec codegen target --outdir artifacts
+
+      - name: Compile artifacts to JS
+        run: |
+          mkdir -p dist/
+          yarn tsc artifacts/*.ts --outDir dist/ --skipLibCheck --target es2020 --module nodenext --moduleResolution nodenext --resolveJsonModule --declaration
+
+      - name: Update version
+        run: yarn version --new-version "0.0.0-${GITHUB_SHA::8}" --no-git-tag-version
+
+      # TODO: We do several things here:
+      # 1. Create current and historical directories
+      # 2. Copy historical versions from existing package to /historical
+      # 3. Move this version's artifacts and circuits to historical/ as well.
+      # 4. Move this version's artifacts and circuits to current/
+      # 5. Copy deployments.json to current/
+      # 6. README.md, and LICENSE to current/
+      # 7. Trim info from package.json
+      - name: Prepare files for release
+        run: |
+          VERSION="0.0.0-${GITHUB_SHA::8}"
+          mkdir -p export/${{ env.PROJECT_NAME }}/current/artifacts
+          mkdir -p export/${{ env.PROJECT_NAME }}/historical
+          
+          # This snippet copies the contents of the nested directory artifacts/artifacts
+          # and moves them up one level to artifacts/. Then it removes the now empty nested directory.
+          # After we run this once, this won't be needed anymore.
+          if [ -d "node_modules/${{ env.PROJECT_NAME }}/historical" ]; then
+            # First copy all historical versions
+            cp -r node_modules/${{ env.PROJECT_NAME }}/historical/** export/${{ env.PROJECT_NAME }}/historical/
+            
+            # Fix structure for each historical version
+            for version_dir in export/${{ env.PROJECT_NAME }}/historical/*/; do
+              if [ -d "${version_dir}artifacts/artifacts" ]; then
+                echo "Fixing double-nested artifacts structure in ${version_dir}"
+                # Move contents up one level
+                mv "${version_dir}artifacts/artifacts"/* "${version_dir}artifacts/"
+                # Remove empty nested directory
+                rm -rf "${version_dir}artifacts/artifacts"
+              fi
+            done
+          else
+            echo "No historical directory found, skipping copy"
+          fi
+
+          # Copy the compiled JS files directly to artifacts directory
+          cp -r dist/* export/${{ env.PROJECT_NAME }}/current/artifacts/
+          cp -r target export/${{ env.PROJECT_NAME }}/current/
+
+          # Copy deployments.json if it exists
+          if [ -f "src/deployments.json" ]; then
+            cp src/deployments.json export/${{ env.PROJECT_NAME }}/current/
+          else
+            echo "src/deployments.json not found, skipping copy"
+          fi
+          
+          cp -r export/${{ env.PROJECT_NAME }}/current export/${{ env.PROJECT_NAME }}/historical/$VERSION
+          cp README.md export/${{ env.PROJECT_NAME }}/
+          cp LICENSE export/${{ env.PROJECT_NAME }}/
+          cat package.json | jq 'del(.scripts, .jest, ."lint-staged", .packageManager, .devDependencies, .dependencies, .engines, .resolutions)' > export/${{ env.PROJECT_NAME }}/package.json
+      - name: Publish to NPM
+        run: cd export/${{ env.PROJECT_NAME }} && npm publish --access public --tag canary
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
