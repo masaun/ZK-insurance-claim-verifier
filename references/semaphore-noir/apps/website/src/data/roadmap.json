@@ -1,0 +1,46 @@
+[
+    {
+        "name": "Launched New Website",
+        "done": true
+    },
+    {
+        "name": "V4 Audit",
+        "done": true
+    },
+    {
+        "name": "V4 Trusted Setup",
+        "done": true
+    },
+    {
+        "name": "V4 Stable Release",
+        "done": true
+    },
+    {
+        "name": "LeanIMT Paper",
+        "done": true
+    },
+    {
+        "name": "Support more Testnets/Mainnets",
+        "done": true
+    },
+    {
+        "name": "New Explorer",
+        "done": true
+    },
+    {
+        "name": "Semaphore V4 Specification",
+        "done": true
+    },
+    {
+        "name": "Semaphore Rust Implementation",
+        "done": false
+    },
+    {
+        "name": "Semaphore Noir Implementation",
+        "done": false
+    },
+    {
+        "name": "Scaling Semaphore with PIR",
+        "done": false
+    }
+]
