@@ -1,0 +1,10 @@
+[workspace]
+members = [
+"src/token_contract",
+"src/dripper",
+"src/nft_contract"
+]
+
+[benchmark]
+token = "benchmarks/token_contract.benchmark.ts"
+nft = "benchmarks/nft_contract.benchmark.ts"
