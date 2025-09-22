@@ -1,0 +1,8 @@
+*/*/target/*
+!*/*/target/Verifier1024.sol
+!*/*/target/Verifier2048.sol
+email_parser/target
+node_modules
+helpers/member_tree_generator/Prover_tree.toml
+helpers/email_parser/Prover_email.toml
+-b/

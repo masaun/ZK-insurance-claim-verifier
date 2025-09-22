@@ -1,0 +1,9 @@
+[package]
+name = "samm_2048"
+type = "bin"
+authors = ["dry914"]
+compiler_version = "0.35.0"
+
+[dependencies]
+samm = { path =  "../../lib"}
+zkemail = { tag = "v0.3.2", git = "https://github.com/zkemail/zkemail.nr", directory = "lib" }

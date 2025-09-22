@@ -1,0 +1,10 @@
+[package]
+name = "circuits"
+type = "lib"
+authors = ["Vedant Chainani<vedant@zkpersona.com>"]
+compiler_version = "^1.0.0"
+description = "Circuits for verifying ownership of social accounts such as Google, Twitter, Github, etc. using ZKEmail.nr"
+license = "MIT"
+
+[dependencies]
+zkemail = { tag = "v0.4.2", git = "https://github.com/zkemail/zkemail.nr", directory = "lib" }
