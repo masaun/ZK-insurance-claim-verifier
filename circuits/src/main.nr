@@ -2,7 +2,7 @@ mod tests;      // tests/mod.nr
 mod data_types; // data_types.nr
 mod utils;      // utils.nr -> utils/converter_field_to_bytes.nr -> convert_field_bytes32_to_uint8_array()
 
-use std::hash::poseidon2;
+use poseidon::poseidon2;                 // @dev - For the Noir/Nargo v1.0.0-beta.11, we need to use this module for Poseidon hash
 use std::ecdsa_secp256k1::verify_signature;
 use dep::std;
 use dep::ecrecover; // @dev - Source: https://github.com/colinnielsen/ecrecover-noir
