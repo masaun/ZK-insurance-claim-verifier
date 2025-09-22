@@ -1,0 +1,14 @@
+target
+node_modules
+.env
+noir_string_search
+noir-jwt
+noir_rsa
+dist
+.tsbuildinfo
+
+# devnet stuff
+devnet/ngrok.yml
+devnet/logs
+devnet/.aztec
+devnet/.latest_aztec_cli_vars
