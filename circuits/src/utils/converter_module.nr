@@ -1,5 +1,6 @@
 //mod test_inputs; // test_inputs.nr
-use std::hash::poseidon2;
+use poseidon::poseidon2;                 // @dev - For the Noir/Nargo v1.0.0-beta.11, we need to use this module for Poseidon hash
+//use std::hash::poseidon2;
 
 
 /** 
