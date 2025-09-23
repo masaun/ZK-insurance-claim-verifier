@@ -300,6 +300,14 @@ sh ./scripts/celo-mainnet/deployment/deploymentScript_InsuranceClaimProofVerifie
 
 <br>
 
+- Run the `DeploymentForReInsurancePool_celoscan.s.sol` to deploy the  `ReInsurancePool` contract on BASE mainnet:
+  - NOTE: The smart contract is verified via the `CeloScan` of Celo Mainnet ()
+```bash
+sh ./scripts/celo-mainnet/deployment/deploymentScript_ReInsurancePool_via_celoscan.sh
+```
+
+<br>
+
 - Run the combined script to deploy the both `InsuranceClaimProofVerifier` and `ReInsurancePool` contract on Celo mainnet:
   - NOTE: The smart contract is verified via the `CeloScan` of Base Mainnet ()
 ```bash

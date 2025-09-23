@@ -102,11 +102,11 @@ pub async fn checkpoint(_private_key: &String, _contract_address: Address) -> ey
     // 1. Fetch values from env
     dotenv().ok();  // Loads .env file
     //let rpc_url = "https://mainnet.base.org".parse()?;
-    let rpc_url = env::var("BASE_MAINNET_RPC").expect("").parse()?;
+    let rpc_url = env::var("CELO_MAINNET_RPC").expect("").parse()?;
     let private_key = _private_key;
     //let private_key = env::var("PRIVATE_KEY")?;
     let contract_address: Address = _contract_address;
-    //let contract_address: Address = env::var("INSURANCE_CLAIM_MANAGER_ON_BASE_MAINNET").expect("").parse()?;
+    //let contract_address: Address = env::var("INSURANCE_CLAIM_MANAGER_on_celo_mainnet").expect("").parse()?;
     println!("✅ rpc_url: {:?}", rpc_url);
     println!("✅ private_key: {:?}", private_key);
     println!("✅ contract_address: {:?}", contract_address);

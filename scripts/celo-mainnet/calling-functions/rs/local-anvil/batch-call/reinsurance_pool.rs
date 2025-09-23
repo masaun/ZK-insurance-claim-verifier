@@ -78,19 +78,19 @@ async fn main() -> eyre::Result<()> {
 // async fn main() -> Result<()> {
 //     dotenv().ok();  // Loads .env file
 
-//     // let base_mainnet_rpc = env::var("BASE_MAINNET_RPC").parse()?;
-//     // let reinsurance_pool_on_base_mainnet: Address = env::var("REINSURANCE_POOL_ON_BASE_MAINNET")
-//     //     .expect("Set REINSURANCE_POOL_ON_BASE_MAINNET in your .env")
+//     // let CELO_MAINNET_RPC = env::var("CELO_MAINNET_RPC").parse()?;
+//     // let reinsurance_pool_on_celo_mainnet: Address = env::var("REINSURANCE_POOL_on_celo_mainnet")
+//     //     .expect("Set REINSURANCE_POOL_on_celo_mainnet in your .env")
 //     //     .parse()?;
 //     // let private_key: LocalWallet = env::var("PRIVATE_KEY");
 
 //     // // Set up provider and wallet using Alloy's recommended Http provider
-//     // let provider = ProviderBuilder::new().connect_http(base_mainnet_rpc);
+//     // let provider = ProviderBuilder::new().connect_http(CELO_MAINNET_RPC);
 //     // let wallet: LocalWallet = private_key.parse()?;
 //     // let client = Arc::new(provider.with_signer(wallet));
 
 //     // Parse contract address
-//     let contract_addr: Address = reinsurance_pool_on_base_mainnet.parse()?;
+//     let contract_addr: Address = reinsurance_pool_on_celo_mainnet.parse()?;
 //     let contract = Contract::new(contract_addr, client.clone());
 
 //     // Example: Call registerAsDepositer (write)
