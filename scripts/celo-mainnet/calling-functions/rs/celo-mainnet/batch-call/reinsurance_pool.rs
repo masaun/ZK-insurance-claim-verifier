@@ -1,6 +1,6 @@
 // @dev - Alloy
 use alloy::{
-    network::AnyNetwork, // @dev - icl. AnyNetwork for Base Mainnet
+    network::AnyNetwork, // @dev - icl. AnyNetwork for Celo Mainnet
     providers::{Provider, ProviderBuilder},
     signers::local::PrivateKeySigner,
     sol,
@@ -25,8 +25,8 @@ use std::env;
 
 
 /**
- * @dev - Call the ReInsurancePool#checkpoint() on Base Mainnet
- * @dev - Run this script with the "sh ./base-mainnet/runningScript_ReInsurancePool.sh" command at the root directory (= /rs)
+ * @dev - Call the ReInsurancePool#checkpoint() on Celo Mainnet
+ * @dev - Run this script with the "sh ./celo-mainnet/runningScript_ReInsurancePool.sh" command at the root directory (= /rs)
  * @dev - Example: `any_network` 🔴
  *    (Run: `cargo run --example any_network` 🟣)
  *    https://alloy.rs/examples/advanced/any_network#example-any_network
@@ -37,7 +37,7 @@ async fn main() {
 }
 
 /**
- * @dev - Batch call the ReInsurancePool#checkpoint() function on Base Mainnet
+ * @dev - Batch call the ReInsurancePool#checkpoint() function on Celo Mainnet
  * @dev - [TODO 1]: for-loop of the 5 private keys + Call the checkpoint() function inside it.
  * @dev - [TODO 2]: for-loop of the 12 SC address of ReInsurancePool
  */
@@ -66,7 +66,7 @@ pub async fn batch_call() {
     ];
 
     // 3. Fetch an array of ReInsurancePool contract addresses from .env file
-    let _contract_addresses_array = env::var("REINSURANCE_POOL_ON_BASE_MAINNET_SINGLE_SC_CALL_LIST").unwrap_or_default();
+    let _contract_addresses_array = env::var("REINSURANCE_POOL_ON_CELO_MAINNET_LIST").unwrap_or_default();
     println!("✅ contract_addresses_array: {:?}", _contract_addresses_array);
 
     let contract_addresses_array: Vec<Address> = _contract_addresses_array
@@ -80,17 +80,14 @@ pub async fn batch_call() {
     println!("{:?}", contract_addresses_array);
 
     // @dev - for-loop of the 5 private keys + Call the checkpoint() function inside it.
-    for c in 1..=12 {
-        println!("🔄 Loop count (c): {}", c);
-        for i in 1..=5 {
-            let private_key = &list_of_private_keys[i - 1];
+    for i in 1..=5 {
+        let private_key = &list_of_private_keys[i - 1];
 
-            // @dev - for-loop of the 3 SC address of ReInsurancePool
-            for contract_address in contract_addresses_array.iter() {
-                let result = checkpoint(private_key, *contract_address).await;
-                //let result = checkpoint(private_key.clone()).await;
-                //let result = checkpoint(private_key.expect("")).await;
-            }
+        // @dev - for-loop of the 12 SC address of ReInsurancePool
+        for contract_address in contract_addresses_array.iter() {
+            let result = checkpoint(private_key, *contract_address).await;
+            //let result = checkpoint(private_key.clone()).await;
+            //let result = checkpoint(private_key.expect("")).await;
         }
     }
 
@@ -99,7 +96,7 @@ pub async fn batch_call() {
 }
 
 /**
- * @dev - Call the ReInsurancePool#checkpoint() function on Base Mainnet
+ * @dev - Call the ReInsurancePool#checkpoint() function on Celo Mainnet
  */
 pub async fn checkpoint(_private_key: &String, _contract_address: Address) -> eyre::Result<()> {
     // 1. Fetch values from env
@@ -124,7 +121,7 @@ pub async fn checkpoint(_private_key: &String, _contract_address: Address) -> ey
     // Create provider with wallet  
     let provider = ProviderBuilder::new()
         .with_gas_estimation()
-        .network::<AnyNetwork>() // @dev - Use AnyNetwork for Base Mainnet
+        .network::<AnyNetwork>() // @dev - Use AnyNetwork for Celo Mainnet
         .wallet(signer)
         .connect_http(rpc_url);
 
@@ -151,7 +148,7 @@ pub async fn checkpoint(_private_key: &String, _contract_address: Address) -> ey
     //let contract_address = receipt.contract_address.expect("ReInsurancePool deployment failed");
 
     let reinsurance_pool = ReInsurancePool::new(contract_address, &provider);
-    println!("✅ ReInsurancePool contract address on BASE Mainnet: {:?}", contract_address);
+    println!("✅ ReInsurancePool contract address on Celo Mainnet: {:?}", contract_address);
 
     // 7. Call the ReInsurancePool contract (expecting it to fail gracefully)
     println!("🔄 Calling the ReInsurancePool#checkpoint() ...");

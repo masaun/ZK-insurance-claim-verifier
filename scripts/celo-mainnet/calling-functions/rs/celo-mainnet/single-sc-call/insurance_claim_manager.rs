@@ -1,6 +1,6 @@
 // @dev - Alloy
 use alloy::{
-    network::AnyNetwork, // @dev - icl. AnyNetwork for Base Mainnet
+    network::AnyNetwork, // @dev - icl. AnyNetwork for Celo Mainnet
     providers::{Provider, ProviderBuilder},
     signers::local::PrivateKeySigner,
     sol,
@@ -12,12 +12,12 @@ use alloy::{
 use alloy_node_bindings::Anvil;
 use serde_json;
 
-// Generate the contract bindings for the ReInsurancePool interface.
+// Generate the contract bindings for the InsuranceClaimManager interface.
 sol! { 
     // The `rpc` attribute enables contract interaction via the provider. 
     #[sol(rpc)] 
-    ReInsurancePool,
-    "artifacts/0901/ReInsurancePool.json"
+    InsuranceClaimManager,
+    "artifacts/0908/InsuranceClaimManager.sol/InsuranceClaimManager.json"
 } 
 
 use dotenv::dotenv;
@@ -25,8 +25,8 @@ use std::env;
 
 
 /**
- * @dev - Call the ReInsurancePool#checkpoint() on Base Mainnet
- * @dev - Run this script with the "sh ./base-mainnet/runningScript_ReInsurancePool.sh" command at the root directory (= /rs)
+ * @dev - Call the InsuranceClaimManager#checkpoint() on Celo Mainnet
+ * @dev - Run this script with the "sh ./celo-mainnet/runningScript_InsuranceClaimManager.sh" command at the root directory (= /rs)
  * @dev - Example: `any_network` 🔴
  *    (Run: `cargo run --example any_network` 🟣)
  *    https://alloy.rs/examples/advanced/any_network#example-any_network
@@ -37,9 +37,9 @@ async fn main() {
 }
 
 /**
- * @dev - Batch call the ReInsurancePool#checkpoint() function on Base Mainnet
- * @dev - [TODO 1]: for-loop of the 5 private keys + Call the checkpoint() function inside it.
- * @dev - [TODO 2]: for-loop of the 12 SC address of ReInsurancePool
+ * @dev - Batch call the InsuranceClaimManager#checkpoint() function on Celo Mainnet
+ * @dev - 1/ for-loop of the 5 private keys + Call the checkpoint() function inside it.
+ * @dev - 2/ for-loop of the 12 SC address of InsuranceClaimManager
  */
 pub async fn batch_call() {
     // 1. Loads .env file
@@ -65,8 +65,8 @@ pub async fn batch_call() {
         private_key_5
     ];
 
-    // 3. Fetch an array of ReInsurancePool contract addresses from .env file
-    let _contract_addresses_array = env::var("REINSURANCE_POOL_ON_BASE_MAINNET_LIST").unwrap_or_default();
+    // 3. Fetch an array of the In contract addresses from .env file
+    let _contract_addresses_array = env::var("INSURANCE_CLAIM_MANAGER_ON_BASE_MAINNET_SINGLE_SC_CALL_LIST").unwrap_or_default();
     println!("✅ contract_addresses_array: {:?}", _contract_addresses_array);
 
     let contract_addresses_array: Vec<Address> = _contract_addresses_array
@@ -80,14 +80,17 @@ pub async fn batch_call() {
     println!("{:?}", contract_addresses_array);
 
     // @dev - for-loop of the 5 private keys + Call the checkpoint() function inside it.
-    for i in 1..=5 {
-        let private_key = &list_of_private_keys[i - 1];
+    for c in 1..=12 {
+        println!("🔄 Loop count (c): {}", c);
+        for i in 1..=5 {
+            let private_key = &list_of_private_keys[i - 1];
 
-        // @dev - for-loop of the 12 SC address of ReInsurancePool
-        for contract_address in contract_addresses_array.iter() {
-            let result = checkpoint(private_key, *contract_address).await;
-            //let result = checkpoint(private_key.clone()).await;
-            //let result = checkpoint(private_key.expect("")).await;
+            // @dev - for-loop of the 12 SC address of the InsuranceClaimManager contract
+            for contract_address in contract_addresses_array.iter() {
+                let result = checkpoint(private_key, *contract_address).await;
+                //let result = checkpoint(private_key.clone()).await;
+                //let result = checkpoint(private_key.expect("")).await;
+            }
         }
     }
 
@@ -96,7 +99,7 @@ pub async fn batch_call() {
 }
 
 /**
- * @dev - Call the ReInsurancePool#checkpoint() function on Base Mainnet
+ * @dev - Call the InsuranceClaimManager#checkpoint() function on Celo Mainnet
  */
 pub async fn checkpoint(_private_key: &String, _contract_address: Address) -> eyre::Result<()> {
     // 1. Fetch values from env
@@ -106,7 +109,7 @@ pub async fn checkpoint(_private_key: &String, _contract_address: Address) -> ey
     let private_key = _private_key;
     //let private_key = env::var("PRIVATE_KEY")?;
     let contract_address: Address = _contract_address;
-    //let contract_address: Address = env::var("REINSURANCE_POOL_ON_BASE_MAINNET").expect("").parse()?;
+    //let contract_address: Address = env::var("INSURANCE_CLAIM_MANAGER_ON_BASE_MAINNET").expect("").parse()?;
     println!("✅ rpc_url: {:?}", rpc_url);
     println!("✅ private_key: {:?}", private_key);
     println!("✅ contract_address: {:?}", contract_address);
@@ -121,39 +124,24 @@ pub async fn checkpoint(_private_key: &String, _contract_address: Address) -> ey
     // Create provider with wallet  
     let provider = ProviderBuilder::new()
         .with_gas_estimation()
-        .network::<AnyNetwork>() // @dev - Use AnyNetwork for Base Mainnet
+        .network::<AnyNetwork>() // @dev - Use AnyNetwork for Celo Mainnet
         .wallet(signer)
         .connect_http(rpc_url);
 
-    // 3. Deploy ZkJwtProofVerifier first using helper function
-    //let zk_jwt_proof_verifier_address = deploy_zk_jwt_proof_verifier(&provider).await?;
-    //let zk_jwt_proof_verifier = ZkJwtProofVerifier::new(zk_jwt_proof_verifier_address, &provider);
-
-    // 4. Deploy ReInsurancePool with HonkVerifier address as constructor parameter
-    let reinsurance_pool_json = std::fs::read_to_string("artifacts/0903/ReInsurancePool.sol/ReInsurancePool.json")?;
-    //let reinsurance_pool_json = std::fs::read_to_string("artifacts/0901/ReInsurancePool.json")?;
-    let reinsurance_pool_artifact: serde_json::Value = serde_json::from_str(&reinsurance_pool_json)?;
-    let bytecode_hex = reinsurance_pool_artifact["bytecode"]["object"]
+    // 4. Deploy the InsuranceClaimManager with HonkVerifier address as constructor parameter
+    let insurance_claim_manager_json = std::fs::read_to_string("artifacts/0908/InsuranceClaimManager.sol/InsuranceClaimManager.json")?;
+    let insurance_claim_manager_artifact: serde_json::Value = serde_json::from_str(&insurance_claim_manager_json)?;
+    let bytecode_hex = insurance_claim_manager_artifact["bytecode"]["object"]
         .as_str()
-        .ok_or_else(|| eyre::eyre!("Failed to get ReInsurancePool bytecode"))?;
+        .ok_or_else(|| eyre::eyre!("Failed to get InsuranceClaimManager contract bytecode"))?;
 
-    // Append constructor parameter (HonkVerifier address) to bytecode
-    //let mut deploy_bytecode = Bytes::from_hex(bytecode_hex)?.to_vec();
-    //let mut constructor_arg = [0u8; 32];
-    //constructor_arg[12..].copy_from_slice(zk_jwt_proof_verifier_address.as_slice());
-    //zk_deploy_bytecode.extend_from_slice(&constructor_arg);
+    let insurance_claim_manager = InsuranceClaimManager::new(contract_address, &provider);
+    println!("✅ InsuranceClaimManager contract address on Celo Mainnet: {:?}", contract_address);
 
-    //let deploy_tx = TransactionRequest::default().with_deploy_code(Bytes::from(deploy_bytecode));
-    //let receipt = provider.send_transaction(deploy_tx).await?.get_receipt().await?;
-    //let contract_address = receipt.contract_address.expect("ReInsurancePool deployment failed");
-
-    let reinsurance_pool = ReInsurancePool::new(contract_address, &provider);
-    println!("✅ ReInsurancePool contract address on BASE Mainnet: {:?}", contract_address);
-
-    // 7. Call the ReInsurancePool contract (expecting it to fail gracefully)
-    println!("🔄 Calling the ReInsurancePool#checkpoint() ...");
+    // 7. Call the InsuranceClaimManager contract (expecting it to fail gracefully)
+    println!("🔄 Calling the InsuranceClaimManager#checkpoint() ...");
     let method_name: String = "checkpoint".to_string();
-    let tx = reinsurance_pool.checkpoint(method_name);
+    let tx = insurance_claim_manager.checkpoint(method_name);
     println!("🔄 Result: {:?}", tx);
 
     // 8. Send the transaction and await receipt

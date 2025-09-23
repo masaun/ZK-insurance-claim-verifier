@@ -1,6 +1,6 @@
 // @dev - Alloy
 use alloy::{
-    network::AnyNetwork, // @dev - icl. AnyNetwork for Base Mainnet
+    network::AnyNetwork, // @dev - icl. AnyNetwork for Celo Mainnet
     providers::{Provider, ProviderBuilder},
     signers::local::PrivateKeySigner,
     sol,
@@ -25,8 +25,8 @@ use std::env;
 
 
 /**
- * @dev - Call the InsuranceClaimManager#checkpoint() on Base Mainnet
- * @dev - Run this script with the "sh ./base-mainnet/runningScript_InsuranceClaimManager.sh" command at the root directory (= /rs)
+ * @dev - Call the InsuranceClaimManager#checkpoint() on Celo Mainnet
+ * @dev - Run this script with the "sh ./celo-mainnet/runningScript_InsuranceClaimManager.sh" command at the root directory (= /rs)
  * @dev - Example: `any_network` 🔴
  *    (Run: `cargo run --example any_network` 🟣)
  *    https://alloy.rs/examples/advanced/any_network#example-any_network
@@ -37,7 +37,7 @@ async fn main() {
 }
 
 /**
- * @dev - Batch call the InsuranceClaimManager#checkpoint() function on Base Mainnet
+ * @dev - Batch call the InsuranceClaimManager#checkpoint() function on Celo Mainnet
  * @dev - 1/ for-loop of the 5 private keys + Call the checkpoint() function inside it.
  * @dev - 2/ for-loop of the 12 SC address of InsuranceClaimManager
  */
@@ -66,7 +66,7 @@ pub async fn batch_call() {
     ];
 
     // 3. Fetch an array of the In contract addresses from .env file
-    let _contract_addresses_array = env::var("INSURANCE_CLAIM_MANAGER_ON_BASE_MAINNET_LIST").unwrap_or_default();
+    let _contract_addresses_array = env::var("INSURANCE_CLAIM_MANAGER_ON_BASE_MAINNET_SINGLE_SC_AND_SINGLE_SC_ADDRESS_CALL_LIST").unwrap_or_default();
     println!("✅ contract_addresses_array: {:?}", _contract_addresses_array);
 
     let contract_addresses_array: Vec<Address> = _contract_addresses_array
@@ -80,14 +80,17 @@ pub async fn batch_call() {
     println!("{:?}", contract_addresses_array);
 
     // @dev - for-loop of the 5 private keys + Call the checkpoint() function inside it.
-    for i in 1..=5 {
-        let private_key = &list_of_private_keys[i - 1];
+    for c in 1..=12 {
+        println!("🔄 Loop count (c): {}", c);
+        for i in 1..=5 {
+            let private_key = &list_of_private_keys[i - 1];
 
-        // @dev - for-loop of the 12 SC address of the InsuranceClaimManager contract
-        for contract_address in contract_addresses_array.iter() {
-            let result = checkpoint(private_key, *contract_address).await;
-            //let result = checkpoint(private_key.clone()).await;
-            //let result = checkpoint(private_key.expect("")).await;
+            // @dev - for-loop of the 12 SC address of the InsuranceClaimManager contract
+            for contract_address in contract_addresses_array.iter() {
+                let result = checkpoint(private_key, *contract_address).await;
+                //let result = checkpoint(private_key.clone()).await;
+                //let result = checkpoint(private_key.expect("")).await;
+            }
         }
     }
 
@@ -96,7 +99,7 @@ pub async fn batch_call() {
 }
 
 /**
- * @dev - Call the InsuranceClaimManager#checkpoint() function on Base Mainnet
+ * @dev - Call the InsuranceClaimManager#checkpoint() function on Celo Mainnet
  */
 pub async fn checkpoint(_private_key: &String, _contract_address: Address) -> eyre::Result<()> {
     // 1. Fetch values from env
@@ -121,7 +124,7 @@ pub async fn checkpoint(_private_key: &String, _contract_address: Address) -> ey
     // Create provider with wallet  
     let provider = ProviderBuilder::new()
         .with_gas_estimation()
-        .network::<AnyNetwork>() // @dev - Use AnyNetwork for Base Mainnet
+        .network::<AnyNetwork>() // @dev - Use AnyNetwork for Celo Mainnet
         .wallet(signer)
         .connect_http(rpc_url);
 
@@ -133,7 +136,7 @@ pub async fn checkpoint(_private_key: &String, _contract_address: Address) -> ey
         .ok_or_else(|| eyre::eyre!("Failed to get InsuranceClaimManager contract bytecode"))?;
 
     let insurance_claim_manager = InsuranceClaimManager::new(contract_address, &provider);
-    println!("✅ InsuranceClaimManager contract address on BASE Mainnet: {:?}", contract_address);
+    println!("✅ InsuranceClaimManager contract address on Celo Mainnet: {:?}", contract_address);
 
     // 7. Call the InsuranceClaimManager contract (expecting it to fail gracefully)
     println!("🔄 Calling the InsuranceClaimManager#checkpoint() ...");
