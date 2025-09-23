@@ -1,0 +1,44 @@
+[package]
+name = "zk_insurance_claim_verifier"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]] # For the SC scripts of the ReInsurancePool contract on Anvil (for a batch contract call)
+name = "reinsurance_pool_on_anvil"
+path = "local-anvil/batch-call/reinsurance_pool.rs"
+
+[[bin]] # For the SC scripts of the ReInsurancePool contract on Base Mainnet (for a batch contract call)
+name = "reinsurance_pool_on_base_mainnet"
+path = "base-mainnet/batch-call/reinsurance_pool.rs"
+
+[[bin]] # For the SC scripts of the InsuranceClaimManager contract on Base Mainnet (for a batch contract call)
+name = "insurance_claim_manager_on_base_mainnet"
+path = "base-mainnet/batch-call/insurance_claim_manager.rs"
+
+[[bin]] # For the SC scripts of the ReInsurancePool contract on Base Mainnet (for a single smart contract call)
+name = "reinsurance_pool_on_base_mainnet_with_single_sc_call"
+path = "base-mainnet/single-sc-call/reinsurance_pool.rs"
+
+[[bin]] # For the SC scripts of the InsuranceClaimManager contract on Base Mainnet (for a single smart contract call)
+name = "insurance_claim_manager_on_base_mainnet_with_single_sc_call"
+path = "base-mainnet/single-sc-call/insurance_claim_manager.rs"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+eyre = "0.6"
+dotenv = "0.15"
+anyhow = "1.0"
+alloy = { version = "1.0.27", features = ["full"] }
+alloy-contract = "1.0.27"
+alloy-provider = "1.0.27"
+alloy-signer = "1.0.27"
+alloy-signer-local = "1.0.27"
+alloy-primitives = "1.0.27"
+alloy-rpc-client = "1.0.27"
+reqwest = "0.11"
+
+# Separate node bindings dependency
+alloy-node-bindings = "1.0"
+
+# For parsing contract artifacts
+serde_json = "1.0"
