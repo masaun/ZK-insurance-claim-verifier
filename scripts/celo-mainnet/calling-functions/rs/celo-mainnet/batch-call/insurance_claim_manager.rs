@@ -106,7 +106,7 @@ pub async fn checkpoint(_private_key: &String, _contract_address: Address) -> ey
     let private_key = _private_key;
     //let private_key = env::var("PRIVATE_KEY")?;
     let contract_address: Address = _contract_address;
-    //let contract_address: Address = env::var("INSURANCE_CLAIM_MANAGER_ON_BASE_MAINNET").expect("").parse()?;
+    //let contract_address: Address = env::var("INSURANCE_CLAIM_MANAGER_on_celo_mainnet").expect("").parse()?;
     println!("✅ rpc_url: {:?}", rpc_url);
     println!("✅ private_key: {:?}", private_key);
     println!("✅ contract_address: {:?}", contract_address);

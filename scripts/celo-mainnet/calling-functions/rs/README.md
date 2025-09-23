@@ -12,14 +12,14 @@ sh ./local-anvil/runningScript_ReInsurancePool.sh
 ## Run the SC script on Celo `Mainnet` - Batch Call
 - Run the SC script of the `ReInsurancePool.sol` on Celo `Mainnet`
 ```bash
-sh ./base-mainnet/batch-call/runningScript_ReInsurancePool.sh
+sh ./celo-mainnet/batch-call/runningScript_ReInsurancePool.sh
 ```
 
 <br>
 
 - Run the SC script of the `InsuranceClaimManager.sol` on Celo `Mainnet`
 ```bash
-sh ./base-mainnet/batch-call/runningScript_InsuranceClaimManager.sh
+sh ./celo-mainnet/batch-call/runningScript_InsuranceClaimManager.sh
 ```
 
 <br>
@@ -27,12 +27,12 @@ sh ./base-mainnet/batch-call/runningScript_InsuranceClaimManager.sh
 ## Run the SC script on Celo `Mainnet` - Single SC Call
 - Run the SC script of the `ReInsurancePool.sol` on Celo `Mainnet`
 ```bash
-sh ./base-mainnet/single-sc-call/runningScript_ReInsurancePool.sh
+sh ./celo-mainnet/single-sc-call/runningScript_ReInsurancePool.sh
 ```
 
 <br>
 
 - Run the SC script of the `InsuranceClaimManager.sol` on Celo `Mainnet`
 ```bash
-sh ./base-mainnet/single-sc-call/runningScript_InsuranceClaimManager.sh
+sh ./celo-mainnet/single-sc-call/runningScript_InsuranceClaimManager.sh
 ```
