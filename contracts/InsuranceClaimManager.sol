@@ -34,7 +34,7 @@ contract InsuranceClaimManager {
     ) {
         insuranceClaimProofVerifier = _insuranceClaimProofVerifier;
         reInsurancePool = _reInsurancePool;
-        version = "0.51.88";
+        version = "0.57.94";
     }
 
     /**
@@ -243,8 +243,8 @@ contract InsuranceClaimManager {
         checkpoints[msg.sender][block.timestamp] = "fallback";
     }
 
-    function addToFiftyThree(string memory methodName) public returns (bool) {
-        checkpoints[msg.sender][block.timestamp] = "addToFiftyThree";
+    function addToFiftyEight(string memory methodName) public returns (bool) {
+        checkpoints[msg.sender][block.timestamp] = "addToFiftyEight";
         checkpointCounts[msg.sender]++;
         return true;
     }
