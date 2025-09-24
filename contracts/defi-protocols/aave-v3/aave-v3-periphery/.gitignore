@@ -1,0 +1,24 @@
+.env
+#Hardhat files
+cache
+artifacts
+node_modules
+dist/
+build/
+.vscode
+.idea
+/types
+/typechain
+
+deployed-contracts.json
+
+coverage
+.coverage_artifacts
+.coverage_cache
+.coverage_contracts
+coverage.json
+
+.DS_Store
+
+temp-artifacts
+contracts/hardhat-dependency-compiler
