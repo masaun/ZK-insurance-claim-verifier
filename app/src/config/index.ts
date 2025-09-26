@@ -1,4 +1,4 @@
-import { sepolia, mainnet } from '@reown/appkit/networks'
+import { sepolia, mainnet, base } from '@reown/appkit/networks'
 import type { AppKitNetwork } from '@reown/appkit/networks'
 
 // Get projectId from https://dashboard.reown.com
@@ -8,5 +8,5 @@ if (!projectId) {
   throw new Error('Project ID is not defined')
 }
 
-export const networks = [sepolia, mainnet] as [AppKitNetwork, ...AppKitNetwork[]]
+export const networks = [sepolia, mainnet, base] as [AppKitNetwork, ...AppKitNetwork[]]
 
