@@ -19,14 +19,15 @@ const metadata = {
 // Create the modal
 export const modal = createAppKit({
   adapters: [],
-  projectId,
-  networks,
+  projectId, 
+  networks,   // @dev - icl. BASE Mainnet (8453)
   metadata,
   themeMode: 'light',
   features: {
     analytics: true, // Optional - defaults to your Cloud configuration
     socials: [],
-    email: false
+    email: true,
+    //email: false
   },
   themeVariables: {
     '--w3m-accent': '#000000',
