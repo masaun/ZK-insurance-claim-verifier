@@ -38,7 +38,8 @@ export const ActionButtonList = () => {
         {isConnected && (
             <>
                 <button onClick={handleDisconnect}>Disconnect</button>
-                <button onClick={() => switchNetwork(networks[1]) }>Switch</button>
+                <button onClick={() => switchNetwork(networks[8453]) }>Switch</button>
+                {/* <button onClick={() => switchNetwork(networks[1]) }>Switch</button> */}
                 <button onClick={handleSignMsg}>Sign</button>
             </>
         )}
