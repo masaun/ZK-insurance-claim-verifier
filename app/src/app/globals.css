@@ -1,3 +1,6 @@
+/* Import local fonts to avoid CORS issues */
+@import '../styles/fonts.css';
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
