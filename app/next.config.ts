@@ -70,10 +70,37 @@ const nextConfig: NextConfig = {
     ];
   },
   webpack: (config) => {
-    config.externals.push('pino-pretty', 'lokijs', 'encoding'),
+    config.externals.push('pino-pretty', 'lokijs', 'encoding');
+    
+    // Add fallbacks for Node.js modules and React Native dependencies
     config.resolve.fallback = {
+      ...config.resolve.fallback,
       buffer: require.resolve("buffer/"), // @dev - This is for preventing from the "buf.writeBigUInt64BE is not function" error, which is caused by the bb.js v0.87.0
+      crypto: require.resolve("crypto-browserify"),
+      stream: require.resolve("stream-browserify"),
+      util: require.resolve("util/"),
+      url: require.resolve("url/"),
+      assert: require.resolve("assert/"),
+      http: require.resolve("stream-http"),
+      https: require.resolve("https-browserify"),
+      os: require.resolve("os-browserify/browser"),
+      path: require.resolve("path-browserify"),
+      fs: false,
+      net: false,
+      tls: false,
+      // React Native specific fallbacks
+      "@react-native-async-storage/async-storage": false,
+      "react-native": false,
     };
+
+    // Ignore React Native specific modules
+    const webpack = require('webpack');
+    config.plugins.push(
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^(@react-native-async-storage\/async-storage|react-native)$/,
+      })
+    );
+    
     return config;
   }
 };
