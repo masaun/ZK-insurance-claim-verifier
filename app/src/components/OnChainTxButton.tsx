@@ -1,5 +1,4 @@
 'use client'
-import { useDisconnect } from '@reown/appkit/react'
 import { config } from '@/config'
 
 // @dev - Wagmi, etc
@@ -12,8 +11,6 @@ const ReInsurancePoolAddress = process.env.NEXT_PUBLIC_REINSURANCE_POOL_ON_BASE_
 //const USDTAddress = "0x...";
 
 export const OnChainTxButton = () => {
-    //const { disconnect } = useDisconnect();
-
     const handleCallCheckpointFunction = async () => {
       try {
         const result = await writeContract(config,{
