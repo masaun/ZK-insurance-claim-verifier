@@ -1,3 +1,12 @@
+# Frontend repo for the ZK Insurance Claim Verifier 
+
+- NOTE: This repo is still in progress.
+
+
+<br>
+
+<hr>
+
 # Reown AppKit Example using wagmi (next.js with App Router)
 
 This is a Next.js project.
