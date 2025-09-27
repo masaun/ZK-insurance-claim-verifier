@@ -5,10 +5,10 @@ import { config } from '@/config'
 // @dev - Wagmi, etc
 import { simulateContract, writeContract, readContract } from '@wagmi/core'
 //import { useReadContract, useWriteContract } from "wagmi";
-import TravelBookingManagerArtifact from "./artifacts/TravelBookingManager.sol/TravelBookingManager.json";
+import ReInsurancePoolArtifact from "./artifacts/ReInsurancePool.sol/ReInsurancePool.json";
 //import { USDTAbi } from "../abi/USDTAbi";
 
-const TravelBookingManagerAddress = process.env.NEXT_PUBLIC_TRAVEL_BOOKING_MANAGER_ON_BASE_MAINNET; // Replace with your contract address
+const ReInsurancePoolAddress = process.env.NEXT_PUBLIC_REINSURANCE_POOL_ON_BASE_MAINNET; // Replace with your contract address
 //const USDTAddress = "0x...";
 
 export const OnChainTxButton = () => {
@@ -17,9 +17,9 @@ export const OnChainTxButton = () => {
     const handleCallCheckpointFunction = async () => {
       try {
         const result = await writeContract(config,{
-            abi: TravelBookingManagerArtifact.abi,
+            abi: ReInsurancePoolArtifact.abi,
             //abi: USDTAbi,
-            address: TravelBookingManagerAddress as `0x${string}`,
+            address: ReInsurancePoolAddress as `0x${string}`,
             //address: USDTAddress,
             functionName: "checkpoint",
             args: ["Test Checkpoint from Frontend"],
