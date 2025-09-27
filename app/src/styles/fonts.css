@@ -1,0 +1,42 @@
+/* KHTeka Font Family - Local hosting to avoid CORS issues */
+
+@font-face {
+  font-family: 'KHTeka';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/KHTeka-Light.woff2') format('woff2'),
+       url('/fonts/KHTeka-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'KHTeka';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/KHTeka-Regular.woff2') format('woff2'),
+       url('/fonts/KHTeka-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'KHTeka';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/KHTeka-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'KHTekaMono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/KHTekaMono-Regular.woff2') format('woff2'),
+       url('/fonts/KHTekaMono-Regular.woff') format('woff');
+}
+
+/* Override Reown AppKit font loading to use local fonts */
+:root {
+  --reown-font-family: 'KHTeka', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  --reown-mono-font-family: 'KHTekaMono', 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', 'Source Code Pro', monospace;
+}

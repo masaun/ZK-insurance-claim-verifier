@@ -7,8 +7,9 @@ import {
     useAppKitEvents,
     useAppKitAccount,
     useWalletInfo
-     } from '@reown/appkit/react-core'
+     } from '@reown/appkit/react'
 import { useClientMounted } from "@/hooks/useClientMount";
+
 export const InfoList = () => {
     const kitTheme = useAppKitTheme();
     const state = useAppKitState();
@@ -16,7 +17,6 @@ export const InfoList = () => {
     const events = useAppKitEvents()
     const walletInfo = useWalletInfo()
     const mounted = useClientMounted();
-
     useEffect(() => {
         console.log("Events: ", events);
     }, [events]);
@@ -29,6 +29,10 @@ export const InfoList = () => {
                 Address: {address}<br />
                 caip Address: {caipAddress}<br />
                 Connected: {isConnected.toString()}<br />
+                Account Type: {embeddedWalletInfo?.accountType}<br />
+                {embeddedWalletInfo?.user?.email && (`Email: ${embeddedWalletInfo?.user?.email}\n`)}
+                {embeddedWalletInfo?.user?.username && (`Username: ${embeddedWalletInfo?.user?.username}\n`)}
+                {embeddedWalletInfo?.authProvider && (`Provider: ${embeddedWalletInfo?.authProvider}\n`)}
             </pre>
         </section>
 
@@ -52,10 +56,6 @@ export const InfoList = () => {
             <h2>WalletInfo</h2>
             <pre>
                 Name: {walletInfo.walletInfo?.name?.toString()}<br />
-                {embeddedWalletInfo && (`Account Type: ${embeddedWalletInfo?.accountType}\n`)}
-                {embeddedWalletInfo?.user?.email && (`Email: ${embeddedWalletInfo?.user?.email}\n`)}
-                {embeddedWalletInfo?.user?.username && (`Username: ${embeddedWalletInfo?.user?.username}\n`)}
-                {embeddedWalletInfo?.authProvider && (`Provider: ${embeddedWalletInfo?.authProvider}\n`)}
             </pre>
         </section>
     </>

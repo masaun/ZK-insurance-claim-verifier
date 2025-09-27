@@ -1,4 +1,4 @@
-# Reown AppKit Example using ethers (next.js with App Router)
+# Reown AppKit Example using wagmi (next.js with App Router)
 
 This is a Next.js project.
 
