@@ -1,0 +1,27 @@
+# OS files
+**/.DS_Store
+
+# Compiler files
+cache/
+out*/
+
+# Ignores the broadcast logs
+broadcast/
+
+# Dotenv file
+.env
+
+# Scripts temporary files
+script/*.json
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+
+# Logs
+logs
+*.log
