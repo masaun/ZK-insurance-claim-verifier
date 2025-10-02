@@ -11,7 +11,7 @@
   "dependencies": {
     "@reown/appkit": "1.8.2",
     "@reown/appkit-adapter-wagmi": "1.8.2",
-    "@reown/walletkit": "1.8.2",
+    "@reown/walletkit": "1.2.11",
     "@walletconnect/core": "2.21.10",
     "@walletconnect/types": "2.21.10",
     "@walletconnect/utils": "2.21.10",
