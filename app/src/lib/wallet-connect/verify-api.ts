@@ -1,9 +1,6 @@
 import { Core } from "@walletconnect/core";
 import { WalletKit } from "@reown/walletkit";
 
-import { populateAuthPayload } from "@walletconnect/utils";
-import { getSdkError } from "@walletconnect/utils";
-
 
 const core = new Core({
   projectId: process.env.PROJECT_ID,
