@@ -32,7 +32,7 @@ export const ActionButtonList = () => {
         onClick={() => switchNetwork(networks[1])} 
         className="btn btn-outline"
       >
-        Switch to Swell Chain
+        Switch to BASE
       </button>
     </div>
   )

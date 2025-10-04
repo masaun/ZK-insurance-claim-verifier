@@ -15,7 +15,7 @@ export default function Home() {
             <div className="space-y-4">
               <h1>Zero-Knowledge Insurance Claim Verifier</h1>
               <p className="text-xl text-foreground-muted max-w-2xl mx-auto">
-                Verify insurance claims privately and securely using zero-knowledge proofs on Swell Chain. 
+                Verify insurance claims privately and securely using zero-knowledge proofs on BASE. 
                 No personal data exposed, complete privacy guaranteed.
               </p>
             </div>
@@ -33,7 +33,7 @@ export default function Home() {
             </div>
             
             <div className="text-sm text-foreground-light">
-              Built on Swell Chain • Powered by Noir ZK Proofs
+              Built on BASE • Powered by Noir ZK Proofs
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function Home() {
               </div>
               <h3 className="card-title">Lightning Fast</h3>
               <p className="card-description">
-                Instant verification on Swell Chain with minimal gas fees and maximum throughput.
+                Instant verification on BASE with minimal gas fees and maximum throughput.
               </p>
             </div>
             
@@ -126,7 +126,7 @@ export default function Home() {
               </div>
               <h3>Verify On-Chain</h3>
               <p className="text-foreground-muted">
-                The proof is verified on Swell Chain, providing immutable confirmation of your claim.
+                The proof is verified on BASE, providing immutable confirmation of your claim.
               </p>
             </div>
           </div>
@@ -172,8 +172,8 @@ export default function Home() {
               <a href="https://github.com" className="hover:text-foreground transition-colors">
                 GitHub
               </a>
-              <a href="https://docs.swell.io" className="hover:text-foreground transition-colors">
-                Swell Chain
+              <a href="https://base.org" className="hover:text-foreground transition-colors">
+                BASE
               </a>
               <span>Built for Swell City Buildathon</span>
             </div>
