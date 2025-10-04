@@ -1,5 +1,11 @@
 import { Header } from "@/components/Header";
 import { InsuranceClaimForm } from "@/components/InsuranceClaimForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Submit Insurance Claim | ZK Insurance Verifier",
+  description: "Submit your insurance claim with complete privacy using zero-knowledge proofs. Secure, private, and tamper-proof verification on Swell Chain.",
+};
 
 export default function ClaimPage() {
   return (
