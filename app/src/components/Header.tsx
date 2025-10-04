@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { ConnectButton } from './ConnectButton'
 
 export const Header = () => {
@@ -19,12 +20,12 @@ export const Header = () => {
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            <a href="/" className="text-foreground-muted hover:text-foreground transition-colors">
+            <Link href="/" className="text-foreground-muted hover:text-foreground transition-colors">
               Home
-            </a>
-            <a href="/claim" className="text-foreground-muted hover:text-foreground transition-colors">
+            </Link>
+            <Link href="/claim" className="text-foreground-muted hover:text-foreground transition-colors">
               Submit Claim
-            </a>
+            </Link>
             <a href="#features" className="text-foreground-muted hover:text-foreground transition-colors">
               Features
             </a>

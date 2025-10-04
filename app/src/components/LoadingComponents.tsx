@@ -17,8 +17,7 @@ export const LoadingButton = ({
   children: React.ReactNode
   loading?: boolean
   className?: string
-  [key: string]: any
-}) => {
+} & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
     <button 
       className={`btn ${className} ${loading ? 'opacity-75 cursor-not-allowed' : ''}`} 
