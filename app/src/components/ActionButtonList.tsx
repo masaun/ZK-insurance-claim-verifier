@@ -15,10 +15,25 @@ export const ActionButtonList = () => {
       }
     }
   return (
-    <div>
-        <button onClick={() => open()}>Open</button>
-        <button onClick={handleDisconnect}>Disconnect</button>
-        <button onClick={() => switchNetwork(networks[1]) }>Switch</button>
+    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      <button 
+        onClick={() => open()} 
+        className="btn btn-secondary"
+      >
+        Open Wallet Settings
+      </button>
+      <button 
+        onClick={handleDisconnect}
+        className="btn btn-outline"
+      >
+        Disconnect Wallet
+      </button>
+      <button 
+        onClick={() => switchNetwork(networks[1])} 
+        className="btn btn-outline"
+      >
+        Switch to BASE
+      </button>
     </div>
   )
 }

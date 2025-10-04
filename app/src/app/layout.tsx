@@ -6,8 +6,8 @@ import './globals.css';
 import ContextProvider from '@/context'
 
 export const metadata: Metadata = {
-  title: "AppKit in Next.js + wagmi",
-  description: "AppKit example dApp",
+  title: "ZK Insurance Verifier | Privacy-First Claims on BASE",
+  description: "Verify insurance claims privately and securely using zero-knowledge proofs. Built on BASE with Noir ZK technology for complete privacy protection.",
 };
 
 export default async function RootLayout({

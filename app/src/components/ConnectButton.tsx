@@ -2,8 +2,8 @@
 
 export const ConnectButton = () => {
   return (
-    <div >
-        <appkit-button />
+    <div className="flex items-center">
+      <appkit-button />
     </div>
   )
 }
