@@ -19,7 +19,7 @@ export const Header = () => {
           </div>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-12">
             <Link href="/" className="text-foreground-muted hover:text-foreground transition-colors">
               Home
             </Link>

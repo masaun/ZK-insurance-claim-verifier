@@ -20,6 +20,7 @@ lib/foundry-noir-helper/*
 
 node_modules
 package-lock.json
+bun.lockb
 
 # JSON file, which is used in the scripts/utils
 #output.json
